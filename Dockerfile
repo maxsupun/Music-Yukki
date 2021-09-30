@@ -7,12 +7,12 @@ RUN apt-get update -y && apt-get upgrade -y && \
 
 RUN apt-get install git ffmpeg python3-pip -y
 RUN pip3 install -U pip
-RUN git clone http://github.com/satyanandatripathi/moosic /rikudo/bot
+RUN git clone http://github.com/levina-lab/vmusic /veez/bot
 
-WORKDIR /rikudo/bot
+WORKDIR /veez/bot
 
-RUN chmod 777 /rikudo/bot
-RUN cd /rikudo/bot 
+RUN chmod 777 /veez/bot
+RUN cd /veez/bot 
 
 ENV PIP_NO_CACHE_DIR
 RUN pip3 install --upgrade pip setuptools
