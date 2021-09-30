@@ -51,51 +51,51 @@ def time_to_seconds(time):
         int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
 
-@Client.on_message(command(["play", "play@Rikudo_senin_bot"]))
+@Client.on_message(command(["play", "play@VMMegaBot"]))
 async def play(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply_text(f"**__Not in allowed chats.__**\n\nRikudo Senin is only for allowed chats. Ask any Sudo User to allow your chat.\nCheck Sudo Users List [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
+        await message.reply_text(f"❌ **__not in allowed chat__**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account From Admin Rights.")  
+        return await message.reply_text("you're an __Anonymous Admin__!\n\n» revert back to user account from admin rights.")  
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
     checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
     if await is_on_off(1):
-        LOG_ID = "-1001197362792"
+        LOG_ID = "-1001306851903"
         if int(chat_id) != int(LOG_ID):
-            return await message.reply_text(f"Bot is under Maintenance. Sorry for the inconvenience!")
-        return await message.reply_text(f"Bot is under Maintenance. Sorry for the inconvenience!")
+            return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
+        return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
     a = await app.get_chat_member(message.chat.id , BOT_ID)
     if a.status != "administrator":
-        await message.reply_text(f"I need to be admin with some permissions:\n\n- **can_manage_voice_chats:** To manage voice chats\n- **can_delete_messages:** To delete Rikudo Senin's Searched Waste\n- **can_invite_users**: For inviting assistant to chat\n**can_restrict_members**: For Protecting Rikudo Senin from Spammers.")
+        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ Delete messages\n» ❌ Ban users\n» ❌ Add users\n» ❌ Manage voice chat\n\nThen type /reload")
         return
     if not a.can_manage_voice_chats:
         await message.reply_text(
-        "I don't have the required permission to perform this action."
-        + "\n**Permission:** __MANAGE VOICE CHATS__")
+        "missing required permission:"
+        + "\n\n» ❌ __Manage voice chat__")
         return
     if not a.can_delete_messages:
         await message.reply_text(
-        "I don't have the required permission to perform this action."
-        + "\n**Permission:** __DELETE MESSAGES__")
+        "missing required permission:"
+        + "\n\n» ❌ __Delete messages__")
         return
     if not a.can_invite_users:
         await message.reply_text(
-        "I don't have the required permission to perform this action."
-        + "\n**Permission:** __INVITE USERS VIA LINK__")
+        "missing required permission:"
+        + "\n\n» ❌ __Add users__")
         return
     if not a.can_restrict_members:
         await message.reply_text(
-        "I don't have the required permission to perform this action."
-        + "\n**Permission:** __BAN USERS__")
+        "missing required permission:"
+        + "\n\n» ❌ __Ban users__")
         return
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
-            await message.reply_text(f"{ASSNAME}(@{ASSUSERNAME}) is banned in your chat **{chat_title}**\n\nUnban it first to use Rikudo senin")
+            await message.reply_text(f"{ASSNAME}(@{ASSUSERNAME}) is banned in this chat **{chat_title}**\n\n» unban the userbot first to use this bot")
             return
     except UserNotParticipant:
         if message.chat.username:
@@ -111,7 +111,7 @@ async def play(_, message: Message):
                 xxy = await app.export_chat_invite_link(message.chat.id)
                 yxy = await app.revoke_chat_invite_link(message.chat.id, xxy)
                 await ASS_ACC.join_chat(yxy.invite_link)
-                await message.reply(f"{ASSNAME} Joined Successfully",) 
+                await message.reply(f"{ASSNAME} joined successfully",) 
                 await remove_active_chat(chat_id)
             except UserAlreadyParticipant:
                 pass
@@ -125,9 +125,9 @@ async def play(_, message: Message):
         fucksemx = 1
         what = "Audio Searched"
         await LOG_CHAT(message, what)
-        mystic = await message.reply_text(f"**🔄 Processing Audio Given By {username}**")
+        mystic = await message.reply_text("**🔄 processing audio...**")
         if audio.file_size > 157286400:
-            await mystic.edit_text("Audio File Size Should Be Less Than 150 mb") 
+            await mystic.edit_text("audio file size must be less than 150 mb.") 
             return
         duration = round(audio.duration / 60)
         if duration > DURATION_LIMIT:
@@ -150,14 +150,14 @@ async def play(_, message: Message):
             else file_name,
         )
         title = "Selected Audio from Telegram"
-        link = "https://t.me/menotdeveloper"
-        thumb = "cache/Audio.JPEG"
+        link = "https://t.me/levinachannel"
+        thumb = "cache/audio.png"
         videoid = "smex1"
     elif url:
         what = "URL Searched"
         await LOG_CHAT(message, what)
         query = message.text.split(None, 1)[1]
-        mystic = await message.reply_text("Processing Url")
+        mystic = await message.reply_text("🔁 **processing url...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = VideosSearch(query, limit=1)
@@ -170,15 +170,15 @@ async def play(_, message: Message):
                 idxz = (result["id"])
                 videoid = (result["id"])
         except Exception as e:
-            return await mystic.edit_text(f"Soung Not Found.\n**Possible Reason:**{e}")    
+            return await mystic.edit_text(f"song not found.\n\n**Possible Reason:**{e}")    
         smex = int(time_to_seconds(duration))
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("Sorry! Live videos are not Supported")
+            return await mystic.edit_text("❌ __live stream video not supported__")
         if views == "None":
-            return await mystic.edit_text("Sorry! Live videos are not Supported")
-        semxbabes = (f"Downloading {title[:50]}")
+            return await mystic.edit_text("❌ __live stream video not supported__")
+        semxbabes = (f"📥 downloading: {title[:40]}")
         await mystic.edit(semxbabes)
         theme = random.choice(themes)
         ctitle = message.chat.title
@@ -243,14 +243,14 @@ async def play(_, message: Message):
             buttons = playlist_markup(user_name, user_id)
             hmo = await message.reply_photo(
             photo=thumb, 
-            caption=("**Usage:** /play [Music Name or Youtube Link or Reply to Audio]\n\nIf you want to play Playlists! Select the one from Below."),    
+            caption=("**usage:** /play [music name/yt url/audio file]\n\nIf you want to play playlist, select one from below."),    
             reply_markup=InlineKeyboardMarkup(buttons),
             ) 
             return
         what = "Query Given"
         await LOG_CHAT(message, what)
         query = message.text.split(None, 1)[1]
-        mystic = await message.reply_text("**🔄 Searching**")
+        mystic = await message.reply_text("🔎 **Searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -270,13 +270,13 @@ async def play(_, message: Message):
             ID4 = (result[3]["id"])
             ID5 = (result[4]["id"])
         except Exception as e:
-            return await mystic.edit_text(f"Soung Not Found.\n**Possible Reason:**{e}")
-        thumb ="cache/Result.JPEG"
+            return await mystic.edit_text(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
+        thumb ="cache/results.png"
         await mystic.delete()   
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
-            caption=(f"**Rikudo Senin**\n\n1️⃣<b>{title1}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID1})__</u>\n\n2️⃣<b>{title2}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID2})__</u>\n\n3️⃣<b>{title3}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID3})__</u>\n\n4️⃣<b>{title4}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID4})__</u>\n\n5️⃣<b>{title5}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID5})__</u>"),    
+            caption=(f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__</u>"),    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -308,7 +308,7 @@ async def play(_, message: Message):
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         await message.reply_photo(
             photo=thumb,
-            caption=(f"🎬<b>__Song:__</b>[{title[:25]}]({link}) \n⏳<b>__Duration:__</b> {duration} \n👤<b>__Requested by:__ </b>{checking} \n🚧<b>__Queued at:__</b> <b>#{position}!</b>"),
+            caption=(f"💡 **Track added to queue »** {position}\n\n🏷 <b>Name:</b> [{title[:25]}]({link}) \n⏱ <b>Duration:</b> `{duration}` \n🎧 <b>Request by:</b> {checking}"),
             reply_markup=InlineKeyboardMarkup(buttons)
         )
         return await mystic.delete()     
@@ -331,7 +331,7 @@ async def play(_, message: Message):
         await message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🎥<b>__Playing:__</b>[{title[:25]}]({link}) \n⏳<b>__Duration:__</b> {duration} \n👤<b>__Requested by:__</b>{checking}")
+        caption=(f"🏷 <b>Name:</b> [{title[:25]}]({link})\n⏱ <b>Duration:</b> `{duration}` \n🎧 <b>Request by:</b> {checking}")
     )   
         return await mystic.delete()
          
@@ -350,9 +350,9 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"Sorry!, Live Videos are not supported")      
+        return await CallbackQuery.message.reply_text(f"❌ __live stream video not supported__")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("This is not for you! Search You Own Song nigga", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry, this not for you", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -448,7 +448,7 @@ async def startyuplay(_,CallbackQuery):
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
         photo=thumb,
-        caption=(f"🎬<b>__Song:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} \n💡<b>__Info:__</b> [Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{id})\n👤<b>__Requested by:__ </b>{checking} \n🚧<b>__Queued at:__</b> <b>#{position}!</b>"),
+        caption=(f"💡 **Track added to queue »** `{position}`\n\n🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> `{duration}`\n🎧 <b>Request by:</b> {checking}\n💡 <b>Info:</b> [Track Information](https://t.me/{BOT_USERNAME}?start=info_{id})"),
         reply_markup=InlineKeyboardMarkup(buttons)
     )
         os.remove(thumb)
@@ -462,7 +462,7 @@ async def startyuplay(_,CallbackQuery):
         m = await CallbackQuery.message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🎥<b>__Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} \n💡<b>__Info:__</b> [Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{id})\n👤**__Requested by:__** {checking}")
+        caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url}) \n⏱ <b>Duration:</b> `{duration}`\n🎧 **Request by:** {checking}\n💡<b>Info:</b> [Track Information](https://t.me/{BOT_USERNAME}?start=info_{id})")
     )   
         os.remove(thumb)
         await CallbackQuery.message.delete()
@@ -481,7 +481,7 @@ async def popat(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("This is not for you! Search You Own Song", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry, this not for you", show_alert=True)
     i=int(id)
     query = str(query)
     try:
@@ -518,11 +518,11 @@ async def popat(_,CallbackQuery):
         ID9 = (result[8]["id"])
         ID10 = (result[9]["id"])                    
     except Exception as e:
-        return await mystic.edit_text(f"Soung Not Found.\n**Possible Reason:**{e}")
+        return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
     if i == 1:
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
         await CallbackQuery.edit_message_text(
-            f"6️⃣<b>{title6}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID6})__</u>\n\n7️⃣<b>{title7}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID7})__</u>\n\n8️⃣<b>{title8}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID8})__</u>\n\n9️⃣<b>{title9}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID9})__</u>\n\n🔟<b>{title10}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID10})__</u>",    
+            f"6️⃣ <b>{title6[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n7️⃣ <b>{title7[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n8️⃣ <b>{title8[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n9️⃣ <b>{title9[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n🔟 <b>{title10[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})**\n└ ⚡ __Powered by Veez Music AI__</u>",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -530,7 +530,7 @@ async def popat(_,CallbackQuery):
     if i == 2:
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         await CallbackQuery.edit_message_text(
-            f"1️⃣<b>{title1}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID1})__</u>\n\n2️⃣<b>{title2}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID2})__</u>\n\n3️⃣<b>{title3}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID3})__</u>\n\n4️⃣<b>{title4}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID4})__</u>\n\n5️⃣<b>{title5}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID5})__</u>",    
+            f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__</u>",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -539,15 +539,15 @@ async def popat(_,CallbackQuery):
         
         
         
-@app.on_message(filters.command("playplaylist"))
+@app.on_message(filters.command("playlist"))
 async def play_playlist_cmd(_, message):
-    thumb ="cache/Playlist.jpg"
+    thumb ="cache/playlist.png"
     user_id = message.from_user.id
     user_name = message.from_user.first_name
     buttons = playlist_markup(user_name, user_id)
     await message.reply_photo(
     photo=thumb, 
-    caption=("**__Rikudo Senin's Playlist Feature__**\n\nSelect the Playlist you want to play!."),    
+    caption=("**❓ Which playlist do you want to play ?**"),    
     reply_markup=InlineKeyboardMarkup(buttons),
     )
     return                            
