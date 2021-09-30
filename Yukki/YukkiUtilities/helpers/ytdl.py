@@ -1,0 +1,12 @@
+from youtube_dl import YoutubeDL
+
+ytdl = YoutubeDL(
+    {
+        "format": "bestaudio/best",
+        "geo-bypass": True,
+        "nocheckcertificate": True,
+        "outtmpl": "downloads/%(id)s.%(ext)s",
+    }
+)
+
+ytdl_opts = {"format" : "bestaudio", "quiet":True}
