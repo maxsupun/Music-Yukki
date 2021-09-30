@@ -70,7 +70,7 @@ async def stop_cmd(_, message):
 @app.on_message(filters.command("pause"))
 async def pause_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -78,17 +78,17 @@ async def pause_cmd(_, message):
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
-        return await message.reply_text("I dont think if something's playing on voice chat")
+        return await message.reply_text("❌ **no music is currently playing**")
     elif not await is_music_playing(message.chat.id):
-        return await message.reply_text("I dont think if something's playing on voice chat")   
+        return await message.reply_text("❌ **no music is currently playing**")   
     await music_off(chat_id)
     yukki.pytgcalls.pause_stream(message.chat.id)
-    await message.reply_text(f"🎧 Voicechat Paused by {checking}!")
+    await message.reply_text("⏸ **music playback has paused**")
     
 @app.on_message(filters.command("resume"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -96,18 +96,18 @@ async def stop_cmd(_, message):
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
-        return await message.reply_text("I dont think if something's playing on voice chat")
+        return await message.reply_text("❌ **no music is currently playing**")
     elif await is_music_playing(message.chat.id):
-        return await message.reply_text("I dont think if something's playing on voice chat") 
+        return await message.reply_text("❌ **no music is currently playing**") 
     else:
         await music_on(chat_id)
         yukki.pytgcalls.resume_stream(message.chat.id)
-        await message.reply_text(f"🎧 Voicechat Resumed by {checking}!")
+        await message.reply_text("▶ **music playback has resumed**")
 
 @app.on_message(filters.command(["stop", "end"]))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -121,14 +121,14 @@ async def stop_cmd(_, message):
             pass                        
         await remove_active_chat(chat_id)
         yukki.pytgcalls.leave_group_call(message.chat.id)
-        await message.reply_text(f"🎧 Voicechat End/Stopped by {checking}!") 
+        await message.reply_text("✅ **music playback has ended.**") 
     else:
-        return await message.reply_text("I dont think if something's playing on voice chat")
+        return await message.reply_text("❌ **no music is currently playing**")
     
 @app.on_message(filters.command("skip"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -137,12 +137,12 @@ async def stop_cmd(_, message):
     chat_id = message.chat.id
     chat_title = message.chat.title
     if not await is_active_chat(chat_id):
-        await message.reply_text("Nothing's playing on Rikudo Senin")
+        await message.reply_text("❌ **no music is currently playing**")
     else:
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("No more music in __Queue__ \n\nLeaving Voice Chat")
+            await message.reply_text("❌ no more music in __Queue__ \n\n» userbot leaving voice chat")
             yukki.pytgcalls.leave_group_call(message.chat.id)
             return  
         else:
@@ -152,7 +152,7 @@ async def stop_cmd(_, message):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await message.reply_text("Rikudo Senin is currently playing Playlist...\n\nDownloading Next Music From Playlist....")
+                mystic = await message.reply_text("💡 currently playing playlist...\n\n💭 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
@@ -216,7 +216,7 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>__Skipped Voice Chat__</b>\n\n🎥<b>__Started Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} Mins\n👤**__Requested by:__** {semx.mention}")
+                caption=(f"<b>⏭ **skipped to next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:25]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -239,6 +239,6 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>__Skipped Voice Chat__</b>\n\n🎥<b>__Started Playing:__</b> {title} \n⏳<b>__Duration:__</b> {duration} \n👤<b>__Requested by:__ </b> {username}",
+                caption=f"<b>⏭ **skipped to next music**</b>\n\n🏷 <b>**Name:**</b> {title} \n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
                 )
                 return
