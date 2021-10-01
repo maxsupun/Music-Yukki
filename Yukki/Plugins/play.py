@@ -539,7 +539,7 @@ async def popat(_,CallbackQuery):
         
         
         
-@app.on_message(filters.command("playlist"))
+@app.on_message(filters.command("playplaylist"))
 async def play_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
     user_id = message.from_user.id
