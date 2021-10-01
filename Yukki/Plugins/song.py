@@ -52,10 +52,10 @@ def time_to_seconds(time):
 async def mpthree(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply_text(f"**__Not in allowed chats.__**\n\nRikudo Senin Private is only for allowed chats. Ask any Sudo User to allow your chat.\nCheck Sudo Users List [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
+        await message.reply_text(f"❌ **__not in allowed chat__**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account From Admin Rights.")  
+        return await message.reply_text("you're an __Anonymous Admin__!\n\n» revert back to user account from admin rights.")  
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
@@ -79,27 +79,27 @@ async def mpthree(_, message: Message):
                 idxz = (result["id"])
                 videoid = (result["id"])
         except Exception as e:
-            return await mystic.edit_text(f"Soung Not Found.\n**Possible Reason:**{e}")    
+            return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")    
         smex = int(time_to_seconds(duration))
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("Sorry! Live videos are not Supported")
+            return await mystic.edit_text("❌ **sorry, live stream video not supported**")
         if views == "None":
-            return await mystic.edit_text("Sorry! Live videos are not Supported")
+            return await mystic.edit_text("❌ **sorry, live stream video not supported**")
         thumb = await down_thumb(thumbnail, user_id)
         buttons = gets(videoid, user_id)
         m = await message.reply_photo(
             photo=thumb,
             reply_markup=InlineKeyboardMarkup(buttons),    
-            caption=(f"🎥<b>__Title:__ </b>[{title[:25]}]({url})\n💡[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{id})")
+            caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url})\n\n💡 [music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
         )   
         os.remove(thumb)
     else:
         if len(message.command) < 2:
-            await message.reply_text("**Usage:**\n\n/song or /music [Youtube Url or Music Name]")
+            await message.reply_text("**usage:**\n\n/song or /music [yt url/music name]")
         query = message.text.split(None, 1)[1]
-        mystic = await message.reply_text("**🔄 Searching**")
+        mystic = await message.reply_text("🔎 **Searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -119,13 +119,13 @@ async def mpthree(_, message: Message):
             ID4 = (result[3]["id"])
             ID5 = (result[4]["id"])
         except Exception as e:
-            return await mystic.edit_text(f"Soung Not Found.\n**Possible Reason:**{e}")
+            return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
         thumb ="cache/Result.JPEG"
         await mystic.delete()   
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
-            caption=(f"**Rikudo Senin Inline Music Downloader**\n\n1️⃣<b>{title1}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID1})__</u>\n\n2️⃣<b>{title2}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID2})__</u>\n\n3️⃣<b>{title3}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID3})__</u>\n\n4️⃣<b>{title4}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID4})__</u>\n\n5️⃣<b>{title5}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID5})__</u>"),    
+            caption=(f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__</u>"),    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -144,9 +144,9 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"Sorry!, Live Videos are not supported")      
+        return await CallbackQuery.message.reply_text(f"❌ **sorry, live stream video not supported**")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("This is not for you! Search You Own Song nigga", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry, this is not for you", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -171,7 +171,7 @@ async def startyuplay(_,CallbackQuery):
     m = await CallbackQuery.message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🎥<b>__Title:__ </b>[{title[:25]}]({url})\n💡[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{id})")
+        caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url})\n\n💡 [music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
     )   
     os.remove(thumb)
     await CallbackQuery.message.delete()
@@ -190,7 +190,7 @@ async def chonga(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("This is not for you! Search You Own Song", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry, this is not for you", show_alert=True)
     i=int(id)
     query = str(query)
     try:
@@ -231,7 +231,7 @@ async def chonga(_,CallbackQuery):
     if i == 1:
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
         await CallbackQuery.edit_message_text(
-            f"6️⃣<b>{title6}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID6})__</u>\n\n7️⃣<b>{title7}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID7})__</u>\n\n8️⃣<b>{title8}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID8})__</u>\n\n9️⃣<b>{title9}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID9})__</u>\n\n🔟<b>{title10}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID10})__</u>",    
+            f"6️⃣ <b>{title6[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n7️⃣ <b>{title7[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n8️⃣ <b>{title8[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n9️⃣ <b>{title9[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n🔟 <b>{title10[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})**\n└ ⚡ __Powered by Veez Music AI__</u>",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -239,15 +239,11 @@ async def chonga(_,CallbackQuery):
     if i == 2:
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         await CallbackQuery.edit_message_text(
-            f"1️⃣<b>{title1}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID1})__</u>\n\n2️⃣<b>{title2}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID2})__</u>\n\n3️⃣<b>{title3}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID3})__</u>\n\n4️⃣<b>{title4}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID4})__</u>\n\n5️⃣<b>{title5}</b>\n  ┗  🔗 <u>__[Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{ID5})__</u>",    
+            f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__</u>",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
         return    
-      
-      
-      
-      
       
       
 def search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query):
@@ -263,9 +259,9 @@ def search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, dura
             ],
             [ 
                 
-                InlineKeyboardButton(text="<", callback_data=f'chonga 1|{query}|{user_id}'), 
+                InlineKeyboardButton(text="⬅️", callback_data=f'chonga 1|{query}|{user_id}'), 
                 InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}") ,
-                InlineKeyboardButton(text=">", callback_data=f'chonga 1|{query}|{user_id}')             
+                InlineKeyboardButton(text="➡️", callback_data=f'chonga 1|{query}|{user_id}')             
             ],
         ]
     return buttons   
@@ -283,9 +279,9 @@ def search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, du
             ],
             [ 
                 
-                InlineKeyboardButton(text="<", callback_data=f'chonga 2|{query}|{user_id}'), 
+                InlineKeyboardButton(text="⬅️", callback_data=f'chonga 2|{query}|{user_id}'), 
                 InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}") ,
-                InlineKeyboardButton(text=">", callback_data=f'chonga 2|{query}|{user_id}')             
+                InlineKeyboardButton(text="➡️", callback_data=f'chonga 2|{query}|{user_id}')             
             ],
         ]
     return buttons     
@@ -297,7 +293,7 @@ def gets(videoid, user_id):
                 InlineKeyboardButton(text="⬇️ Get Video", callback_data=f'gets video|{videoid}|{user_id}')
             ],
             [
-                InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
             ],
         ]
     return buttons 
