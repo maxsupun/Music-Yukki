@@ -13,23 +13,23 @@ async def blacklist_chat_func(_, message: Message):
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
         await add_served_chat(chat_id)
-        await message.reply_text("ADDED CHAT TO ALLOWED LIST")
+        await message.reply_text("✅ **chat added to allowed group list**")
     else:
-        await message.reply_text("ALREADY IN ALLOWED LIST")
+        await message.reply_text("✅ **already added to allowed list**")
     
-@app.on_message(filters.command("disallow") & filters.user(SUDOERS))
+@app.on_message(filters.command("deny") & filters.user(SUDOERS))
 async def whitelist_chat_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "**Usage:**\n/disallow [CHAT_ID]"
+            "**usage:**\n/deny [CHAT_ID]"
         )
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
-        await message.reply_text("Chat not allowed.")
+        await message.reply_text("❌ chat not allowed.")
         return
     try:
         await remove_served_chat(chat_id)
-        await message.reply_text("Chat diallowed.")
+        await message.reply_text("❌ chat has denied.")
         return
     except Exception as e:
       await message.reply_text("Error.")
@@ -38,7 +38,7 @@ async def whitelist_chat_func(_, message: Message):
 @app.on_message(filters.command("allowedchat") & filters.user(SUDOERS))
 async def blacklisted_chats_func(_, message: Message):
     served_chats = []
-    text = "**__Allowed Chats__**\n"
+    text = "💡 **allowed chats:**\n\n"
     try:
         chats = await get_served_chats()
         for chat in chats:
@@ -56,6 +56,6 @@ async def blacklisted_chats_func(_, message: Message):
         count += 1
         text += f"**{count}. {title}** [`{served_chat}`]\n"
     if not text:
-        await message.reply_text("No Allowed Chats")  
+        await message.reply_text("❌ **no allowed chats**")  
     else:
         await message.reply_text(text) 
