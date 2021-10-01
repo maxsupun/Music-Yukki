@@ -5,9 +5,9 @@ from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from ..YukkiUtilities.helpers.filters import command
 
 
-@Client.on_message(command("Rikudop") & filters.user(SUDOERS))
+@Client.on_message(command("veezmega") & filters.user(SUDOERS))
 async def smex(_, message):
-    usage = "**Usage:**\n/Rikudop [enable|disable]"
+    usage = "**usage:**\n/veezmega [enable|disable]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     chat_id = message.chat.id
@@ -16,18 +16,18 @@ async def smex(_, message):
     if state == "enable":
         user_id = 1
         await add_on(user_id)
-        await message.reply_text("Rikudo Senin Enabled for Maintenance")
+        await message.reply_text("✅ veez mega maintenance mode enabled")
     elif state == "disable":
         user_id = 1
         await add_off(user_id)
-        await message.reply_text("Maintenance Mode Disabled")
+        await message.reply_text("❌ veez mega maintenance mode disabled")
     else:
         await message.reply_text(usage)
 
         
-@Client.on_message(command("stpp") & filters.user(SUDOERS))
+@Client.on_message(command("veezrun") & filters.user(SUDOERS))
 async def sls_skfs(_, message):
-    usage = "**Usage:**\n/stpp [enable|disable]"
+    usage = "**usage:**\n/veezrun [enable|disable]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     chat_id = message.chat.id
@@ -36,10 +36,10 @@ async def sls_skfs(_, message):
     if state == "enable":
         user_id = 2
         await add_on(user_id)
-        await message.reply_text("Speedtest Enabled")
+        await message.reply_text("✅ **speedtest enabled**")
     elif state == "disable":
         user_id = 2
         await add_off(user_id)
-        await message.reply_text("Speedtest Disabled")
+        await message.reply_text("❌ **speedtest disabled**")
     else:
         await message.reply_text(usage)
