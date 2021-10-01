@@ -41,10 +41,10 @@ options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", 
 
 @app.on_message(filters.command("playlist"))
 async def pause_cmd(_, message):
-    thumb ="cache/Playlist.jpg"
+    thumb ="cache/playlist.png"
     await message.reply_photo(
     photo=thumb, 
-    caption=("**__Rikudo Senin's Playlist Feature__**\n\nSelect The Playlist, You want to check!"),    
+    caption=("**❓ Which playlist do you want to play ?**"),    
     reply_markup=play_list_keyboard) 
     return 
 
@@ -64,7 +64,7 @@ async def pause_cmd(_, message):
     else:
          _playlist = await get_note_names(message.from_user.id)
     if not _playlist:
-        await message.reply_text("You have no Playlist on Yukki's Server")
+        await message.reply_text("you have no playlist on veez mega database !")
     else:
         titlex = []
         j = 0
@@ -75,13 +75,13 @@ async def pause_cmd(_, message):
             if j == count:
                 deleted = await delete_playlist(message.from_user.id, note)
                 if deleted:
-                    return await message.reply_text(f"**Deleted the {count} music in playlist**")
+                    return await message.reply_text(f"**deleted the {count} music in playlist**")
                 else:
-                    return await message.reply_text(f"**No such saved music in playlist.**")                                
-        await message.reply_text("You have no such music in Playlist.")                             
+                    return await message.reply_text(f"**no such saved music in playlist.**")                                
+        await message.reply_text("you have no such music in playlist.")                             
 
         
-@app.on_message(filters.command("delgroupplaylist"))
+@app.on_message(filters.command("delchatplaylist"))
 async def delgroupplaylist(_, message):
     a = await app.get_chat_member(message.chat.id , message.from_user.id)
     if not a.can_manage_voice_chats:
@@ -99,7 +99,7 @@ async def delgroupplaylist(_, message):
     else:
          _playlist = await get_note_names(message.chat.id)
     if not _playlist:
-        await message.reply_text("Group has no Playlist on Rikudo Senin's Server")
+        await message.reply_text("Group has no playlist on veez mega database.")
     else:
         titlex = []
         j = 0
@@ -110,7 +110,7 @@ async def delgroupplaylist(_, message):
             if j == count:
                 deleted = await delete_playlist(message.chat.id, note)
                 if deleted:
-                    return await message.reply_text(f"**Deleted the {count} music in group's playlist**")
+                    return await message.reply_text(f"**deleted the {count} music in group's playlist**")
                 else:
-                    return await message.reply_text(f"**No such saved music in Group playlist.**")                                
-        await message.reply_text("You have no such music in Group Playlist.") 
+                    return await message.reply_text(f"**no such saved music in Group playlist.**")                                
+        await message.reply_text("you have no such music in Group Playlist.") 
