@@ -14,7 +14,6 @@ WORKDIR /veez/bot
 RUN chmod 777 /veez/bot
 RUN cd /veez/bot 
 
-ENV PIP_NO_CACHE_DIR
 RUN pip3 install --upgrade pip setuptools
 RUN pip3 install --no-cache-dir -U -r requirements.txt
 
