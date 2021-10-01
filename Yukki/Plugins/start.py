@@ -35,6 +35,7 @@ pstart_markup=InlineKeyboardMarkup(
                 [
                     InlineKeyboardButton(
                         "➕ Add me to a Group", url="https://t.me/VeezMegaBot?startgroup=true")
+                ],[
                     InlineKeyboardButton(
                         "📚 Commands", url="https://telegra.ph/Veez-Mega-Bot-09-30")
                 ],[
