@@ -20,7 +20,7 @@ Disk: {disk}%'''
     return stats
 
 
-@app.on_message(filters.command(["ping", "ping@Rikudo_senin_bot"]))
+@app.on_message(filters.command(["ping", "ping@VeezMegaBot"]))
 async def ping(_, message):
     uptime = await bot_sys_stats()
     start = datetime.now()
@@ -30,4 +30,4 @@ async def ping(_, message):
     )
     end = datetime.now()
     resp = (end - start).microseconds / 1000
-    await response.edit_text(f"**Pong!**\n`⚡{resp} ms`\n\n<b><u>Rikudo Senin System Stats:</u></b>{uptime}")  
+    await response.edit_text(f"🏓 `PONG !`\n⚡ `{resp} ms`\n\n<b><u>🖥 system stats:</u></b>{uptime}")  
