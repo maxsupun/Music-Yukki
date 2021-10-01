@@ -18,6 +18,8 @@ RUN cd /veez/bot
 ENV PIP_NO_CACHE_DIR 1
 RUN pip3 install --upgrade pip setuptools
 RUN pip3 install --no-cache-dir -U -r requirements.txt
-RUN pip3 uninstall pytgcalls && pip3 install git+https://github.com/pyrogram/pyrogram -U && pip3 uninstall py-tgcalls && pip3 install py-tgcalls==0.5.5 && pip3 install lyricsgenius && pip3 install hachoir
+RUN pip3 uninstall py-tgcalls && pip3 install py-tgcalls==0.5.5 && \
+    pip3 install git+https://github.com/pyrogram/pyrogram -U && \
+    pip3 install lyricsgenius && pip3 install hachoir
 
 CMD ["python3", "-m", "Yukki"]
