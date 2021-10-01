@@ -1,0 +1,81 @@
+{
+    "name": "Veez Mega Bot",
+    "logo": "https://telegra.ph/file/9dd9b20abcda2d7bb6725.png",
+    "description": "veez music mega allow you to stream music trought the telegram voice chat feature.",
+    "keywords": ["music", "voice chat", "telegram"],
+    "repository": "https://github.com/levina-lab/vmusic",
+    "stack": "container",
+    "env": {
+        "SESSION_NAME1": {
+            "description": "fill with the pyrogram session string",
+            "required": true
+        },
+        "SESSION_NAME2": {
+            "description": "fill with your bot token from @BotFather",
+            "required": true
+        },
+        "OWNER_ID": {
+            "description": "fill with your telegram id as the owner of the bot",
+            "required": true,
+            "value": "1757169682"
+        },
+        "ASS_ID": {
+            "description": "fill with the mongodb url you get from cloud.mongodb.com",
+            "required": true,
+            "value": "1727937540 1977586419"
+        },
+        "LOG_GROUP_ID": {
+            "description": "create a private channel and get the channel id, add your bot as admin to the channel too",
+            "required": true,
+            "value": "-1001306851903"
+        },
+        "assnumber": {
+            "description": "fill with the assistant username without @",
+            "required": true,
+            "value": "2"
+        },
+        "API_ID": {
+            "description": "your Api ID from my.telegram.org/apps",
+            "required": true,
+            "value": "3487995"
+        },
+        "API_HASH": {
+            "description": "your Api Hash from my.telegram.org/apps",
+            "required": true,
+            "value": "7b9f1868c1e90b7408d48445f1e89603"
+        },
+        "SUDO_USERS": {
+            "description": "fill with the user id who can access all function in your bot (separate with space).",
+            "required": true,
+            "value": "1952053555 1738637033 1253367088"
+        },
+        "DURATION_LIMIT": {
+            "description": "max duration for music to download (in minutes).",
+            "required": true,
+            "value": "40"
+        },
+        "BOT_TOKEN": {
+            "description": "if you have channel fill the channel username here without @",
+            "required": false,
+            "value": "2021634838:AAFrOXeMcoehotEOKAtarakn7MTV0WTJ_Ss"
+        },
+        "MONGO_DB_URI2": {
+            "description": "if you have group fill the group username here without @",
+            "required": false,
+            "value": "mongodb+srv://veez:music@cluster0.p1htj.mongodb.net/veez?retryWrites=true&w=majority"
+        },
+        "MONGO_DB_URI": {
+            "description": "if you have group fill the group username here without @",
+            "required": false,
+            "value": "mongodb+srv://veez:music@cluster0.p1htj.mongodb.net/veez?retryWrites=true&w=majority"
+        }
+    },
+    "buildpacks": [
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
