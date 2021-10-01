@@ -28,7 +28,7 @@ async def lyricssex(_,CallbackQuery):
         for result in results.result()["result"]:
             title = (result["title"])
     except Exception as e:
-        return await CallbackQuery.answer("Sound not found. Youtube issues.", show_alert=True)   
+        return await CallbackQuery.answer("song not found, due to youtube issues.", show_alert=True)   
     x = "OXaVabSRKQLqwpiYOn-E4Y7k3wj-TNdL5RfDPXlnXhCErbcqVvdCF-WnMR5TBctI"
     y = lyricsgenius.Genius(x)
     print(title)
@@ -37,17 +37,17 @@ async def lyricssex(_,CallbackQuery):
     y.verbose = False
     S = y.search_song(t, get_full_info=False)
     if S is None:
-        return await CallbackQuery.answer("Lyrics not found :p", show_alert=True)
+        return await CallbackQuery.answer("❌ lyrics not found", show_alert=True)
     await CallbackQuery.message.delete()
     userid = CallbackQuery.from_user.id
     usr = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     xxx = f"""
-**Lyrics Search Powered By Rikudo senin**
+⚡️ __Powered by Veez Music AI__
 
 **Searched By:-** {usr}
 **Searched Song:-** __{title}__
 
-**Found Lyrics For:-** __{S.title}__
+**Lyrics Found:-** __{S.title}__
 **Artist:-** {S.artist}
 
 **__Lyrics:__**
@@ -58,20 +58,20 @@ async def lyricssex(_,CallbackQuery):
     
 @Client.on_message(filters.command("lyrics"))
 async def lrsearch(_, message: Message):  
-    m = await message.reply_text("Searching Lyrics")
+    m = await message.reply_text("searching lyrics...")
     query = message.text.split(None, 1)[1]
     x = "OXaVabSRKQLqwpiYOn-E4Y7k3wj-TNdL5RfDPXlnXhCErbcqVvdCF-WnMR5TBctI"
     y = lyricsgenius.Genius(x)
     y.verbose = False
     S = y.search_song(query, get_full_info=False)
     if S is None:
-        return await m.edit("Lyrics not found :p")
+        return await m.edit("❌ lyrics not found")
     xxx = f"""
-**Lyrics Search Powered By Rikudo Senin Bot**
+⚡️ __Powered by Veez Music AI__
 
 **Searched Song:-** __{query}__
 
-**Found Lyrics For:-** __{S.title}__
+**Lyrics Found:-** __{S.title}__
 **Artist:-** {S.artist}
 
 **__Lyrics:__**
