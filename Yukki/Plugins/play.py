@@ -124,7 +124,6 @@ async def play(_, message: Message):
     if audio:
         fucksemx = 1
         what = "Audio Searched"
-        await LOG_CHAT(message, what)
         mystic = await message.reply_text("**🔄 processing audio...**")
         if audio.file_size > 157286400:
             await mystic.edit_text("audio file size must be less than 150 mb.") 
@@ -149,14 +148,13 @@ async def play(_, message: Message):
             )
             else file_name,
         )
-        title = "Selected Audio from Telegram"
+        title = "telegram audio file"
         link = "https://t.me/levinachannel"
         thumb = "cache/audio.png"
         videoid = "smex1"
     elif url:
         what = "URL Searched"
-        await LOG_CHAT(message, what)
-        query = message.text.split(None, 1)[1]
+        query = " ".join(message.filters.command[1:])
         mystic = await message.reply_text("🔁 **processing url...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
@@ -175,10 +173,10 @@ async def play(_, message: Message):
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("❌ __live stream video not supported__")
+            return await mystic.edit_text("❌ live stream video not supported")
         if views == "None":
-            return await mystic.edit_text("❌ __live stream video not supported__")
-        semxbabes = (f"📥 downloading: {title[:40]}")
+            return await mystic.edit_text("❌ live stream video not supported")
+        semxbabes = (f"📥 downloading: {title[:35]}")
         await mystic.edit(semxbabes)
         theme = random.choice(themes)
         ctitle = message.chat.title
