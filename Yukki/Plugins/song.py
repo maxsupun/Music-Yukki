@@ -65,8 +65,8 @@ async def mpthree(_, message: Message):
     await message.delete()
     fucksemx = 0
     if url:
-        query = message.text.split(None, 1)[1]
-        mystic = await message.reply_text("Processing Url")
+        query = " ".join(message.filters.command[1:])
+        mystic = await message.reply_text("🔄 processing...")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = VideosSearch(query, limit=1)
