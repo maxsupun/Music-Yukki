@@ -56,7 +56,7 @@ def get_url(message_1: Message) -> Union[str, None]:
     return text[offset:offset + length]
 random_assistant = ["5", "1", "2", "3", "4"]
 
-themes = ["Black", "Grey", "Green", "Purple", "Red", "Lightred", "Blue", "Lightblue"]
+themes = ["LightBlue"]
 
 def bytes(size: float) -> str:
     """humanize size"""
@@ -72,4 +72,4 @@ def bytes(size: float) -> str:
 
 
 async def ass_det(assistant: int):
-    print("HAHAHHAHA")
+    print("VEEZ MUSIC MEGA")
