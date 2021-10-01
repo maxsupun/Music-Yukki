@@ -21,28 +21,30 @@ from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove
 def start_pannel():  
     buttons  = [
             [
-                InlineKeyboardButton(text="🎚 Commands Menu", url="https://telegra.ph/Rikudo-Senin-09-29")
+                InlineKeyboardButton(text="📚 Commands", url="https://telegra.ph/Rikudo-Senin-09-29")
             ],
             [ 
-                InlineKeyboardButton(text="📨Official Channel", url="https://t.me/mrdark_genuine"),
-                InlineKeyboardButton(text="📨Support Group", url="https://t.me/menotdeveloper")
+                InlineKeyboardButton(text="📣 Channel", url="https://t.me/levinachannel"),
+                InlineKeyboardButton(text="💭 Group", url="https://t.me/VeezSupportGroup")
             ],
     ]
-    return "🎛  **This is Rikudo Senin Music Bot**", buttons
+    return "✨  **Welcome to veez music mega bot.**", buttons
 
 pstart_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "🧰 Commands List", url=f"https://telegra.ph/Rikudo-Senin-09-29")],
-                [
+                        "➕ Add me to a Group", url="https://t.me/VeezMegaBot?startgroup=true")
                     InlineKeyboardButton(
-                        "📲 Channel", url=f"https://t.me/mrdark_genuine"), 
-                    InlineKeyboardButton(
-                        "💬 Support", url=f"https://t.me/menotdeveloper")
+                        "📚 Commands", url="https://telegra.ph/Veez-Mega-Bot-09-30")
                 ],[
                     InlineKeyboardButton(
-                        "➕ Add Me To Your Group", url=f"https://t.me/Rikudo_senin_bot?startgroup=true")
+                        "📣 Channel", url="https://t.me/levinachannel"), 
+                    InlineKeyboardButton(
+                        "💬 Support", url="https://t.me/VeezSupportGroup")
+                ],[
+                    InlineKeyboardButton(
+                        "💖 Donation", url="https://t.me/dlwrml")
                 ]
             ]
         )
@@ -51,19 +53,19 @@ welcome_captcha_group = 2
 async def welcome(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply_text(f"**__Not in allowed chats.__**\n\nRikudo Senin is only for allowed chats. Ask any Sudo User to allow your chat.\nCheck Sudo Users List [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
+        await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats, ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)
     for member in message.new_chat_members:
         try:
             if member.id in OWNER:
-                return await message.reply_text(f"Call the Avengers, My Owner[{member.mention}] has just joined your chat.")
+                return await message.reply_text(f"💡 announcement, my owner [{member.mention}] has joined this group.")
             if member.id in SUDOERS:
-                return await message.reply_text(f"Tighten your seatbelts, A member of Rikudo Senin's SudoUser[{member.mention}] has just joined your chat.")
+                return await message.reply_text(f"💡 announcement, sudo member [{member.mention}] has joined this group.")
             if member.id == ASSID:
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
                 out = start_pannel()
-                await message.reply_text(f"Welcome To Rikudo Senin\n\nPromote me as administrator in your group otherwise I will not function properly.", reply_markup=InlineKeyboardMarkup(out[1]))
+                await message.reply_text(f"✨ Welcome to veez music mega bot.\n\n💭 Make me admin in your group so I can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
                 return
         except:
             return
@@ -72,10 +74,10 @@ async def welcome(_, message: Message):
 async def start(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply_text(f"**__Not in allowed chats.__**\n\nRikudo Senin is only for allowed chats. Ask any Sudo User to allow your chat.\nCheck Sudo Users List [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
+        await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats, ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)
     out = start_pannel()
-    await message.reply_text(f"Thanks for having me in {message.chat.title}.\nRikudo Senin is alive.\n\nFor any assistance or help, checkout our support group and channel.", reply_markup=InlineKeyboardMarkup(out[1]))
+    await message.reply_text(f"❤️ **Thanks for adding me to the group!**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly. Once done, type** `/reload`", reply_markup=InlineKeyboardMarkup(out[1]))
     return
         
 @Client.on_message(filters.private & filters.incoming & filters.command("vcstart"))
@@ -85,7 +87,7 @@ async def play(_, message: Message):
         user_name = message.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")" 
         await app.send_message(message.chat.id,
-            text=f"Hello {rpk}!\n\nThis is Rikudo Senin Music Bot.\nI play music on Telegram's Voice Chats.\n\nOnly for selected chats.",
+            text=f"✨ Hello {rpk}!\n\nThis is veez music mega bot, a bot that can play music on Telegram's voice chats.\n\n💡 only for selected chats.",
             parse_mode="markdown",
             reply_markup=pstart_markup,
             reply_to_message_id=message.message_id
@@ -103,20 +105,18 @@ async def play(_, message: Message):
                 x = ytdl.extract_info(query, download=False)
             thumbnail = (x["thumbnail"])
             searched_text = f"""
-🔍__**Video Track Information**__
+💡 **Track Information**
 
-❇️**Title:** {x["title"]}
-   
-⏳**Duration:** {round(x["duration"] / 60)} Mins
-👀**Views:** `{x["view_count"]}`
-👍**Likes:** `{x["like_count"]}`
-👎**Dislikes:** `{x["dislike_count"]}`
-⭐️**Average Ratings:** {x["average_rating"]}
-🎥**Channel Name:** {x["uploader"]}
-📎**Channel Link:** [Visit From Here]({x["channel_url"]})
-🔗**Link:** [Link]({x["webpage_url"]})
+🏷 **Name:** {x["title"]}
+⏱ **Duration:** {round(x["duration"] / 60)} Mins
+👀 **Views:** `{x["view_count"]}`
+👍 **Likes:** `{x["like_count"]}`
+👎 **Dislikes:** `{x["dislike_count"]}`
+⭐️ **Ratings:** {x["average_rating"]}
+📣 **Channel:** {x["uploader"]}
+🔗 **Link:** [Link]({x["webpage_url"]})
 
-⚡️ __Searched Powered By Rikudo Senin Music Bot__"""
+⚡️ __Powered by Veez Music AI__"""
             link = (x["webpage_url"])
             buttons = personal_markup(link)
             userid = message.from_user.id
@@ -129,7 +129,7 @@ async def play(_, message: Message):
             )
         if str(finxx) == "sud":
             sudoers = await get_sudoers()
-            text = "**__Sudo Users List of Rikudo Senin:-__**\n\n"
+            text = "**💡 sudo users list of:**\n\n"
             for count, user_id in enumerate(sudoers, 1):
                 try:                     
                     user = await app.get_users(user_id)
@@ -138,7 +138,7 @@ async def play(_, message: Message):
                     continue                     
                 text += f"➤ {user}\n"
             if not text:
-                await message.reply_text("No Sudo Users")  
+                await message.reply_text("❌ no sudo users")  
             else:
                 await message.reply_text(text) 
   
