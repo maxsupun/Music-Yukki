@@ -8,4 +8,5 @@ RUN npm install -g npm@7.24.1
 COPY . /app
 WORKDIR /app
 RUN python3 -m pip install -U -r requirements.txt
+RUN pip3 install lyricsgenius && pip3 install hachoir
 CMD python3 -m Yukki
