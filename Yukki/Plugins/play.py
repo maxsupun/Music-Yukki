@@ -154,7 +154,7 @@ async def play(_, message: Message):
         videoid = "smex1"
     elif url:
         what = "URL Searched"
-        query = " ".join(message.filters.command[1:])
+        query = " ".join(message.command[1:])
         mystic = await message.reply_text("🔁 **processing url...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
@@ -235,7 +235,6 @@ async def play(_, message: Message):
     else:
         if len(message.command) < 2:
             what = "Command"
-            await LOG_CHAT(message, what)
             user_name = message.from_user.first_name
             thumb ="cache/playlist.png"
             buttons = playlist_markup(user_name, user_id)
@@ -246,7 +245,7 @@ async def play(_, message: Message):
             ) 
             return
         what = "Query Given"
-        query = message.text.split(None, 1)[1]
+        query = " ".join(message.command[1:])
         mystic = await message.reply_text("🔎 **Searching...**")
         try:
             a = VideosSearch(query, limit=5)
