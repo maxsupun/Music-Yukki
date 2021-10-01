@@ -6,7 +6,7 @@ from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_cha
 from ..YukkiUtilities.helpers.filters import command
 
 
-@app.on_message(filters.command("broadcastp") & filters.user(SUDOERS))
+@app.on_message(filters.command("broadcast") & filters.user(SUDOERS))
 async def broadcast_message(_, message):
     if not message.reply_to_message:
         pass
@@ -31,10 +31,10 @@ async def broadcast_message(_, message):
                 sent += 1
             except Exception:
                 pass
-        await message.reply_text(f"**Broadcasted Message In {sent}  Chats with {pin} Pins.**")  
+        await message.reply_text(f"**broadcasted message in {sent}\n\nchats with {pin} pins.**")  
         return
     if len(message.command) < 2:
-        await message.reply_text("**Usage**:\n/broadcast [MESSAGE]")
+        await message.reply_text("**usage**:\n/broadcast [MESSAGE]")
         return  
     text = message.text.split(None, 1)[1]
     sent = 0
@@ -55,4 +55,4 @@ async def broadcast_message(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply_text(f"**Broadcasted Message In {sent} Chats and {pin} Pins.**")
+    await message.reply_text(f"**broadcasted message in {sent}\n\nchats and {pin} pins.**")
