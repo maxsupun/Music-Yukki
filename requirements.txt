@@ -5,7 +5,7 @@ aiofiles
 asyncio
 ffmpeg-python
 Pillow
-py-tgcalls
+py-tgcalls==0.5.5
 pytube
 wget
 python-dotenv
