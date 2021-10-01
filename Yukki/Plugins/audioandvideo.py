@@ -76,7 +76,7 @@ async def getspy(_,CallbackQuery):
     try:
         if userLastDownloadTime > datetime.now():
             wait_time = round((userLastDownloadTime - datetime.now()).total_seconds() / 60, 2)
-            return await CallbackQuery.message.reply_text(f"Okay {Name}, Fast AF Boiii.. `Wait for {wait_time} min(s) before next download request")
+            return await CallbackQuery.message.reply_text(f"Okay {Name}, fastspeed.. `wait for {wait_time} min(s) before next download request")
     except:
         pass
     url = (f"https://www.youtube.com/watch?v={videoid}")
@@ -161,8 +161,8 @@ async def getspy(_,CallbackQuery):
                     a1,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )
@@ -174,8 +174,8 @@ async def getspy(_,CallbackQuery):
                     a2,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )  
@@ -190,8 +190,8 @@ async def getspy(_,CallbackQuery):
                     a3,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         ) 
@@ -207,8 +207,8 @@ async def getspy(_,CallbackQuery):
                     a4,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )    
@@ -227,8 +227,8 @@ async def getspy(_,CallbackQuery):
                     a5,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )  
@@ -248,8 +248,8 @@ async def getspy(_,CallbackQuery):
                     a6,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )    
@@ -279,8 +279,8 @@ async def ytdata(_,CallbackQuery):
                     a2,
                 ],
                 [
-                    InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )
@@ -290,7 +290,7 @@ async def ytdata(_,CallbackQuery):
 inl = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Downloading......", callback_data=f'down')
+                    InlineKeyboardButton(text="📥 Downloading...", callback_data=f'down')
                 ]   
             ]
         )
@@ -298,7 +298,7 @@ inl = InlineKeyboardMarkup(
 upl = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Uploading......", callback_data=f'down')
+                    InlineKeyboardButton(text="📤 Uploading......", callback_data=f'down')
                 ]   
             ]
         )
@@ -306,11 +306,11 @@ upl = InlineKeyboardMarkup(
 def inl_mark(videoid, user_id):
     buttons= [
             [
-                InlineKeyboardButton(text="Download or Upload Failed......", callback_data=f'down')
+                InlineKeyboardButton(text="Download or Upload Failed...", callback_data=f'down')
             ],
             [
-                InlineKeyboardButton(text="⬅️  Go Back", callback_data=f'good {videoid}|{user_id}'),
-                InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                InlineKeyboardButton(text="⬅️ Back", callback_data=f'good {videoid}|{user_id}'),
+                InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
             ],
         ]
     return buttons 
@@ -341,14 +341,14 @@ async def boom(_,CallbackQuery):
         await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons)) 
     mystic = await CallbackQuery.edit_message_text("Download Started\n\nDownloading speed could be slow. Please hold on..", reply_markup = inl)
     fetched = f"""
-**Track Downloaded**
+💡 **Track downloaded**
 
-❇️**Title:** {x["title"]}
-⏳**Duration:** {round(x["duration"] / 60)} Mins
-👀**Views:** __{x["view_count"]}__
-🎥**Channel Name:** {x["uploader"]}
+🏷 **Name:** {x["title"]}
+⏱ **Duration:** {round(x["duration"] / 60)} Mins
+👀 **Views:** __{x["view_count"]}__
+📣 **Channel:** {x["uploader"]}
 
-__Youtube Inline Download Powered By Rikudo Senin__ """    
+⚡️ __Powered by Veez Music AI__"""    
     link = (x["webpage_url"])
     channel = (x["channel_url"])
     perf = (x['uploader'])
@@ -513,34 +513,6 @@ def duration(vid_file_path):
     raise Exception('duration Not found')
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 def humanbytes(num, suffix='B'):
     if num is None:
         num = 0
@@ -594,6 +566,3 @@ async def downloadaudiocli(command_to_exec):
     print("Download error:", e_response)
 
     return t_response.split("Destination")[-1].split("Deleting")[0].split(":")[-1].strip()
-    
-    
-    
