@@ -21,7 +21,7 @@ from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove
 def start_pannel():  
     buttons  = [
             [
-                InlineKeyboardButton(text="📚 Commands", url="https://telegra.ph/Rikudo-Senin-09-29")
+                InlineKeyboardButton(text="📚 Commands", url="https://telegra.ph/Veez-Mega-Bot-09-30")
             ],
             [ 
                 InlineKeyboardButton(text="📣 Channel", url="https://t.me/levinachannel"),
@@ -66,7 +66,7 @@ async def welcome(_, message: Message):
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
                 out = start_pannel()
-                await message.reply_text(f"✨ Welcome to veez music mega bot.\n\n💭 Make me admin in your group so I can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
+                await message.reply_text(f"❤️ **Thanks for adding me to the group!**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly.\nOnce done, type** `/reload`", reply_markup=InlineKeyboardMarkup(out[1]))
                 return
         except:
             return
@@ -78,7 +78,7 @@ async def start(_, message: Message):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats, ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)
     out = start_pannel()
-    await message.reply_text(f"❤️ **Thanks for adding me to the group!**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly. Once done, type** `/reload`", reply_markup=InlineKeyboardMarkup(out[1]))
+    await message.reply_text(f"✨ Welcome to veez music mega bot.\n\n💭 Make me admin in your group so I can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
     return
         
 @Client.on_message(filters.private & filters.incoming & filters.command("start"))
