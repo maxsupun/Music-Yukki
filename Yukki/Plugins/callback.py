@@ -99,7 +99,7 @@ async def closesmex(_,CallbackQuery):
         await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
         return 
     if CallbackQuery.from_user.id != int(user_id):
-        await CallbackQuery.answer("You're not allowed to close this Nigga", show_alert=True)
+        await CallbackQuery.answer("💡 only admin can tap this button !", show_alert=True)
         return
     await CallbackQuery.message.delete()
     await CallbackQuery.answer()
@@ -109,36 +109,36 @@ async def closesmex(_,CallbackQuery):
 async def pausevc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(CallbackQuery.message.chat.id):
             yukki.pytgcalls.pause_stream(CallbackQuery.message.chat.id)
             await music_off(chat_id)
-            await CallbackQuery.answer("Voicechat Paused", show_alert=True)
+            await CallbackQuery.answer("⏸ music playback has paused", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-            await CallbackQuery.message.reply(f"🎧 Voicechat Paused by {rpk}!", reply_markup=play_keyboard)
+            await CallbackQuery.message.reply(f"⏸ music playback has paused", reply_markup=play_keyboard)
             await CallbackQuery.message.delete()
         else:
-            await CallbackQuery.answer(f"Nothing's playing on Rikudo Senin!", show_alert=True)
+            await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
             return
     else:
-        await CallbackQuery.answer(f"Nothing's playing on Rikudo Senin", show_alert=True)
+        await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
    
     
 @Client.on_callback_query(filters.regex("resumevc"))
 async def resumevc(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(CallbackQuery.message.chat.id):
-            await CallbackQuery.answer("I dont think if something's paused on voice chat", show_alert=True)
+            await CallbackQuery.answer("❌ no music is paused", show_alert=True)
             return    
         else:
             await music_on(chat_id)
@@ -147,17 +147,17 @@ async def resumevc(_,CallbackQuery):
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-            await CallbackQuery.message.reply(f"🎧 Voicechat Resumed by {rpk}!", reply_markup=play_keyboard)
+            await CallbackQuery.message.reply(f"▶ music playback has resumed", reply_markup=play_keyboard)
             await CallbackQuery.message.delete()
     else:
-        await CallbackQuery.answer(f"Nothing's playing on Rikudo senin!", show_alert=True)
+        await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
    
     
 @Client.on_callback_query(filters.regex("skipvc"))
 async def skipvc(_,CallbackQuery): 
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
@@ -170,18 +170,18 @@ async def skipvc(_,CallbackQuery):
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
-            await CallbackQuery.message.reply(f"**__Skip Button Used By__** {rpk}\n\nNo more music in __Queues__ \n\nLeaving Voice Chat")
+            await CallbackQuery.message.reply(f"**skip button pressed by {rpk}**\n\n❌ no more music in __Queues__\n\n» userbot leaving voice chat")
             yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
             return
         else:
-            await CallbackQuery.answer("Voicechat Skipped", show_alert=True)
+            await CallbackQuery.answer("⏭ You've skipped to the next song", show_alert=True)
             afk = get(chat_id)['file']
             f1 = (afk[0])
             f2 = (afk[1])
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply("Rikudo Senin is currently playing Playlist...\n\nDownloading Next Music From Playlist....")
+                mystic = await CallbackQuery.message.reply("veez mega is currently playing playlist...\n\ndownloading next music from playlist....")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
@@ -248,7 +248,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>__Skipped Voice Chat By {rpk}__</b>\n\n🎥<b>__Started Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} Mins\n👤**__Requested by:__** {semx.mention}")
+                caption=(f"💡 <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> `{duration} m`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -274,7 +274,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>__Skipped Voice Chat By {rpk}__</b>\n\n🎥<b>__Started Playing:__</b> {title} \n⏳<b>__Duration:__</b> {duration} \n👤<b>__Requested by:__ </b> {username}",
+                caption=f"💡 <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title}\n⏱ <b>Duration:</b> `{duration} m`\n🎧 **Request by:** {username}",
                 )
                 return
             
@@ -284,7 +284,7 @@ async def skipvc(_,CallbackQuery):
 async def stopvc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -297,13 +297,13 @@ async def stopvc(_,CallbackQuery):
         except Exception as e:
             pass
         await remove_active_chat(CallbackQuery.message.chat.id) 
-        await CallbackQuery.answer("Voicechat Stopped", show_alert=True)
+        await CallbackQuery.answer("✅ music playback has ended", show_alert=True)
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-        await CallbackQuery.message.reply(f"🎧 Voicechat End/Stopped by {rpk}!")
+        await CallbackQuery.message.reply("✅ music playback has ended")
     else:
-        await CallbackQuery.answer(f"Nothing's playing on Yukki!", show_alert=True)
+        await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
 
         
            
@@ -323,20 +323,20 @@ async def play_playlist(_,CallbackQuery):
     chat_title = CallbackQuery.message.chat.title
     if str(smex) == "personal":
         if CallbackQuery.from_user.id != int(user_id):
-            return await CallbackQuery.answer("This is not for you! Play your own playlist", show_alert=True)
+            return await CallbackQuery.answer("💡 this is not for you, play your own playlist", show_alert=True)
         _playlist = await get_note_names(CallbackQuery.from_user.id)
         if not _playlist:
-            return await CallbackQuery.answer(f"You have no playlist on servers.", show_alert=True)
+            return await CallbackQuery.answer(f"❌ you have no playlist on server", show_alert=True)
         else:
             await CallbackQuery.message.delete()
-            logger_text=f"""Starting Playlist
+            logger_text=f"""💡 Starting Playlist
 
 Group :- {chat_title}
-By :- {Name}
+Req By :- {Name}
 
 Personal Playlist Playing."""
             await ASS_ACC.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
-            mystic = await CallbackQuery.message.reply_text(f"Starting {Name}'s Personal Playlist.\n\nRequested By:- {CallbackQuery.from_user.first_name}")   
+            mystic = await CallbackQuery.message.reply_text(f"💡 starting {Name}'s personal playlist.\n\n🎧 request by: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
             j = 0
@@ -422,16 +422,16 @@ Personal Playlist Playing."""
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🎥<b>__Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} \n💡<b>__Info:__</b> [Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})\n👤**__Requested by:__** {checking}")
+                    caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> {duration}\n🎧 <b>Request by:</b> {checking}\n💡<b>Info:</b> [Music Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
         await mystic.delete()
-        m = await CallbackQuery.message.reply_text("Pasting Queued Playlist to Bin")
+        m = await CallbackQuery.message.reply_text("🔄 pasting queued playlist to bin...")
         link = await paste(msg)
         preview = link + "/preview.png"
         urlxp = link + "/index.txt"
-        a1 = InlineKeyboardButton(text=f"Checkout Queued Playlist", url=urlxp)
+        a1 = InlineKeyboardButton(text=f"checkout queued playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
                 [
@@ -444,14 +444,14 @@ Personal Playlist Playing."""
                     a1,
                 ],
                 [
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )
         if await isPreviewUp(preview):
             try:
                 await CallbackQuery.message.reply_photo(
-                    photo=preview, caption=f"This is Queued Playlist of {Name}.\n\nIf you want to delete any music from playlist use : /delmyplaylist", quote=False, reply_markup=key
+                    photo=preview, caption=f"This is queued playlist of {Name}.\n\nIf you want to delete any music from playlist use: /delmyplaylist", quote=False, reply_markup=key
                 )
                 await m.delete()
             except Exception:
@@ -464,17 +464,17 @@ Personal Playlist Playing."""
     if str(smex) == "group":
         _playlist = await get_note_names(CallbackQuery.message.chat.id)
         if not _playlist:
-            return await CallbackQuery.answer(f"Your Group has no playlist on servers. Try adding musics in playlist.", show_alert=True)
+            return await CallbackQuery.answer(f"This Group has no playlist on server, try to adding music in playlist.", show_alert=True)
         else:
             await CallbackQuery.message.delete()
-            logger_text=f"""Starting Playlist
+            logger_text=f"""💡 Starting Playlist
 
 Group :- {chat_title}
-By :- {Name}
+Req By :- {Name}
 
 Group Playlist Playing."""
             await ASS_ACC.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
-            mystic = await CallbackQuery.message.reply_text(f"Starting Groups's Playlist.\n\nRequested By:- {CallbackQuery.from_user.first_name}")   
+            mystic = await CallbackQuery.message.reply_text(f"💡 starting Groups's playlist.\n\n🎧 request By: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
             j = 0
@@ -560,17 +560,17 @@ Group Playlist Playing."""
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🎥<b>__Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} \n💡<b>__Info:__</b> [Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})\n👤**__Requested by:__** {checking}")
+                    caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> {duration}\n🎧 <b>Request by:</b> {checking}\n💡<b>Info:</b> [Music Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
         await asyncio.sleep(1)
         await mystic.delete()
-        m = await CallbackQuery.message.reply_text("Pasting Queued Playlist to Bin")
+        m = await CallbackQuery.message.reply_text("🔄 pasting queued playlist to bin...")
         link = await paste(msg)
         preview = link + "/preview.png"
         urlxp = link + "/index.txt"
-        a1 = InlineKeyboardButton(text=f"Checkout Queued Playlist", url=urlxp)
+        a1 = InlineKeyboardButton(text=f"checkout queued playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
                 [
@@ -583,14 +583,14 @@ Group Playlist Playing."""
                     a1,
                 ],
                 [
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )
         if await isPreviewUp(preview):
             try:
                 await CallbackQuery.message.reply_photo(
-                    photo=preview, caption=f"This is Queued Playlist of Your Group.\n\nIf you want to delete any music from playlist use : /delgroupplaylist", quote=False, reply_markup=key
+                    photo=preview, caption=f"This is queued playlist of this Group.\n\nIf you want to delete any music from playlist use : /delchatplaylist", quote=False, reply_markup=key
                 )
                 await m.delete()
             except Exception:
@@ -606,7 +606,7 @@ async def group_playlist(_,CallbackQuery):
     await CallbackQuery.answer()
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -619,7 +619,7 @@ async def group_playlist(_,CallbackQuery):
     _count = await get_note_names(chat_id)
     count = 0
     if not _count:
-        sex = await CallbackQuery.message.reply_text("Welcome To Rikudo Senin's Playlist Feature.\n\nGenerating Your Group's Playlist In Database...Please wait.")
+        sex = await CallbackQuery.message.reply_text("💡 veez music mega playlist feature.\n\nGenerating Group's playlist in database...")
         await asyncio.sleep(2)
         await sex.delete()
     else:
@@ -627,7 +627,7 @@ async def group_playlist(_,CallbackQuery):
             count += 1   
     count = int(count)
     if count == 30:
-        return await CallbackQuery.message.reply_text("Sorry! You can only have 30 music in group playlist.")
+        return await CallbackQuery.message.reply_text("💡 sorry, you can only have 30 music in group's playlist.")
     try:
         url = (f"https://www.youtube.com/watch?v={url}")
         results = VideosSearch(url, limit=1)
@@ -636,11 +636,11 @@ async def group_playlist(_,CallbackQuery):
             duration = (result["duration"])
             videoid = (result["id"])
     except Exception as e:
-            return await CallbackQuery.message.reply_text(f"Some Error Occured.\nPlease forward to @menotdeveloper\n**Possible Reason:** {e}") 
+            return await CallbackQuery.message.reply_text(f"an error occured.\n\nplease forward to @VeezSupportGroup\n**Possible Reason:** {e}") 
     _check = await get_playlist(chat_id, videoid)
     title = title[:50]
     if _check:
-         return await CallbackQuery.message.reply_text(f"{Name}, Its already in the Playlist!")   
+         return await CallbackQuery.message.reply_text(f"{Name}, is already in the playlist!")   
     assis = {
         "videoid": videoid,
         "title": title,
@@ -648,7 +648,7 @@ async def group_playlist(_,CallbackQuery):
     }
     await save_playlist(chat_id, videoid, assis)
     Name = CallbackQuery.from_user.first_name
-    return await CallbackQuery.message.reply_text(f"Added to Group's Playlist by {Name}")
+    return await CallbackQuery.message.reply_text(f"added to Group's playlist by {Name}")
   
 
 @Client.on_callback_query(filters.regex("playlist"))
@@ -661,12 +661,12 @@ async def pla_playylistt(_,CallbackQuery):
     try:
         url,smex= callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
+        return await CallbackQuery.message.edit(f"an error occured\n**Possible reason could be**:{e}")
     Name = CallbackQuery.from_user.first_name
     _count = await get_note_names(userid)
     count = 0
     if not _count:
-        sex = await CallbackQuery.message.reply_text("Welcome To Rikudo Senin's Playlist Feature.\n\nGenerating Your Playlist In Database...Please wait.")
+        sex = await CallbackQuery.message.reply_text("💡 Welcome veez music mega playlist feature.\n\nGenerating your playlist in database...")
         await asyncio.sleep(2)
         await sex.delete()
     else:
@@ -677,7 +677,7 @@ async def pla_playylistt(_,CallbackQuery):
         if userid in SUDOERS:
             pass
         else:
-            return await CallbackQuery.message.reply_text("Sorry! You can only have 30 music in your playlist.")
+            return await CallbackQuery.message.reply_text("💡 sorry, you can only have 30 music in your playlist.")
     try:
         url = (f"https://www.youtube.com/watch?v={url}")
         results = VideosSearch(url, limit=1)
@@ -686,10 +686,10 @@ async def pla_playylistt(_,CallbackQuery):
             duration = (result["duration"])
             videoid = (result["id"])
     except Exception as e:
-            return await CallbackQuery.message.reply_text(f"Some Error Occured.\nPlease forward to @menotdeveloper\n**Possible Reason:**{e}") 
+            return await CallbackQuery.message.reply_text(f"an error occured.\n\nplease forward to @VeezSupportGroup\n**Possible Reason:**{e}") 
     _check = await get_playlist(userid, videoid)
     if _check:
-         return await CallbackQuery.message.reply_text(f"{Name}, Its already in the Playlist!") 
+         return await CallbackQuery.message.reply_text(f"{Name}, is already in the playlist!") 
     title = title[:50]    
     assis = {
         "videoid": videoid,
@@ -697,7 +697,7 @@ async def pla_playylistt(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(userid, videoid, assis)
-    return await CallbackQuery.message.reply_text(f"Added to {Name}'s Playlist")   
+    return await CallbackQuery.message.reply_text(f"added to {Name}'s playlist")   
     
     
 
@@ -705,7 +705,7 @@ async def pla_playylistt(_,CallbackQuery):
 async def P_list(_,CallbackQuery):
     _playlist = await get_note_names(CallbackQuery.from_user.id)
     if not _playlist:
-        return await CallbackQuery.answer(f"You have no Personal Playlist on servers. Try adding musics in playlist.", show_alert=True)
+        return await CallbackQuery.answer(f"you have no personal playlist on database, try to adding music in playlist.", show_alert=True)
     else:
         j = 0
         await CallbackQuery.answer()
@@ -719,14 +719,14 @@ async def P_list(_,CallbackQuery):
             msg += f"    Duration- {duration} Min(s)\n\n"   
         await CallbackQuery.answer()
         await CallbackQuery.message.delete()     
-        m = await CallbackQuery.message.reply_text("Pasting Playlist to Bin")
+        m = await CallbackQuery.message.reply_text("🔄 pasting playlist to bin...")
         link = await paste(msg)
         preview = link + "/preview.png"
         print(link)
         urlxp = link + "/index.txt"
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
-        a2 = InlineKeyboardButton(text=f"Play {user_name[:17]}'s Playlist", callback_data=f'play_playlist {user_id}|personal')
+        a2 = InlineKeyboardButton(text=f"💡 play {user_name[:17]}'s playlist", callback_data=f'play_playlist {user_id}|personal')
         a3 = InlineKeyboardButton(text=f"🔗 Check Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
@@ -735,7 +735,7 @@ async def P_list(_,CallbackQuery):
                 ],
                 [
                     a3,
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )
@@ -761,7 +761,7 @@ async def G_list(_,CallbackQuery):
     user_id = CallbackQuery.from_user.id
     _playlist = await get_note_names(CallbackQuery.message.chat.id)
     if not _playlist:
-        return await CallbackQuery.answer(f"You have no Group Playlist on servers. Try adding musics in playlist.", show_alert=True)
+        return await CallbackQuery.answer(f"💡 you have no Group playlist on database, try to adding music in playlist.", show_alert=True)
     else:
         await CallbackQuery.answer()
         j = 0
@@ -775,13 +775,13 @@ async def G_list(_,CallbackQuery):
             msg += f"    Duration- {duration} Min(s)\n\n"
         await CallbackQuery.answer()
         await CallbackQuery.message.delete()
-        m = await CallbackQuery.message.reply_text("Pasting Playlist to Bin")
+        m = await CallbackQuery.message.reply_text("🔄 pasting playlist to bin...")
         link = await paste(msg)
         preview = link + "/preview.png"
         urlxp = link + "/index.txt"
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
-        a1 = InlineKeyboardButton(text=f"Play Group's Playlist", callback_data=f'play_playlist {user_id}|group')
+        a1 = InlineKeyboardButton(text=f"💡 play Group's playlist", callback_data=f'play_playlist {user_id}|group')
         a3 = InlineKeyboardButton(text=f"🔗 Check Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
@@ -790,7 +790,7 @@ async def G_list(_,CallbackQuery):
                 ],
                 [
                     a3,
-                    InlineKeyboardButton(text="🗑 Close Menu", callback_data=f'close2')
+                    InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
                 ]    
             ]
         )
@@ -813,17 +813,17 @@ async def G_list(_,CallbackQuery):
 async def cbgroupdel(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
     await CallbackQuery.message.delete() 
     await CallbackQuery.answer()
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
     if not _playlist:
-        return await CallbackQuery.message.reply_text("Group has no Playlist on Rikudo Senin's Server")
+        return await CallbackQuery.message.reply_text("💡 Group has no playlist on veez music mega database.")
     else:
         titlex = []
         for note in _playlist:
             await delete_playlist(CallbackQuery.message.chat.id, note)
-    await CallbackQuery.message.reply_text("Successfully deleted your Group's whole playlist")  
+    await CallbackQuery.message.reply_text("✅ successfully deleted your Group's whole playlist")  
     
     
 @Client.on_callback_query(filters.regex("cbdel"))
@@ -832,14 +832,9 @@ async def delplcb(_,CallbackQuery):
     await CallbackQuery.message.delete() 
     _playlist = await get_note_names(CallbackQuery.from_user.id)                                    
     if not _playlist:
-        return await CallbackQuery.message.reply_text("You have no Playlist on Rikudo Senin's Server")
+        return await CallbackQuery.message.reply_text("💡 you have no playlist on veez music mega database.")
     else:
         titlex = []
         for note in _playlist:
             await delete_playlist(CallbackQuery.from_user.id, note)
-    await CallbackQuery.message.reply_text("Successfully deleted your whole playlist")                              
-                                                
-        
-        
-        
-        
+    await CallbackQuery.message.reply_text("✅ successfully deleted your whole playlist")
