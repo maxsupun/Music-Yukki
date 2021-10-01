@@ -71,7 +71,7 @@ async def welcome(_, message: Message):
         except:
             return
 
-@Client.on_message(filters.group & filters.command(["vcstart", "vchelp"]))
+@Client.on_message(filters.group & filters.command(["start", "help"]))
 async def start(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
@@ -81,7 +81,7 @@ async def start(_, message: Message):
     await message.reply_text(f"❤️ **Thanks for adding me to the group!**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly. Once done, type** `/reload`", reply_markup=InlineKeyboardMarkup(out[1]))
     return
         
-@Client.on_message(filters.private & filters.incoming & filters.command("vcstart"))
+@Client.on_message(filters.private & filters.incoming & filters.command("start"))
 async def play(_, message: Message):
     if len(message.command) == 1:
         user_id = message.from_user.id
