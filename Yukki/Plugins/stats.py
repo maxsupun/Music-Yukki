@@ -17,7 +17,7 @@ from ..config import MONGO_DB_URI as smex
 
 @app.on_message(filters.command("stats") & ~filters.edited)
 async def gstats(_, message):
-    m = await message.reply_text("**Getting Stats**\n\nPlease wait for some time..")
+    m = await message.reply_text("🔁 **getting stats**\n\n» please wait for some time..")
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
@@ -45,7 +45,7 @@ async def gstats(_, message):
     free = (hdd.free / (1024.0 ** 3))
     free = str(free)
     msg = f"""
-**Global Stats of Rikudo Senin Bot**:\n\n
+**Global Stats of Veez Mega Bot**:\n\n
 [•]<u>__**System Stats**__</u>
 **Uptime:** {uptime}
 **System Proc:** Online
