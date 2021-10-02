@@ -335,7 +335,6 @@ Group :- {chat_title}
 Req By :- {Name}
 
 Personal Playlist Playing."""
-            await ASS_ACC.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
             mystic = await CallbackQuery.message.reply_text(f"💡 starting {Name}'s personal playlist.\n\n🎧 request by: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
@@ -473,7 +472,6 @@ Group :- {chat_title}
 Req By :- {Name}
 
 Group Playlist Playing."""
-            await ASS_ACC.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
             mystic = await CallbackQuery.message.reply_text(f"💡 starting Groups's playlist.\n\n🎧 request By: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
