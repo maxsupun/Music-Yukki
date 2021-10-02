@@ -34,7 +34,7 @@ from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.decorators import errors
 from Yukki.YukkiUtilities.database.functions import start_restart_stage
 
-@Client.on_message(command('updatep') & filters.user(OWNER))
+@Client.on_message(command('update') & filters.user(OWNER))
 @errors
 async def update(_, message: Message):
     m = subprocess.check_output(["git", "pull"]).decode("UTF-8")
@@ -63,7 +63,7 @@ async def edit_or_reply(msg: Message, **kwargs):
     filters.user(OWNER)
     & ~filters.forwarded
     & ~filters.via_bot
-    & filters.command("evalp")
+    & filters.command("eval")
 )
 async def executor(client, message):
     if len(message.command) < 2:
@@ -143,7 +143,7 @@ async def runtime_func_cq(_, cq):
     filters.user(OWNER)
     & ~filters.forwarded
     & ~filters.via_bot
-    & filters.command("shp"),
+    & filters.command("sh"),
 )
 async def shellrunner(client, message):
     if len(message.command) < 2:
