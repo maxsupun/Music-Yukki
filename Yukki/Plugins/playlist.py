@@ -51,7 +51,7 @@ async def pause_cmd(_, message):
 
 @app.on_message(filters.command("delmyplaylist"))
 async def pause_cmd(_, message):
-    usage = ("Usage:\n\n/delmyplaylist [Numbers between 1-30] ( to delete a particular music in playlist )\n\nor\n\n /delmyplaylist all ( to delete whole playlist )")
+    usage = ("usage:\n\n/delmyplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\nor\n\n /delmyplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
         return await message.reply_text(usage)
     name = message.text.split(None, 1)[1].strip()
@@ -60,7 +60,7 @@ async def pause_cmd(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 18:
-        return await message.reply_text(f"Confirmation!!\nYou sure you want to delete your whole playlist?", reply_markup=confirm_keyboard)
+        return await message.reply_text(f"💡 confirmation !\n\nare you sure want to delete your whole playlist ?", reply_markup=confirm_keyboard)
     else:
          _playlist = await get_note_names(message.from_user.id)
     if not _playlist:
@@ -86,7 +86,7 @@ async def delgroupplaylist(_, message):
     a = await app.get_chat_member(message.chat.id , message.from_user.id)
     if not a.can_manage_voice_chats:
         return await message.reply_text("I don't have the required permission to perform this action.\n**Permission:** __MANAGE VOICE CHATS__")
-    usage = ("Usage:\n\n/delgroupplaylist [Numbers between 1-30] ( to delete a particular music in playlist )\n\nor\n\n /delgroupplaylist all ( to delete whole playlist )")
+    usage = ("usage:\n\n/delchatplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\nor\n\n /delchatplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
         return await message.reply_text(usage)
     name = message.text.split(None, 1)[1].strip()
@@ -95,11 +95,11 @@ async def delgroupplaylist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 21:
-        return await message.reply_text(f"Confirmation!!\nYou sure you want to delete whole whole playlist?", reply_markup=confirm_group_keyboard)
+        return await message.reply_text(f"💡 confirmation !\n\nare you sure want to delete whole whole playlist ?", reply_markup=confirm_group_keyboard)
     else:
          _playlist = await get_note_names(message.chat.id)
     if not _playlist:
-        await message.reply_text("Group has no playlist on veez mega database.")
+        await message.reply_text("Group's has no playlist on veez mega database.")
     else:
         titlex = []
         j = 0
@@ -113,4 +113,4 @@ async def delgroupplaylist(_, message):
                     return await message.reply_text(f"**deleted the {count} music in group's playlist**")
                 else:
                     return await message.reply_text(f"**no such saved music in Group playlist.**")                                
-        await message.reply_text("you have no such music in Group Playlist.") 
+        await message.reply_text("you have no such music in Group's playlist.") 
