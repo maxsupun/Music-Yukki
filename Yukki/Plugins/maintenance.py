@@ -5,9 +5,9 @@ from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from ..YukkiUtilities.helpers.filters import command
 
 
-@Client.on_message(command("veezmega") & filters.user(SUDOERS))
+@Client.on_message(command("maintenance") & filters.user(SUDOERS))
 async def smex(_, message):
-    usage = "**usage:**\n/veezmega [enable|disable]"
+    usage = "**usage:**\n/maintenance [enable|disable]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     chat_id = message.chat.id
@@ -25,9 +25,9 @@ async def smex(_, message):
         await message.reply_text(usage)
 
         
-@Client.on_message(command("veezrun") & filters.user(SUDOERS))
+@Client.on_message(command("speedtest") & filters.user(SUDOERS))
 async def sls_skfs(_, message):
-    usage = "**usage:**\n/veezrun [enable|disable]"
+    usage = "**usage:**\n/speedtest [enable|disable]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     chat_id = message.chat.id
