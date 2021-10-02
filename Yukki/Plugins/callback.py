@@ -486,7 +486,7 @@ Group Playlist Playing."""
                     position = await put(chat_id, file=videoid)
                     j += 1
                     msg += f"{j}- {title[:50]}\n"
-                    msg += f"   Queued Position- {position}\n\n"
+                    msg += f"Queued Position: {position}\n\n"
                     f20 = open(f'search/{videoid}id.txt', 'w')
                     f20.write(f"{user_id}") 
                     f20.close()
@@ -617,7 +617,7 @@ async def group_playlist(_,CallbackQuery):
     _count = await get_note_names(chat_id)
     count = 0
     if not _count:
-        sex = await CallbackQuery.message.reply_text("💡 veez music mega playlist feature.\n\nGenerating Group's playlist in database...")
+        sex = await CallbackQuery.message.reply_text("💡 Generating Group's playlist in database...")
         await asyncio.sleep(2)
         await sex.delete()
     else:
@@ -638,7 +638,7 @@ async def group_playlist(_,CallbackQuery):
     _check = await get_playlist(chat_id, videoid)
     title = title[:50]
     if _check:
-         return await CallbackQuery.message.reply_text(f"{Name}, is already in the playlist!")   
+         return await CallbackQuery.message.reply_text(f"{Name}, your request is already in the playlist !")   
     assis = {
         "videoid": videoid,
         "title": title,
@@ -664,7 +664,7 @@ async def pla_playylistt(_,CallbackQuery):
     _count = await get_note_names(userid)
     count = 0
     if not _count:
-        sex = await CallbackQuery.message.reply_text("💡 Welcome veez music mega playlist feature.\n\nGenerating your playlist in database...")
+        sex = await CallbackQuery.message.reply_text("💡 Generating your personal playlist in database...")
         await asyncio.sleep(2)
         await sex.delete()
     else:
@@ -687,7 +687,7 @@ async def pla_playylistt(_,CallbackQuery):
             return await CallbackQuery.message.reply_text(f"an error occured.\n\nplease forward to @VeezSupportGroup\n**Possible Reason:**{e}") 
     _check = await get_playlist(userid, videoid)
     if _check:
-         return await CallbackQuery.message.reply_text(f"{Name}, is already in the playlist!") 
+         return await CallbackQuery.message.reply_text(f"{Name}, your request is already in the playlist !") 
     title = title[:50]    
     assis = {
         "videoid": videoid,
