@@ -55,10 +55,10 @@ def time_to_seconds(time):
 async def play(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply_text(f"❌ **__not in allowed chat__**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
+        await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous Admin__!\n\n» revert back to user account from admin rights.")  
+        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account from admin rights.")  
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
@@ -240,7 +240,7 @@ async def play(_, message: Message):
             buttons = playlist_markup(user_name, user_id)
             hmo = await message.reply_photo(
             photo=thumb, 
-            caption=("**usage:** /play [music name/yt url/audio file]\n\nIf you want to play playlist, select one from below."),    
+            caption=("**usage:** /play [music name/yt url/audio file]\n\nIf you want to play from playlist, select one from below."),    
             reply_markup=InlineKeyboardMarkup(buttons),
             ) 
             return
@@ -332,8 +332,6 @@ async def play(_, message: Message):
         return await mystic.delete()
          
     
-    
-    
 @Client.on_callback_query(filters.regex(pattern=r"yukki"))
 async def startyuplay(_,CallbackQuery): 
     callback_data = CallbackQuery.data.strip()
@@ -364,7 +362,7 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**:{e}") 
     title = (x["title"])
-    await CallbackQuery.answer(f"🎧 name: {title[:20]}...\n\n💡 starting download & converting...", show_alert=True)
+    await CallbackQuery.answer(f"🎧 name: {title[:25]}...\n\n💡 starting download & converting...", show_alert=True)
     mystic = await CallbackQuery.message.reply_text(f"📥 downloading: {title[:45]}")
     thumbnail = (x["thumbnail"])
     idx = (x["id"])
