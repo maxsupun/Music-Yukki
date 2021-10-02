@@ -65,7 +65,7 @@ async def stop_cmd(_, message):
         yukki.pytgcalls.leave_group_call(message.chat.id)
     except:
         pass   
-    await message.reply_text("Erased Databae, Queues, Logs, Raw Files, Downloads.")
+    await message.reply_text("🗑 Cleaned databae, queues, logs, raw files, downloads")
     
 @app.on_message(filters.command("pause"))
 async def pause_cmd(_, message): 
