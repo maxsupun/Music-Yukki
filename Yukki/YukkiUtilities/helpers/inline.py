@@ -15,7 +15,7 @@ def play_markup(videoid, user_id):
                 InlineKeyboardButton(text="⏹️", callback_data=f'stopvc2')
             ],
             [
-                InlineKeyboardButton(text="🔎 Lyric", callback_data=f'lyrics {videoid}|{user_id}'),
+                InlineKeyboardButton(text="🔎 Lyrics", callback_data=f'lyrics {videoid}|{user_id}'),
                 InlineKeyboardButton(text="⚙️ Menu", callback_data=f'other {videoid}|{user_id}'),
             ],
             [      
@@ -156,10 +156,10 @@ confirm_keyboard = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "Yes", callback_data="cbdel"
+                        "✅ Yes", callback_data="cbdel"
                     ),
                     InlineKeyboardButton(
-                        "No", callback_data="close2"
+                        "❌ No", callback_data="close2"
                     )
                 ]    
             ]
@@ -169,10 +169,10 @@ confirm_group_keyboard = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "Yes", callback_data="cbgroupdel"
+                        "✅ Yes", callback_data="cbgroupdel"
                     ),
                     InlineKeyboardButton(
-                        "No", callback_data="close2"
+                        "❌ No", callback_data="close2"
                     )
                 ]    
             ]
