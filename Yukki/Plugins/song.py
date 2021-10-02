@@ -125,7 +125,7 @@ async def mpthree(_, message: Message):
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
-            caption=(f"1️⃣ <b>[{title1[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__"),    
+            caption=(f"1️⃣ <b>[{title1[:25]}]({link})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}]({link})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}]({link})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}]({link})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}]({link})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__"),    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -193,6 +193,7 @@ async def chonga(_,CallbackQuery):
         return await CallbackQuery.answer("💡 sorry, this is not for you", show_alert=True)
     i=int(id)
     query = str(query)
+    url = (f"https://www.youtube.com/watch?v={id}")
     try:
         a = VideosSearch(query, limit=10)
         result = (a.result()).get("result")
