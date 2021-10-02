@@ -72,4 +72,4 @@ def bytes(size: float) -> str:
 
 
 async def ass_det(assistant: int):
-    print("VEEZ MUSIC MEGA )
+    print("VEEZ MUSIC MEGA")
