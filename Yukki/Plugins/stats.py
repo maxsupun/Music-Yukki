@@ -45,8 +45,8 @@ async def gstats(_, message):
     free = (hdd.free / (1024.0 ** 3))
     free = str(free)
     msg = f"""
-**Global Stats of Veez Mega Bot**:\n\n
-[•]<u>__**System Stats**__</u>
+📊 **Global stats of veez mega bot**:\n\n
+⩥ **System Stats:**\n
 **Uptime:** {uptime}
 **System Proc:** Online
 **Platform:** {sc}
@@ -56,7 +56,7 @@ async def gstats(_, message):
 **Python Ver:** {pyver.split()[0]}
 **Pyrogram Ver:** {pyrover}
 
-[•]<u>__**Bot Stats**__</u>
+⩥ **Bot Stats:**\n
 **Modules Loaded:** {modules_count}
 **GBanned Users:** {blocked}
 **Sudo Users:** {j}
