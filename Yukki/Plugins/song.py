@@ -125,7 +125,7 @@ async def mpthree(_, message: Message):
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
-            caption=(f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__</u>\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 <u>**[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__</u>"),    
+            caption=(f"1️⃣ <b>[{title1[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__"),    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -154,7 +154,7 @@ async def startyuplay(_,CallbackQuery):
     idx = id
     smex = int(time_to_seconds(duration))
     if smex > DURATION_LIMIT:
-        await CallbackQuery.message.reply_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
+        await CallbackQuery.message.reply_text(f"**❌ __Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         return 
     try:
         with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
@@ -162,7 +162,7 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.reply_text(f"Failed to download this video.\n\n**Reason**:{e}") 
     title = (x["title"])
-    await CallbackQuery.answer(f"Selected {title[:20]}.... \nProcessing..", show_alert=True)
+    await CallbackQuery.answer(f"🎧 title: {title[:25]}...\n\n📥 processing...", show_alert=True)
     thumbnail = (x["thumbnail"])
     idx = (x["id"])
     videoid = (x["id"])
@@ -231,7 +231,7 @@ async def chonga(_,CallbackQuery):
     if i == 1:
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
         await CallbackQuery.edit_message_text(
-            f"6️⃣ <b>{title6[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})**\n└ ⚡ __Powered by Veez Music AI__\n\n7️⃣ <b>{title7[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})**\n└ ⚡ __Powered by Veez Music AI__\n\n8️⃣ <b>{title8[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})**\n└ ⚡ __Powered by Veez Music AI__\n\n9️⃣ <b>{title9[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})**\n└ ⚡ __Powered by Veez Music AI__\n\n🔟 <b>{title10[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})**\n└ ⚡ __Powered by Veez Music AI__",    
+            f"6️⃣ <b>[{title1[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})**\n└ ⚡ __Powered by Veez Music AI__\n\n7️⃣ <b>[{title7[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})**\n└ ⚡ __Powered by Veez Music AI__\n\n8️⃣ <b>[{title8[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})**\n└ ⚡ __Powered by Veez Music AI__\n\n9️⃣ <b>[{title9[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})**\n└ ⚡ __Powered by Veez Music AI__\n\n🔟 <b>[{title10[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})**\n└ ⚡ __Powered by Veez Music AI__",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -239,13 +239,13 @@ async def chonga(_,CallbackQuery):
     if i == 2:
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         await CallbackQuery.edit_message_text(
-            f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__",    
+            f"1️⃣ <b>[{title6[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}]({url})</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
         return    
       
-      
+
 def search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query):
     buttons= [
             [
