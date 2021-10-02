@@ -25,7 +25,7 @@ async def smex(_, message):
         await message.reply_text(usage)
 
         
-@Client.on_message(command("speedtest") & filters.user(SUDOERS))
+@Client.on_message(command("sptest") & filters.user(SUDOERS))
 async def sls_skfs(_, message):
     usage = "**usage:**\n/speedtest [enable|disable]"
     if len(message.command) != 2:
