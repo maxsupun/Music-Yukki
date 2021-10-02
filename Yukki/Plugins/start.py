@@ -34,7 +34,7 @@ pstart_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "➕ Add me to a Group", url="https://t.me/VeezMegaBot?startgroup=true")
+                        "➕ Add me to a Group ➕", url="https://t.me/VeezMegaBot?startgroup=true")
                 ],[
                     InlineKeyboardButton(
                         "📚 Commands", url="https://telegra.ph/Veez-Mega-Bot-09-30")
@@ -66,7 +66,7 @@ async def welcome(_, message: Message):
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
                 out = start_pannel()
-                await message.reply_text(f"❤️ **Thanks for adding me to the group!**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly.\nOnce done, type** `/reload`", reply_markup=InlineKeyboardMarkup(out[1]))
+                await message.reply_text(f"❤️ **Thanks for adding me to the group!**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly.", reply_markup=InlineKeyboardMarkup(out[1]))
                 return
         except:
             return
