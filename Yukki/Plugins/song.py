@@ -263,7 +263,7 @@ def search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, dura
                 InlineKeyboardButton(text="➡️", callback_data=f'chonga 1|{query}|{user_id}')             
             ],
             [
-                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}") ,
+                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}")
 
             ],
         ]
@@ -286,7 +286,7 @@ def search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, du
                 InlineKeyboardButton(text="➡️", callback_data=f'chonga 2|{query}|{user_id}')             
             ],
             [
-                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}") ,
+                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}")
             
             ],
         ]
