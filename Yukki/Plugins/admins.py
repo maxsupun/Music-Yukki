@@ -216,7 +216,7 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>⏭ **skipped to next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:25]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** {semx.mention}")
+                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:60]}]({url})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -239,6 +239,6 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>⏭ **skipped to next music**</b>\n\n🏷 <b>**Name:**</b> {title} \n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
+                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:60]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
                 )
                 return
