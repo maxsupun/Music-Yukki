@@ -67,15 +67,15 @@ async def on_stream_end(chat_id: int) -> None:
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":  
-                mystic = await app.send_message(chat_id, "downloading next music from playlist...")
+                mystic = await app.send_message(chat_id, "📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 ctitle = (await app.get_chat(chat_id)).title
-                logger_text=f"""playing next from playlist
+                logger_text=f"""▶ playing next music from playlist
 
-Group :- {chat_id}
-Title :- {ctitle}
+Group : {chat_id}
+Title : {ctitle}
 
-downloading...
+📥 downloading...
 
 {url}"""
                 okay = await smexy.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
@@ -83,7 +83,7 @@ downloading...
                     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
+                    return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
                 
                 chat_title = ctitle                
                 videoid = afk
@@ -139,7 +139,7 @@ downloading...
                 await app.send_photo(chat_id,
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🏷 <b>**Name:** </b>[{title[:25]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** {semx.mention}\n💡<b>**Info:**</b> [Track Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})")
+                caption=(f"🏷 <b>**Name:** </b>[{title[:60]}]({url})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -164,7 +164,7 @@ downloading...
                 await app.send_photo(chat_id,
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"🏷 <b>**Name:**</b> {title} \n⏱ <b>**Duration:**</b> {duration} m\n🎧 <b>**Request by:** </b> {username}",
+                caption=f"🏷 <b>**Name:**</b> {title} \n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 <b>**Request by:**</b> {username}",
                 )
                 return
            
