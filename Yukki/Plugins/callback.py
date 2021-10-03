@@ -96,10 +96,10 @@ async def closesmex(_,CallbackQuery):
     try:
         smex, user_id = callback_request.split("|") 
     except Exception as e:
-        await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
+        await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
         return 
     if CallbackQuery.from_user.id != int(user_id):
-        await CallbackQuery.answer("💡 only admin can tap this button !", show_alert=True)
+        await CallbackQuery.answer("💡 only requester can tap this button !", show_alert=True)
         return
     await CallbackQuery.message.delete()
     await CallbackQuery.answer()
@@ -329,12 +329,12 @@ async def play_playlist(_,CallbackQuery):
             return await CallbackQuery.answer(f"❌ you have no playlist on server", show_alert=True)
         else:
             await CallbackQuery.message.delete()
-            logger_text=f"""💡 Starting Playlist
+            logger_text=f"""💡 atarting playlist
 
 Group : {chat_title}
 Req By : {Name}
 
-Personal Playlist Playing."""
+▶ personal playlist playing."""
             mystic = await CallbackQuery.message.reply_text(f"💡 starting {Name}'s personal playlist.\n\n🎧 request by: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
@@ -450,7 +450,7 @@ Personal Playlist Playing."""
         if await isPreviewUp(preview):
             try:
                 await CallbackQuery.message.reply_photo(
-                    photo=preview, caption=f"This is queued playlist of {Name}.\n\nIf you want to delete any music from playlist use: /delmyplaylist", quote=False, reply_markup=key
+                    photo=preview, caption=f"This is queued personal playlist of {Name}.\n\nIf you want to delete any music from playlist use: /delmyplaylist", quote=False, reply_markup=key
                 )
                 await m.delete()
             except Exception:
@@ -463,15 +463,15 @@ Personal Playlist Playing."""
     if str(smex) == "group":
         _playlist = await get_note_names(CallbackQuery.message.chat.id)
         if not _playlist:
-            return await CallbackQuery.answer(f"This Group has no playlist on server, try to adding music in playlist.", show_alert=True)
+            return await CallbackQuery.answer(f"This Group not have a playlist on server, try to adding music in playlist.", show_alert=True)
         else:
             await CallbackQuery.message.delete()
-            logger_text=f"""💡 Starting Playlist
+            logger_text=f"""💡 starting playlist
 
 Group : {chat_title}
 Req By : {Name}
 
-Group Playlist Playing."""
+▶ Group's playlist playing."""
             mystic = await CallbackQuery.message.reply_text(f"💡 starting Groups's playlist.\n\n🎧 request By: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
@@ -542,7 +542,7 @@ Group Playlist Playing."""
                             except Exception as e:
                                 taken = "00:00"
                             size = d['_total_bytes_str']
-                            mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File**[__FFmpeg processing__]")
+                            mystic.edit(f"**Downloaded: {title[:50]}...**\n\n**Size:** {size}\n**Time:** `{taken}` sec\n\n**Converting File** [__FFmpeg processing__]")
                             print(f"[{videoid}] Downloaded| Elapsed: {taken} seconds")  
                     loop = asyncio.get_event_loop()
                     xx = await loop.run_in_executor(None, download, url, my_hook)
@@ -638,7 +638,7 @@ async def group_playlist(_,CallbackQuery):
     _check = await get_playlist(chat_id, videoid)
     title = title[:50]
     if _check:
-         return await CallbackQuery.message.reply_text(f"{Name}, your request is already in the playlist !")   
+         return await CallbackQuery.message.reply_text(f"{Name}, your request is already **added** to the **playlist !**")   
     assis = {
         "videoid": videoid,
         "title": title,
@@ -646,7 +646,7 @@ async def group_playlist(_,CallbackQuery):
     }
     await save_playlist(chat_id, videoid, assis)
     Name = CallbackQuery.from_user.first_name
-    return await CallbackQuery.message.reply_text(f"➕ added to Group's playlist by {Name}")
+    return await CallbackQuery.message.reply_text(f"➕ added to **Group's playlist** ➕\n\n» **added by:** {Name}")
   
 
 @Client.on_callback_query(filters.regex("playlist"))
@@ -687,7 +687,7 @@ async def pla_playylistt(_,CallbackQuery):
             return await CallbackQuery.message.reply_text(f"an error occured.\n\nplease forward to @VeezSupportGroup\n**Possible Reason:**{e}") 
     _check = await get_playlist(userid, videoid)
     if _check:
-         return await CallbackQuery.message.reply_text(f"{Name}, your request is already in the playlist !") 
+         return await CallbackQuery.message.reply_text(f"{Name}, your request is **already added** to the **playlist !**") 
     title = title[:50]    
     assis = {
         "videoid": videoid,
@@ -695,8 +695,7 @@ async def pla_playylistt(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(userid, videoid, assis)
-    return await CallbackQuery.message.reply_text(f"➕ added to {Name}'s personal playlist")   
-    
+    return await CallbackQuery.message.reply_text(f"➕ added to **personal playlist** ➕\n\n» **added by:** {Name}")   
     
 
 @Client.on_callback_query(filters.regex("P_list"))
@@ -816,7 +815,7 @@ async def cbgroupdel(_,CallbackQuery):
     await CallbackQuery.answer()
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
     if not _playlist:
-        return await CallbackQuery.message.reply_text("💡 Group has no playlist on veez music mega database.")
+        return await CallbackQuery.message.reply_text("💡 Group not have a playlist on veez music mega database.")
     else:
         titlex = []
         for note in _playlist:
@@ -830,7 +829,7 @@ async def delplcb(_,CallbackQuery):
     await CallbackQuery.message.delete() 
     _playlist = await get_note_names(CallbackQuery.from_user.id)                                    
     if not _playlist:
-        return await CallbackQuery.message.reply_text("💡 you have no playlist on veez music mega database.")
+        return await CallbackQuery.message.reply_text("💡 you not have a playlist on veez music mega database.")
     else:
         titlex = []
         for note in _playlist:
