@@ -7,11 +7,11 @@
     "stack": "container",
     "env": {
         "SESSION_NAME1": {
-            "description": "fill with the pyrogram session string",
+            "description": "fill with the pyrogram session string from account 1",
             "required": true
         },
         "SESSION_NAME2": {
-            "description": "fill with your bot token from @BotFather",
+            "description": "fill with the pyrogram session string from account 2",
             "required": true
         },
         "OWNER_ID": {
@@ -20,17 +20,17 @@
             "value": "1757169682"
         },
         "ASS_ID": {
-            "description": "fill with the mongodb url you get from cloud.mongodb.com",
+            "description": "fill with telegram id of account 1",
             "required": true,
-            "value": "1727937540 1977586419"
+            "value": "1727937540"
         },
         "LOG_GROUP_ID": {
-            "description": "create a private channel and get the channel id, add your bot as admin to the channel too",
+            "description": "create a private group and get the group id, add your bot as admin to the group too",
             "required": true,
             "value": "-1001306851903"
         },
         "assnumber": {
-            "description": "fill with the assistant username without @",
+            "description": "just fill 2 you can fill 1 too",
             "required": true,
             "value": "2"
         },
@@ -50,22 +50,22 @@
             "value": "1952053555 1738637033 1253367088"
         },
         "DURATION_LIMIT": {
-            "description": "max duration for music to download (in minutes).",
+            "description": "filled, don't change this !",
             "required": true,
-            "value": "40"
+            "value": "540000"
         },
         "BOT_TOKEN": {
-            "description": "if you have channel fill the channel username here without @",
+            "description": "fill with your bot token get from @BotFather on telegram",
             "required": false,
             "value": "2021634838:AAFrOXeMcoehotEOKAtarakn7MTV0WTJ_Ss"
         },
         "MONGO_DB_URI2": {
-            "description": "if you have group fill the group username here without @",
+            "description": "fill with the mongodb url 1 get from mongodb.cloud.com (don't use mine below !)",
             "required": false,
             "value": "mongodb+srv://veez:music@cluster0.p1htj.mongodb.net/veez?retryWrites=true&w=majority"
         },
         "MONGO_DB_URI": {
-            "description": "if you have group fill the group username here without @",
+            "description": "fill with the mongodb url 2 get from mongodb.cloud.com (don't use mine below !)",
             "required": false,
             "value": "mongodb+srv://veez:music@cluster0.p1htj.mongodb.net/veez?retryWrites=true&w=majority"
         }
