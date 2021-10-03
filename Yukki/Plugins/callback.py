@@ -646,7 +646,7 @@ async def group_playlist(_,CallbackQuery):
     }
     await save_playlist(chat_id, videoid, assis)
     Name = CallbackQuery.from_user.first_name
-    return await CallbackQuery.message.reply_text(f"added to Group's playlist by {Name}")
+    return await CallbackQuery.message.reply_text(f"➕ added to Group's playlist by {Name}")
   
 
 @Client.on_callback_query(filters.regex("playlist"))
@@ -695,7 +695,7 @@ async def pla_playylistt(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(userid, videoid, assis)
-    return await CallbackQuery.message.reply_text(f"added to {Name}'s playlist")   
+    return await CallbackQuery.message.reply_text(f"➕ added to {Name}'s personal playlist")   
     
     
 
