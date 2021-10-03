@@ -327,7 +327,7 @@ async def play(_, message: Message):
         await message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🏷 <b>Name:</b> [{title[:25]}]({link})\n⏱ <b>Duration:</b> `{duration}` \n🎧 <b>Request by:</b> {checking}")
+        caption=(f"🏷 <b>Name:</b> [{title[:60]}]({link})\n⏱ <b>Duration:</b> `{duration}`\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
     )   
         return await mystic.delete()
          
@@ -442,7 +442,7 @@ async def startyuplay(_,CallbackQuery):
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
         photo=thumb,
-        caption=(f"💡 **Track added to queue »** `{position}`\n\n🏷 <b>Name:</b> [{title[:30]}]({url})\n⏱ <b>Duration:</b> `{duration}`\n🎧 <b>Request by:</b> {checking}\n💡 <b>Info:</b> [Track Information](https://t.me/{BOT_USERNAME}?start=info_{id})"),
+        caption=(f"💡 **Track added to queue »** `{position}`\n\n🏷 <b>Name:</b> [{title[:30]}]({url})\n⏱ <b>Duration:</b> `{duration}`\n🎧 <b>Request by:</b> {checking}"),
         reply_markup=InlineKeyboardMarkup(buttons)
     )
         os.remove(thumb)
