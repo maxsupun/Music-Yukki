@@ -11,7 +11,7 @@ import asyncio
 async def ban_globally(_, message):  
     if not message.reply_to_message:
         if len(message.command) < 2:
-            await message.reply_text("**usage:**\n/block [USERNAME | USER_ID]")
+            await message.reply_text("**usage:**\n\n/gban [username / user_id]")
             return
         user = message.text.split(None, 2)[1]
         if "@" in user:
@@ -32,7 +32,7 @@ async def ban_globally(_, message):
             chats = await get_served_chats()
             for chat in chats:
                 served_chats.append(int(chat["chat_id"]))
-            m = await message.reply_text(f"**Initializing Gobal Ban on {user.mention}**\n\nExpected Time : {len(served_chats)}")    
+            m = await message.reply_text(f"**Initializing Global ban of {user.mention}**\n\nExpected Time: {len(served_chats)}")    
             number_of_chats = 0
             for sex in served_chats:
                 try:
@@ -78,7 +78,7 @@ __**new global ban on veez mega**__
             chats = await get_served_chats()
             for chat in chats:
                 served_chats.append(int(chat["chat_id"]))
-            m = await message.reply_text(f"**Initializing Gobal Ban on {mention}**\n\nExpected Time : {len(served_chats)}")    
+            m = await message.reply_text(f"**Initializing Global ban of {mention}**\n\nExpected Time: {len(served_chats)}")    
             number_of_chats = 0
             for sex in served_chats:
                 try:
@@ -109,7 +109,7 @@ __**new global ban on veez mega**__
 async def unban_globally(_, message):            
     if not message.reply_to_message:
         if len(message.command) != 2:
-            await message.reply_text("**Usage:**\n/unblock [USERNAME | USER_ID]")
+            await message.reply_text("**usage:**\n\n/ungban [username / user_id]")
             return
         user = message.text.split(None, 1)[1]
         if "@" in user:
@@ -126,10 +126,10 @@ async def unban_globally(_, message):
         else:
             is_gbanned = await is_gbanned_user(user.id)
             if not is_gbanned:
-                await message.reply_text("✅ user already unblocked")
+                await message.reply_text("✅ user already ungbanned !")
             else:
                 await remove_gban_user(user.id)
-                await message.reply_text(f"✅ ungbanned !")
+                await message.reply_text(f"✅ user ungbanned !")
         return
     from_user_id = message.from_user.id
     user_id = message.reply_to_message.from_user.id
@@ -144,10 +144,10 @@ async def unban_globally(_, message):
     else:
         is_gbanned = await is_gbanned_user(user_id)
         if not is_gbanned:
-            await message.reply_text("✅ user already unblocked")
+            await message.reply_text("✅ user already ungbanned !")
         else:
             await remove_gban_user(user_id)     
-            await message.reply_text(f"✅ ungbanned !")
+            await message.reply_text(f"✅ user ungbanned !")
 
             
 chat_watcher_group = 5
@@ -164,7 +164,4 @@ async def chat_watcher_func(_, message):
             await message.chat.kick_member(userid)
         except Exception:
             return       
-        await message.reply_text(f"{checking} is globally banned by veez mega and has been kicked out of the chat.\n\n**Possible Reason:** Potential Spammer and Abuser.")         
-            
-            
-            
+        await message.reply_text(f"{checking} is globally banned by veez mega and has been kicked out from chat.\n\n🚫 **reason:** potential spammer and abuser.")
