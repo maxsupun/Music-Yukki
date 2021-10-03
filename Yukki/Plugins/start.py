@@ -78,7 +78,7 @@ async def start(_, message: Message):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats, ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)
     out = start_pannel()
-    await message.reply_text((f"✨ Hello {message.from_user.mention}, i'm a veez music mega bot.\n\n💭 Make me admin in your group so I can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]), disable_web_page_preview=True))
+    await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm a veez music mega bot.\n\n💭 Make me admin in your group so I can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
     return
         
 @Client.on_message(filters.private & filters.incoming & filters.command("start"))
@@ -91,7 +91,8 @@ async def play(_, message: Message):
             text=f"✨ Welcome {rpk} !\n\n💭 [Veez Mega](https://t.me/VeezMegaBot) **allows** you to **play music** on **groups** through the new **Telegram's voice chats** feature !\n\n💡 **Find out** all the **Bot's commands** and how they work by clicking on the » 📚 **Commands** button!",
             parse_mode="markdown",
             reply_markup=pstart_markup,
-            reply_to_message_id=message.message_id
+            reply_to_message_id=message.message_id,
+            disable_web_page_preview=True
         )
     elif len(message.command) == 2:                                                           
         query = message.text.split(None, 1)[1]
