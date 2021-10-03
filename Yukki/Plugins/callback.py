@@ -170,24 +170,24 @@ async def skipvc(_,CallbackQuery):
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
-            await CallbackQuery.message.reply(f"**skip button pressed by {rpk}**\n\n❌ no more music in __Queues__\n\n» userbot leaving voice chat")
+            await CallbackQuery.message.reply(f"**{rpk} want to skipped music**\n\n❌ no more music in __Queues__\n\n» userbot leaving voice chat")
             yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
             return
         else:
-            await CallbackQuery.answer("⏭ You've skipped to the next song", show_alert=True)
+            await CallbackQuery.answer("💡 you've skipped to the next song", show_alert=True)
             afk = get(chat_id)['file']
             f1 = (afk[0])
             f2 = (afk[1])
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply("veez mega is currently playing playlist...\n\ndownloading next music from playlist....")
+                mystic = await CallbackQuery.message.reply("💡 bot is currently playing playlist...\n\n📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
+                    return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -248,7 +248,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"💡 <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> `{duration} m`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -274,7 +274,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"💡 <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title}\n⏱ <b>Duration:</b> `{duration} m`\n🎧 **Request by:** {username}",
+                caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
                 )
                 return
             
@@ -331,8 +331,8 @@ async def play_playlist(_,CallbackQuery):
             await CallbackQuery.message.delete()
             logger_text=f"""💡 Starting Playlist
 
-Group :- {chat_title}
-Req By :- {Name}
+Group : {chat_title}
+Req By : {Name}
 
 Personal Playlist Playing."""
             mystic = await CallbackQuery.message.reply_text(f"💡 starting {Name}'s personal playlist.\n\n🎧 request by: {CallbackQuery.from_user.first_name}")   
@@ -349,7 +349,7 @@ Personal Playlist Playing."""
                     position = await put(chat_id, file=videoid)
                     j += 1
                     msg += f"{j}- {title[:50]}\n"
-                    msg += f"   Queued Position- {position}\n\n"
+                    msg += f"Queued Position: {position}\n\n"
                     f20 = open(f'search/{videoid}id.txt', 'w')
                     f20.write(f"{user_id}") 
                     f20.close()
@@ -358,7 +358,7 @@ Personal Playlist Playing."""
                         with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
                             x = ytdl.extract_info(url, download=False)
                     except Exception as e:
-                        return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
+                        return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
                     title = (x["title"])
                     thumbnail = (x["thumbnail"])
                     def my_hook(d): 
@@ -421,7 +421,7 @@ Personal Playlist Playing."""
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> {duration}\n🎧 <b>Request by:</b> {checking}\n💡<b>Info:</b> [Music Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})")
+                    caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> {duration}\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
@@ -468,8 +468,8 @@ Personal Playlist Playing."""
             await CallbackQuery.message.delete()
             logger_text=f"""💡 Starting Playlist
 
-Group :- {chat_title}
-Req By :- {Name}
+Group : {chat_title}
+Req By : {Name}
 
 Group Playlist Playing."""
             mystic = await CallbackQuery.message.reply_text(f"💡 starting Groups's playlist.\n\n🎧 request By: {CallbackQuery.from_user.first_name}")   
@@ -495,7 +495,7 @@ Group Playlist Playing."""
                         with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
                             x = ytdl.extract_info(url, download=False)
                     except Exception as e:
-                        return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
+                        return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
                     title = (x["title"])
                     thumbnail = (x["thumbnail"])
                     def my_hook(d): 
@@ -558,7 +558,7 @@ Group Playlist Playing."""
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🏷 <b>Name:</b> [{title[:25]}]({url})\n⏱ <b>Duration:</b> {duration}\n🎧 <b>Request by:</b> {checking}\n💡<b>Info:</b> [Music Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})")
+                    caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> {duration}\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
@@ -588,7 +588,7 @@ Group Playlist Playing."""
         if await isPreviewUp(preview):
             try:
                 await CallbackQuery.message.reply_photo(
-                    photo=preview, caption=f"This is queued playlist of this Group.\n\nIf you want to delete any music from playlist use : /delchatplaylist", quote=False, reply_markup=key
+                    photo=preview, caption=f"This is queued playlist of this Group.\n\nIf you want to delete any music from playlist use: /delchatplaylist", quote=False, reply_markup=key
                 )
                 await m.delete()
             except Exception:
@@ -612,7 +612,7 @@ async def group_playlist(_,CallbackQuery):
     try:
         url,smex= callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**: {e}")
+        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
     Name = CallbackQuery.from_user.first_name
     _count = await get_note_names(chat_id)
     count = 0
@@ -634,7 +634,7 @@ async def group_playlist(_,CallbackQuery):
             duration = (result["duration"])
             videoid = (result["id"])
     except Exception as e:
-            return await CallbackQuery.message.reply_text(f"an error occured.\n\nplease forward to @VeezSupportGroup\n**Possible Reason:** {e}") 
+            return await CallbackQuery.message.reply_text(f"❌ an error occured.\n\nplease forward to @VeezSupportGroup\n\n**reason:** {e}") 
     _check = await get_playlist(chat_id, videoid)
     title = title[:50]
     if _check:
@@ -659,7 +659,7 @@ async def pla_playylistt(_,CallbackQuery):
     try:
         url,smex= callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"an error occured\n**Possible reason could be**:{e}")
+        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
     Name = CallbackQuery.from_user.first_name
     _count = await get_note_names(userid)
     count = 0
@@ -703,7 +703,7 @@ async def pla_playylistt(_,CallbackQuery):
 async def P_list(_,CallbackQuery):
     _playlist = await get_note_names(CallbackQuery.from_user.id)
     if not _playlist:
-        return await CallbackQuery.answer(f"you have no personal playlist on database, try to adding music in playlist.", show_alert=True)
+        return await CallbackQuery.answer(f"❌ you not have personal playlist on database, try to adding music in playlist.", show_alert=True)
     else:
         j = 0
         await CallbackQuery.answer()
@@ -714,7 +714,7 @@ async def P_list(_,CallbackQuery):
             title = _note["title"]
             duration = _note["duration"]
             msg += f"{j}- {title[:60]}\n"
-            msg += f"    Duration- {duration} Min(s)\n\n"   
+            msg += f"Duration: {duration} min(s)\n\n"   
         await CallbackQuery.answer()
         await CallbackQuery.message.delete()     
         m = await CallbackQuery.message.reply_text("🔄 pasting playlist to bin...")
@@ -759,7 +759,7 @@ async def G_list(_,CallbackQuery):
     user_id = CallbackQuery.from_user.id
     _playlist = await get_note_names(CallbackQuery.message.chat.id)
     if not _playlist:
-        return await CallbackQuery.answer(f"💡 you have no Group playlist on database, try to adding music in playlist.", show_alert=True)
+        return await CallbackQuery.answer(f"❌ you not have Group playlist on database, try to adding music in playlist.", show_alert=True)
     else:
         await CallbackQuery.answer()
         j = 0
