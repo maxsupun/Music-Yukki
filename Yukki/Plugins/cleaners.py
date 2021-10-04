@@ -15,4 +15,4 @@ async def hsjdjs(_, message: Message):
     shutil.rmtree(dir1)
     os.mkdir(dir)
     os.mkdir(dir1)
-    await message.reply_text("✅ successfully cleaned all **temp** dir(s) !")
+    await message.reply_text("✅ cleaned all **temp** dir(s) !")
