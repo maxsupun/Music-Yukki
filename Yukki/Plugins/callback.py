@@ -109,7 +109,7 @@ async def closesmex(_,CallbackQuery):
 async def pausevc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -133,7 +133,7 @@ async def pausevc(_,CallbackQuery):
 async def resumevc(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -157,7 +157,7 @@ async def resumevc(_,CallbackQuery):
 async def skipvc(_,CallbackQuery): 
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
@@ -274,7 +274,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
+                caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
                 )
                 return
             
@@ -284,7 +284,7 @@ async def skipvc(_,CallbackQuery):
 async def stopvc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -329,7 +329,7 @@ async def play_playlist(_,CallbackQuery):
             return await CallbackQuery.answer(f"❌ you have no playlist on server", show_alert=True)
         else:
             await CallbackQuery.message.delete()
-            logger_text=f"""💡 atarting playlist
+            logger_text=f"""💡 starting playlist
 
 Group : {chat_title}
 Req By : {Name}
@@ -558,7 +558,7 @@ Req By : {Name}
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> {duration}\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
+                    caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
@@ -604,7 +604,7 @@ async def group_playlist(_,CallbackQuery):
     await CallbackQuery.answer()
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -646,7 +646,7 @@ async def group_playlist(_,CallbackQuery):
     }
     await save_playlist(chat_id, videoid, assis)
     Name = CallbackQuery.from_user.first_name
-    return await CallbackQuery.message.reply_text(f"➕ added to **Group's playlist** ➕\n\n» **added by:** {Name}")
+    return await CallbackQuery.message.reply_text(f"➕ added to **Group's playlist**\n\n-» **By :** {Name}")
   
 
 @Client.on_callback_query(filters.regex("playlist"))
@@ -695,7 +695,7 @@ async def pla_playylistt(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(userid, videoid, assis)
-    return await CallbackQuery.message.reply_text(f"➕ added to **personal playlist** ➕\n\n» **added by:** {Name}")   
+    return await CallbackQuery.message.reply_text(f"➕ added to **personal playlist**\n\n-» **By :** {Name}")   
     
 
 @Client.on_callback_query(filters.regex("P_list"))
@@ -810,7 +810,7 @@ async def G_list(_,CallbackQuery):
 async def cbgroupdel(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » __Manage voice chat__", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
     await CallbackQuery.message.delete() 
     await CallbackQuery.answer()
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
