@@ -26,7 +26,7 @@ from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_the
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from ..config import DURATION_LIMIT
 from ..YukkiUtilities.helpers.decorators import errors
-from ..YukkiUtilities.helpers.filters import command
+from ..YukkiUtilities.helpers.filters import command, other_filters, other_filters2
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant, ass_det)
 from ..YukkiUtilities.helpers.logger import LOG_CHAT
 from ..YukkiUtilities.helpers.thumbnails import gen_thumb
@@ -42,7 +42,7 @@ import os
 from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import Message, Audio, Voice
-from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, )
+from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message)
 
 flex = {}
 chat_watcher_group = 3
@@ -55,7 +55,7 @@ def time_to_seconds(time):
     )
 
 
-@Client.on_message(command(["play", "play@VeezMegaBot"]))
+@Client.on_message(command(["play", "play@VeezMegaBot"]) & other_filters2)
 async def play(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
@@ -532,7 +532,7 @@ async def popat(_, CallbackQuery):
         return
 
 
-@app.on_message(filters.command("playplaylist"))
+@app.on_message(filters.command("playplaylist") & other_filters)
 async def play_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
     user_id = message.from_user.id
