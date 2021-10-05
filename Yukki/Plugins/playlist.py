@@ -85,7 +85,7 @@ async def pause_cmd(_, message):
 async def delgroupplaylist(_, message):
     a = await app.get_chat_member(message.chat.id , message.from_user.id)
     if not a.can_manage_voice_chats:
-        return await message.reply_text("I don't have the required permission to perform this action.\n**Permission:** __MANAGE VOICE CHATS__")
+        return await message.reply_text("you must be admin with permission:\n\n» ❌ __Can manage voice chat__")
     usage = ("usage:\n\n/delchatplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\nor\n\n /delchatplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
         return await message.reply_text(usage)
