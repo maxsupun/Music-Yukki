@@ -24,7 +24,7 @@ from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_the
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from ..config import DURATION_LIMIT
 from ..YukkiUtilities.helpers.decorators import errors
-from ..YukkiUtilities.helpers.filters import command
+from ..YukkiUtilities.helpers.filters import command, other_filters2
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant, ass_det)
 from ..YukkiUtilities.helpers.logger import LOG_CHAT
 from ..YukkiUtilities.helpers.thumbnails import down_thumb
@@ -48,7 +48,7 @@ def time_to_seconds(time):
         int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
 
-@Client.on_message(command(["music", "song", "download"]))
+@Client.on_message(command(["music", "song", "download"]) & other_filters2)
 async def mpthree(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
