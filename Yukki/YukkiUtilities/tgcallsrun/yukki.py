@@ -70,14 +70,12 @@ async def on_stream_end(chat_id: int) -> None:
                 mystic = await app.send_message(chat_id, "📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 ctitle = (await app.get_chat(chat_id)).title
-                logger_text=f"""▶ playing next music from playlist
+                logger_text=f"""▶ playing music from playlist
 
-Group : {chat_id}
-Title : {ctitle}
+Group: `{chat_id}`
+Title: {ctitle}
 
-📥 downloading...
-
-{url}"""
+🔗 {url}"""
                 okay = await smexy.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
                 try:
                     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
