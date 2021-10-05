@@ -110,7 +110,7 @@ async def play(_, message: Message):
 💡 **Track Information**
 
 🏷 **Name:** {x["title"]}
-⏱ **Duration:** {round(x["duration"] / 60)} Mins
+⏱ **Duration:** {round(x["duration"] / 60)} min(s)
 👀 **Views:** `{x["view_count"]}`
 👍 **Likes:** `{x["like_count"]}`
 👎 **Dislikes:** `{x["dislike_count"]}`
@@ -131,7 +131,7 @@ async def play(_, message: Message):
             )
         if str(finxx) == "sud":
             sudoers = await get_sudoers()
-            text = "**💡 sudo users list of:**\n\n"
+            text = "**💡 sudo users list:**\n\n"
             for count, user_id in enumerate(sudoers, 1):
                 try:                     
                     user = await app.get_users(user_id)
