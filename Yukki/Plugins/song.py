@@ -125,7 +125,7 @@ async def mpthree(_, message: Message):
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
-            caption=(f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__"),
+            caption=(f"1️⃣ <b>{title1[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n └ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>{title2[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n └ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>{title3[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n └ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>{title4[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n └ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>{title5[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n └ ⚡ __Powered by Veez Music AI__"),
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -227,11 +227,11 @@ async def chonga(_,CallbackQuery):
         ID9 = (result[8]["id"])
         ID10 = (result[9]["id"])                    
     except Exception as e:
-        return await mystic.edit_text(f"song not found.\n**possible reason:**{e}")
+        return await mystic.edit_text(f"song not found.\n**reason:** {e}")
     if i == 1:
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
         await CallbackQuery.edit_message_text(
-            f"6️⃣ <b>{title6[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})**\n└ ⚡ __Powered by Veez Music AI__\n\n7️⃣ <b>{title7[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})**\n└ ⚡ __Powered by Veez Music AI__\n\n8️⃣ <b>{title8[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})**\n└ ⚡ __Powered by Veez Music AI__\n\n9️⃣ <b>{title9[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})**\n└ ⚡ __Powered by Veez Music AI__\n\n🔟 <b>{title10[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})**\n└ ⚡ __Powered by Veez Music AI__",    
+            f"6️⃣ <b>{title6[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})**\n └ ⚡ __Powered by Veez Music AI__\n\n7️⃣ <b>{title7[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})**\n └ ⚡ __Powered by Veez Music AI__\n\n8️⃣ <b>{title8[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})**\n └ ⚡ __Powered by Veez Music AI__\n\n9️⃣ <b>{title9[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})**\n └ ⚡ __Powered by Veez Music AI__\n\n🔟 <b>{title10[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})**\n └ ⚡ __Powered by Veez Music AI__",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -239,7 +239,7 @@ async def chonga(_,CallbackQuery):
     if i == 2:
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         await CallbackQuery.edit_message_text(
-            f"1️⃣ <b>{title1[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n└ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>{title2[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n└ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>{title3[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n└ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>{title4[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n└ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>{title5[:25]}</b>\n├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n└ ⚡ __Powered by Veez Music AI__",    
+            f"1️⃣ <b>{title1[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n └ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>{title2[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n └ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>{title3[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n └ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>{title4[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n └ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>{title5[:25]}</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n └ ⚡ __Powered by Veez Music AI__",    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
