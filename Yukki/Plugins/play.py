@@ -43,13 +43,17 @@ from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import Message, Audio, Voice
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, )
+
 flex = {}
 chat_watcher_group = 3
+
+
 def time_to_seconds(time):
     stringt = str(time)
     return sum(
         int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
+
 
 @Client.on_message(command(["play", "play@VeezMegaBot"]))
 async def play(_, message: Message):
@@ -119,7 +123,6 @@ async def play(_, message: Message):
                 return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**:{e}")       
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
     url = get_url(message)
-    await message.delete()
     fucksemx = 0
     if audio:
         fucksemx = 1
@@ -461,11 +464,9 @@ async def startyuplay(_,CallbackQuery):
         os.remove(thumb)
         await CallbackQuery.message.delete()
 
-        
-        
-        
+
 @Client.on_callback_query(filters.regex(pattern=r"popat"))
-async def popat(_,CallbackQuery): 
+async def popat(_, CallbackQuery): 
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
     print(callback_request)
@@ -528,11 +529,9 @@ async def popat(_,CallbackQuery):
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
-        return    
-        
-        
-        
-        
+        return
+
+
 @app.on_message(filters.command("playplaylist"))
 async def play_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
@@ -544,5 +543,4 @@ async def play_playlist_cmd(_, message):
     caption=("**❓ Which playlist do you want to play ?**"),    
     reply_markup=InlineKeyboardMarkup(buttons),
     )
-    return                            
-        
+    return
