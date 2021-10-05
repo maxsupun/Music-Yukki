@@ -23,7 +23,7 @@ from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_the
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from ..config import DURATION_LIMIT, ASS_ID, assnumber
 from ..YukkiUtilities.helpers.decorators import errors
-from ..YukkiUtilities.helpers.filters import command
+from ..YukkiUtilities.helpers.filters import command, other_filters
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
 from ..YukkiUtilities.helpers.thumbnails import gen_thumb
 from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
@@ -39,7 +39,7 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardM
 options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "all","16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",]   
 
 
-@app.on_message(filters.command("playlist"))
+@app.on_message(filters.command("playlist") & other_filters)
 async def pause_cmd(_, message):
     thumb ="cache/playlist.png"
     await message.reply_photo(
@@ -49,7 +49,7 @@ async def pause_cmd(_, message):
     return 
 
 
-@app.on_message(filters.command("delmyplaylist"))
+@app.on_message(filters.command("delmyplaylist") & other_filters)
 async def pause_cmd(_, message):
     usage = ("usage:\n\n/delmyplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\nor\n\n /delmyplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
@@ -81,7 +81,7 @@ async def pause_cmd(_, message):
         await message.reply_text("you have no such music in playlist.")                             
 
         
-@app.on_message(filters.command("delchatplaylist"))
+@app.on_message(filters.command("delchatplaylist") & other_filters)
 async def delgroupplaylist(_, message):
     a = await app.get_chat_member(message.chat.id , message.from_user.id)
     if not a.can_manage_voice_chats:
