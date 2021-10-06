@@ -34,6 +34,7 @@ from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.decorators import errors
 from Yukki.YukkiUtilities.database.functions import start_restart_stage
 
+
 @Client.on_message(command('update') & filters.user(OWNER))
 @errors
 async def update(_, message: Message):
@@ -60,7 +61,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 
 
 @app.on_message(
-    filters.user(OWNER)
+    filters.user(SUDOERS)
     & ~filters.forwarded
     & ~filters.via_bot
     & filters.command("eval")
@@ -140,7 +141,7 @@ async def runtime_func_cq(_, cq):
 
 
 @app.on_message(
-    filters.user(OWNER)
+    filters.user(SUDOERS)
     & ~filters.forwarded
     & ~filters.via_bot
     & filters.command("sh"),
