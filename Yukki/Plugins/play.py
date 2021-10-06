@@ -26,7 +26,7 @@ from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_the
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from ..config import DURATION_LIMIT
 from ..YukkiUtilities.helpers.decorators import errors
-from ..YukkiUtilities.helpers.filters import command, other_filters, other_filters2
+from ..YukkiUtilities.helpers.filters import command, other_filters
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant, ass_det)
 from ..YukkiUtilities.helpers.logger import LOG_CHAT
 from ..YukkiUtilities.helpers.thumbnails import gen_thumb
@@ -55,7 +55,7 @@ def time_to_seconds(time):
     )
 
 
-@Client.on_message(command(["play", "play@VeezMegaBot"]) & other_filters2)
+@Client.on_message(command(["play", f"play@VeezMegaBot"]) & other_filters)
 async def play(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
@@ -99,7 +99,7 @@ async def play(_, message: Message):
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
-            await message.reply_text(f"{ASSNAME}(@{ASSUSERNAME}) is banned in this chat **{chat_title}**\n\n» unban the userbot first to use this bot")
+            await message.reply_text(f"{ASSNAME}(@{ASSUSERNAME}) is banned in group **{chat_title}**\n\n» unban the userbot first to use this bot")
             return
     except UserNotParticipant:
         if message.chat.username:
@@ -532,7 +532,7 @@ async def popat(_, CallbackQuery):
         return
 
 
-@app.on_message(filters.command("playplaylist") & other_filters)
+@Client.on_message(command(["playplaylist", f"playplaylist@VeezMegaBot"]) & other_filters)
 async def play_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
     user_id = message.from_user.id
