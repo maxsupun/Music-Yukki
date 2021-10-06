@@ -55,7 +55,7 @@ def time_to_seconds(time):
     )
 
 
-@Client.on_message(command(["play", f"play@VeezMegaBot"]) & other_filters)
+@Client.on_message(command(["play", "play@VeezMegaBot"]) & other_filters)
 async def play(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
@@ -532,7 +532,7 @@ async def popat(_, CallbackQuery):
         return
 
 
-@Client.on_message(command(["playplaylist", f"playplaylist@VeezMegaBot"]) & other_filters)
+@Client.on_message(command(["playplaylist", "playplaylist@VeezMegaBot"]) & other_filters)
 async def play_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
     user_id = message.from_user.id
