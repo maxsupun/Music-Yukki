@@ -8,6 +8,7 @@ from Yukki.YukkiUtilities.database.gbanned import get_gbans_count
 from Yukki.YukkiUtilities.database.chats import get_served_chats
 from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove_sudo)
 from Yukki.YukkiUtilities.database.playlist import get_playlist_count
+from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.time import get_readable_time
 from Yukki import app, SUDOERS, YUKKI_START_TIME
 import os 
@@ -15,7 +16,8 @@ import time
 from pymongo import MongoClient
 from ..config import MONGO_DB_URI as smex
 
-@app.on_message(filters.command("stats") & ~filters.edited)
+
+@app.on_message(command("stats") & filters.user(SUDOERS))
 async def gstats(_, message):
     m = await message.reply_text("🔁 **getting stats**\n\n» please wait for some time..")
     served_chats = []
@@ -45,7 +47,7 @@ async def gstats(_, message):
     free = (hdd.free / (1024.0 ** 3))
     free = str(free)
     msg = f"""
-📊 **Global stats of veez mega bot**:\n\n
+📊 **Global stats of veez mega bot**:\n
 ⩥ **System Stats:**\n
 **Uptime:** {uptime}
 **System Proc:** Online
