@@ -49,20 +49,20 @@ async def gstats(_, message):
     msg = f"""
 📊 **Global stats of veez mega bot**:\n
 ⩥ **System Stats:**\n
-**Uptime:** {uptime}
-**System Proc:** Online
-**Platform:** {sc}
-**Storage:** Used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
-**Architecture:** {arch}
-**Ram:** {ram}
-**Python Ver:** {pyver.split()[0]}
-**Pyrogram Ver:** {pyrover}
+📶 **uptime:** {uptime}
+📟 **system proc:** Online
+🖥 **platform:** {sc}
+🎛 **storage:** used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
+⚙️ **architecture:** {arch}
+💾 **ram:** {ram}
+🐍 **python ver:** {pyver.split()[0]}
+🔥 **pyrogram ver:** {pyrover}
 
 ⩥ **Bot Stats:**\n
-**Modules Loaded:** {modules_count}
-**GBanned Users:** {blocked}
-**Sudo Users:** {j}
-**Allowed Chats:** {len(served_chats)}
+📚 **loaded modules:** {modules_count}
+🚷 **gbanned users:** {blocked}
+👷🏻 **sudo users:** {j}
+🟢 **allowed chats:** {len(served_chats)}
 
 """
     served_chats.pop(0)
