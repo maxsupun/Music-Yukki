@@ -5,9 +5,9 @@ import random
 import asyncio
 import shutil
 from pytube import YouTube
-from youtube_dl import YoutubeDL
+from yt_dlp import YoutubeDL
 from .. import converter
-import youtube_dl
+import yt_dlp
 import shutil
 import psutil
 from pyrogram import Client
@@ -158,7 +158,7 @@ async def startyuplay(_,CallbackQuery):
         await CallbackQuery.message.reply_text(f"**❌ __Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         return 
     try:
-        with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+        with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(url, download=False)
     except Exception as e:
         return await CallbackQuery.message.reply_text(f"failed to download this video.\n\n**reason:** {e}") 
