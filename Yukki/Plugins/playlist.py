@@ -5,7 +5,7 @@ import random
 import asyncio
 import shutil
 from time import time
-import youtube_dl
+import yt_dlp
 from .. import converter
 from pyrogram import Client
 from pyrogram.types import Message
