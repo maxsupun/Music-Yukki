@@ -14,7 +14,7 @@ from pyrogram.types import (
     Message,
 )
 import os
-import youtube_dl
+import yt_dlp
 from youtubesearchpython import VideosSearch
 from os import path
 import random
@@ -22,11 +22,9 @@ import asyncio
 import shutil
 from time import time
 import time as sedtime
-import youtube_dl
 import os
 from os import path
 import asyncio
-import youtube_dl
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
 from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done)
@@ -37,6 +35,7 @@ from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts
 from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
 from Yukki.YukkiUtilities.tgcallsrun import (convert, download)
 from pyrogram import filters
+from pytgcalls.types.input_stream import InputAudioStream
 from typing import Union
 from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
@@ -62,7 +61,7 @@ async def stop_cmd(_, message):
         pass                        
     await remove_active_chat(chat_id)
     try:
-        yukki.pytgcalls.leave_group_call(message.chat.id)
+        await yukki.pytgcalls.leave_group_call(message.chat.id)
     except:
         pass   
     await message.reply_text("🗑 Cleaned databae, queues, logs, raw files, downloads")
@@ -82,7 +81,7 @@ async def pause_cmd(_, message):
     elif not await is_music_playing(message.chat.id):
         return await message.reply_text("❌ **no music is currently playing**")   
     await music_off(chat_id)
-    yukki.pytgcalls.pause_stream(message.chat.id)
+    await yukki.pytgcalls.pause_stream(chat_id)
     await message.reply_text("⏸ **music playback has paused**")
     
 @app.on_message(filters.command("resume"))
@@ -101,7 +100,7 @@ async def stop_cmd(_, message):
         return await message.reply_text("❌ **no music is currently playing**") 
     else:
         await music_on(chat_id)
-        yukki.pytgcalls.resume_stream(message.chat.id)
+        await yukki.pytgcalls.resume_stream(message.chat.id)
         await message.reply_text("▶ **music playback has resumed**")
 
 @app.on_message(filters.command(["stop", "end"]))
@@ -120,7 +119,7 @@ async def stop_cmd(_, message):
         except QueueEmpty:
             pass                        
         await remove_active_chat(chat_id)
-        yukki.pytgcalls.leave_group_call(message.chat.id)
+        await yukki.pytgcalls.leave_group_call(message.chat.id)
         await message.reply_text("✅ **music playback has ended.**") 
     else:
         return await message.reply_text("❌ **no music is currently playing**")
@@ -143,7 +142,7 @@ async def stop_cmd(_, message):
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
             await message.reply_text("❌ no more music in __Queue__ \n\n» userbot leaving voice chat")
-            yukki.pytgcalls.leave_group_call(message.chat.id)
+            await yukki.pytgcalls.leave_group_call(message.chat.id)
             return  
         else:
             afk = get(chat_id)['file']
@@ -155,7 +154,7 @@ async def stop_cmd(_, message):
                 mystic = await message.reply_text("💡 currently playing playlist...\n\n💭 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
-                    with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+                    with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
                     return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
@@ -199,7 +198,12 @@ async def stop_cmd(_, message):
                 loop = asyncio.get_event_loop()
                 xxx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xxx)
-                yukki.pytgcalls.change_stream(chat_id, file)
+                await yukki.pytgcalls.change_stream(
+                    chat_id, 
+                    InputAudioStream(
+                        file,
+                    ),
+                )
                 thumbnail = (x["thumbnail"])
                 duration = (x["duration"])
                 duration = round(x["duration"] / 60)
@@ -220,7 +224,12 @@ async def stop_cmd(_, message):
             )   
                 os.remove(thumb)
             else:      
-                yukki.pytgcalls.change_stream(chat_id, afk)
+                await yukki.pytgcalls.change_stream(
+                    chat_id, 
+                    InputAudioStream(
+                        afk,
+                    ),
+                )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
                 f2 = open(f'search/{_chat_}title.txt', 'r')        
                 title =(f2.read())
