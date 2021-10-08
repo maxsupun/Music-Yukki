@@ -9,7 +9,7 @@ from pyrogram.types import (
     InputMediaAudio,
     Message,
 )
-from youtube_dl import YoutubeDL
+from yt_dlp import YoutubeDL
 from pyrogram import Client, filters
 import wget
 import os
@@ -20,7 +20,7 @@ from Yukki.YukkiUtilities.helpers.inline import others_markup, play_markup
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton
-import youtube_dl
+import yt_dlp
 import asyncio
 from PIL import Image
 from hachoir.metadata import extractMetadata
@@ -334,7 +334,7 @@ async def boom(_,CallbackQuery):
     filepath = os.path.join(userdir, filext)
     yturl = (f"https://www.youtube.com/watch?v={videoid}")
     try:
-        with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+        with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(yturl, download=False)
     except Exception as e:
         buttons = inl_mark(videoid, user_id)
@@ -382,7 +382,7 @@ async def boom(_,CallbackQuery):
             img.resize((90, height))
         img.save(thumb_image_path, "JPEG")
     audio_command = [
-        "youtube-dl",
+        "yt-dlp",
         "-c",
         "--prefer-ffmpeg",
         "--extract-audio",
@@ -392,7 +392,7 @@ async def boom(_,CallbackQuery):
         yturl,
     ]
     video_command = [
-        "youtube-dl",
+        "yt-dlp",
         "-c",
         "--embed-subs",
         "-f", f"{format_id}+140",
@@ -527,7 +527,7 @@ def humanbytes(num, suffix='B'):
 
 
 def extractYt(yturl):
-    ydl = youtube_dl.YoutubeDL()
+    ydl = yt_dlp.YoutubeDL()
     with ydl:
         qualityList = []
         r = ydl.extract_info(yturl, download=False)
