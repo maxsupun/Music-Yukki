@@ -6,11 +6,13 @@ from pyrogram.types import (
     InputMediaPhoto,
     Message,
 )
+from pytgcalls import StreamType
+from pytgcalls.types.input_stream import InputAudioStream
 from asyncio import QueueEmpty
 from pyrogram import Client, filters
 from Yukki import app, BOT_USERNAME, dbb, SUDOERS
 import os
-import youtube_dl
+import yt_dlp
 from youtubesearchpython import VideosSearch
 from Yukki.config import LOG_GROUP_ID
 from ..YukkiUtilities.tgcallsrun import ASS_ACC
@@ -20,7 +22,6 @@ import time as sedtime
 import asyncio
 import shutil
 from time import time
-import youtube_dl
 from .. import converter
 import aiohttp
 from aiohttp import ClientResponseError, ServerTimeoutError, TooManyRedirects
@@ -114,7 +115,7 @@ async def pausevc(_,CallbackQuery):
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(CallbackQuery.message.chat.id):
-            yukki.pytgcalls.pause_stream(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.pause_stream(CallbackQuery.message.chat.id)
             await music_off(chat_id)
             await CallbackQuery.answer("⏸ music playback has paused", show_alert=True)
             user_id = CallbackQuery.from_user.id
@@ -142,7 +143,7 @@ async def resumevc(_,CallbackQuery):
             return    
         else:
             await music_on(chat_id)
-            yukki.pytgcalls.resume_stream(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.resume_stream(CallbackQuery.message.chat.id)
             await CallbackQuery.answer("Voicechat Resumed", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
@@ -171,7 +172,7 @@ async def skipvc(_,CallbackQuery):
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
             await CallbackQuery.message.reply(f"**{rpk} want to skipped music**\n\n❌ no more music in __Queues__\n\n» userbot leaving voice chat")
-            yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
             return
         else:
             await CallbackQuery.answer("💡 you've skipped to the next song", show_alert=True)
@@ -184,7 +185,7 @@ async def skipvc(_,CallbackQuery):
                 mystic = await CallbackQuery.message.reply("💡 bot is currently playing playlist...\n\n📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
-                    with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+                    with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
                     return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
@@ -228,7 +229,12 @@ async def skipvc(_,CallbackQuery):
                 loop = asyncio.get_event_loop()
                 xx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xx)
-                yukki.pytgcalls.change_stream(chat_id, file)
+                await yukki.pytgcalls.change_stream(
+                    chat_id, 
+                    InputAudioStream(
+                        file,
+                    ),
+                )
                 thumbnail = (x["thumbnail"])
                 duration = (x["duration"])
                 duration = round(x["duration"] / 60)
@@ -293,7 +299,7 @@ async def stopvc(_,CallbackQuery):
         except QueueEmpty:
             pass
         try:
-            yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
         except Exception as e:
             pass
         await remove_active_chat(CallbackQuery.message.chat.id) 
@@ -355,7 +361,7 @@ Req By : {Name}
                     f20.close()
                 else:
                     try:
-                        with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+                        with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                             x = ytdl.extract_info(url, download=False)
                     except Exception as e:
                         return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
@@ -412,7 +418,7 @@ Req By : {Name}
                     file = await convert(xx)
                     await music_on(chat_id)
                     await add_active_chat(chat_id)
-                    yukki.pytgcalls.join_group_call(chat_id, file)
+                    await yukki.pytgcalls.join_group_call(chat_id, file)
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
                     ctitle = await CHAT_TITLE(ctitle)
@@ -492,7 +498,7 @@ Req By : {Name}
                     f20.close()
                 else:
                     try:
-                        with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+                        with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                             x = ytdl.extract_info(url, download=False)
                     except Exception as e:
                         return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
@@ -549,7 +555,13 @@ Req By : {Name}
                     file = await convert(xx)
                     await music_on(chat_id)
                     await add_active_chat(chat_id)
-                    yukki.pytgcalls.join_group_call(chat_id, file)
+                    await yukki.pytgcalls.join_group_call(
+                        chat_id, 
+                        InputAudioStream(
+                            file,
+                        ),
+                        stream_type=StreamType().local_stream,
+                    )
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
                     ctitle = await CHAT_TITLE(ctitle)
