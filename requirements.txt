@@ -1,5 +1,5 @@
 tgcrypto
-https://github.com/pyrogram/pyrogram@master
+git+https://github.com/pyrogram/pyrogram@master
 aiohttp
 aiofiles
 asyncio
