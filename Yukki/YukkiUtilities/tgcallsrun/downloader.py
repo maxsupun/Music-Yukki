@@ -23,7 +23,7 @@ def download(url: str, my_hook) -> str:
     }
     info = ytdl.extract_info(url, False)
     try:
-        x = youtube_dl.YoutubeDL(ydl_optssx)
+        x = yt_dlp.YoutubeDL(ydl_optssx)
         x.add_progress_hook(my_hook)
         dloader = x.download([url])
     except Exception as y_e:
