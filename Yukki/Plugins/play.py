@@ -5,9 +5,9 @@ import random
 import asyncio
 import shutil
 from pytube import YouTube
-from youtube_dl import YoutubeDL
+from yt_dlp import YoutubeDL
 from .. import converter
-import youtube_dl
+import yt_dlp
 import shutil
 import psutil
 from pyrogram import Client
@@ -314,7 +314,13 @@ async def play(_, message: Message):
     else:
         await music_on(chat_id)
         await add_active_chat(chat_id)
-        yukki.pytgcalls.join_group_call(message.chat.id, file)
+        await yukki.pytgcalls.join_group_call(
+            message.chat.id, 
+            InputAudioStream(
+                file,
+            ),
+            stream_type=StreamType().local_stream,
+        )
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         if fucksemx != 1:
@@ -453,7 +459,13 @@ async def startyuplay(_,CallbackQuery):
     else:
         await music_on(chat_id)
         await add_active_chat(chat_id)
-        yukki.pytgcalls.join_group_call(chat_id, file) 
+        await yukki.pytgcalls.join_group_call(
+            message.chat.id, 
+            InputAudioStream(
+                file,
+            ),
+            stream_type=StreamType().local_stream,
+        ) 
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
