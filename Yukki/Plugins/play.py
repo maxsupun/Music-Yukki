@@ -368,7 +368,7 @@ async def startyuplay(_,CallbackQuery):
         await CallbackQuery.message.reply_text(f"❌ **__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         return 
     try:
-        with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+        with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(url, download=False)
     except Exception as e:
         return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**:{e}") 
