@@ -1,8 +1,8 @@
 from os import path
-import youtube_dl
-from youtube_dl.utils import DownloadError
+import yt_dlp
+from yt_dlp.utils import DownloadError
 
-ytdl = youtube_dl.YoutubeDL(
+ytdl = yt_dlp.YoutubeDL(
     {
         "outtmpl": "downloads/%(id)s.%(ext)s",
         "format": "bestaudio/best",
