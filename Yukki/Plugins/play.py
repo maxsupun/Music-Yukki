@@ -161,7 +161,7 @@ async def play(_, message: Message):
         what = "URL Searched"
         query = " ".join(message.command[1:])
         mystic = await message.reply_text("🔁 **processing url...**")
-        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        ydl_opts = {"format": "bestaudio/best"}
         try:
             results = VideosSearch(query, limit=1)
             for result in results.result()["result"]:
@@ -317,7 +317,7 @@ async def play(_, message: Message):
         await music_on(chat_id)
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
-            message.chat.id, 
+            chat_id, 
             InputAudioStream(
                 file,
             ),
@@ -462,7 +462,7 @@ async def startyuplay(_,CallbackQuery):
         await music_on(chat_id)
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
-            message.chat.id, 
+            chat_id, 
             InputAudioStream(
                 file,
             ),
