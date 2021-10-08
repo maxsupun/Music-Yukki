@@ -8,14 +8,11 @@ import os
    
     
 @Client.on_message(command("clean") & filters.user(SUDOERS))
-async def storagefree(_, message: Message):   
-    dir0 = 'downloads'
-    dir1 = 'raw_files'
-    dir2 = 'search'
-    shutil.rmtree(dir0)
+async def clear_storage(_, message: Message):    
+    dir = 'downloads'
+    dir1 = 'search'
+    shutil.rmtree(dir)
     shutil.rmtree(dir1)
-    shutil.rmtree(dir2)
-    os.mkdir(dir0)
+    os.mkdir(dir)
     os.mkdir(dir1)
-    os.mkdir(dir2)
-    await message.reply_text("✅ Cleaned all **temp** directories!")
+    await message.reply_text("✅ cleaned all **temp** dir(s) !")
