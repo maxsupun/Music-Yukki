@@ -2,6 +2,8 @@ import os
 from typing import Dict
 import random
 from pytgcalls import PyTgCalls
+from pytgcalls.types import Update
+from pytgcalls.types.input_stream import InputAudioStream
 from Yukki import app, BOT_USERNAME
 from ... import config
 from pyrogram import Client
@@ -16,7 +18,7 @@ import os
 from os import path
 from Yukki import BOT_USERNAME
 import asyncio
-import youtube_dl
+import yt_dlp
 from Yukki.converter import converter
 from pyrogram.types import Message
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
@@ -37,7 +39,7 @@ smexy = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 pytgcalls = PyTgCalls(smexy)
 
 @pytgcalls.on_kicked()
-async def on_kicked(chat_id: int) -> None:
+async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
     try:
         queues.clear(chat_id)
     except QueueEmpty:
@@ -45,7 +47,7 @@ async def on_kicked(chat_id: int) -> None:
     await remove_active_chat(chat_id)
             
 @pytgcalls.on_closed_voice_chat()
-async def on_closed(chat_id: int) -> None:
+async def on_closed(client: PyTgCalls, chat_id: int) -> None:
     try:
         queues.clear(chat_id)
     except QueueEmpty:
@@ -54,12 +56,13 @@ async def on_closed(chat_id: int) -> None:
 
 
 @pytgcalls.on_stream_end()
-async def on_stream_end(chat_id: int) -> None:
+async def on_stream_end(client: PyTgCalls, update: Update) -> None:
+    chat_id = update.chat_id
     try:
         queues.task_done(chat_id)
         if queues.is_empty(chat_id):
             await remove_active_chat(chat_id)               
-            pytgcalls.leave_group_call(chat_id)
+            await pytgcalls.leave_group_call(chat_id)
         else:
             afk = queues.get(chat_id)['file']
             f1 = (afk[0])
@@ -78,7 +81,7 @@ Title: {ctitle}
 🔗 {url}"""
                 okay = await smexy.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
                 try:
-                    with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+                    with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
                     return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
@@ -120,7 +123,12 @@ Title: {ctitle}
                 loop = asyncio.get_event_loop()
                 xx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xx)
-                pytgcalls.change_stream(chat_id, file)
+                await pytgcalls.change_stream(
+                    chat_id, 
+                    InputAudioStream(
+                        file,
+                    ),
+                )
                 thumbnail = (x["thumbnail"])
                 duration = (x["duration"])
                 duration = round(x["duration"] / 60)
@@ -141,8 +149,11 @@ Title: {ctitle}
             )   
                 os.remove(thumb)
             else:      
-                pytgcalls.change_stream(
-                    chat_id, afk
+                await pytgcalls.change_stream(
+                    chat_id, 
+                    InputAudioStream(
+                        afk,
+                    ),
                 )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
                 f2 = open(f'search/{_chat_}title.txt', 'r')        
@@ -170,4 +181,4 @@ Title: {ctitle}
         print(e) 
 
 
-run = pytgcalls.run
+run = pytgcalls.start
