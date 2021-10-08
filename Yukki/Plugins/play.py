@@ -13,6 +13,8 @@ import psutil
 from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.types import Voice
+from pytgcalls import StreamType
+from pytgcalls.types.input_stream import InputAudioStream
 from sys import version as pyver
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, ASS_ACC)
