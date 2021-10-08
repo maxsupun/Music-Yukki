@@ -8,11 +8,14 @@ import os
    
     
 @Client.on_message(command("clean") & filters.user(SUDOERS))
-async def hsjdjs(_, message: Message):    
-    dir = 'downloads'
-    dir1 = 'search'
-    shutil.rmtree(dir)
+async def storagefree(_, message: Message):   
+    dir0 = 'downloads'
+    dir1 = 'raw_files'
+    dir2 = 'search'
+    shutil.rmtree(dir0)
     shutil.rmtree(dir1)
-    os.mkdir(dir)
+    shutil.rmtree(dir2)
+    os.mkdir(dir0)
     os.mkdir(dir1)
-    await message.reply_text("✅ cleaned all **temp** dir(s) !")
+    os.mkdir(dir2)
+    await message.reply_text("✅ Cleaned all **temp** directories!")
