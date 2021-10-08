@@ -1,4 +1,4 @@
-import youtube_dl
+import yt_dlp
 from pyrogram import filters
 from pyrogram import Client
 from Yukki import app, SUDOERS, BOT_ID, BOT_USERNAME, OWNER
@@ -103,7 +103,7 @@ async def play(_, message: Message):
         if str(finxx) == "inf":
             query = ((str(query)).replace("info_","", 1))
             query = (f"https://www.youtube.com/watch?v={query}")
-            with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+            with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                 x = ytdl.extract_info(query, download=False)
             thumbnail = (x["thumbnail"])
             searched_text = f"""
@@ -143,4 +143,4 @@ async def play(_, message: Message):
                 await message.reply_text("❌ no sudo users")  
             else:
                 await message.reply_text(text) 
-  
+ 
