@@ -114,8 +114,8 @@ async def pausevc(_,CallbackQuery):
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
-        if await is_music_playing(CallbackQuery.message.chat.id):
-            await yukki.pytgcalls.pause_stream(CallbackQuery.message.chat.id)
+        if await is_music_playing(chat_id):
+            await yukki.pytgcalls.pause_stream(chat_id)
             await music_off(chat_id)
             await CallbackQuery.answer("⏸ music playback has paused", show_alert=True)
             user_id = CallbackQuery.from_user.id
@@ -138,12 +138,12 @@ async def resumevc(_,CallbackQuery):
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
-        if await is_music_playing(CallbackQuery.message.chat.id):
+        if await is_music_playing(chat_id):
             await CallbackQuery.answer("❌ no music is paused", show_alert=True)
             return    
         else:
             await music_on(chat_id)
-            await yukki.pytgcalls.resume_stream(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.resume_stream(chat_id)
             await CallbackQuery.answer("Voicechat Resumed", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
@@ -172,7 +172,7 @@ async def skipvc(_,CallbackQuery):
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
             await CallbackQuery.message.reply(f"**{rpk} want to skipped music**\n\n❌ no more music in __Queues__\n\n» userbot leaving voice chat")
-            await yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.leave_group_call(chat_id)
             return
         else:
             await CallbackQuery.answer("💡 you've skipped to the next song", show_alert=True)
@@ -258,7 +258,12 @@ async def skipvc(_,CallbackQuery):
             )   
                 os.remove(thumb)
             else:      
-                yukki.pytgcalls.change_stream(chat_id, afk)
+                await yukki.pytgcalls.change_stream(
+                    chat_id, 
+                    InputAudioStream(
+                        afk,
+                    ),
+                )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
                 f2 = open(f'search/{_chat_}title.txt', 'r')        
                 title =(f2.read())
@@ -299,7 +304,7 @@ async def stopvc(_,CallbackQuery):
         except QueueEmpty:
             pass
         try:
-            await yukki.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
+            await yukki.pytgcalls.leave_group_call(chat_id)
         except Exception as e:
             pass
         await remove_active_chat(CallbackQuery.message.chat.id) 
@@ -418,7 +423,13 @@ Req By : {Name}
                     file = await convert(xx)
                     await music_on(chat_id)
                     await add_active_chat(chat_id)
-                    await yukki.pytgcalls.join_group_call(chat_id, file)
+                    await yukki.pytgcalls.join_group_call(
+                        chat_id, 
+                        InputAudioStream(
+                            file,
+                        ),
+                        stream_type=StreamType().local_stream,
+                    )
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
                     ctitle = await CHAT_TITLE(ctitle)
