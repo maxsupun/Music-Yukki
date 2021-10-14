@@ -254,7 +254,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title[:60]}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -285,7 +285,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
+                caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title[:60]}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
                 )
                 return
             
