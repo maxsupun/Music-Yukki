@@ -151,7 +151,7 @@ async def stop_cmd(_, message):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await message.reply_text("💡 currently playing playlist...\n\n💭 downloading next music from playlist...")
+                mystic = await message.reply_text("💡 bot currently playing playlist...\n\n💭 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
@@ -220,7 +220,7 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:60]}]({url})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> {title[:60]}\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -248,6 +248,6 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:60]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
+                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> {title[:60]}\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
                 )
                 return
