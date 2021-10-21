@@ -1,7 +1,7 @@
 ### ⚠ Read This !!
 
 ----
-Keep this source code private and never share to other people without my permissions !
+Keep this source code private and never share to other people without my permissions !!
 ----
 
 ### String Session
