@@ -2,6 +2,7 @@ from Yukki import app, SUDOERS, BOT_ID
 from pyrogram import filters, Client
 from sys import version as pyver
 from pyrogram import __version__ as pyrover
+from pytgcalls import (__version__ as pytover)
 from pyrogram.types import Message
 import platform ,socket,re,uuid,json,psutil,logging
 from Yukki.YukkiUtilities.database.gbanned import get_gbans_count
@@ -49,20 +50,21 @@ async def gstats(_, message):
     msg = f"""
 📊 **Global stats of veez mega bot**:\n
 ⩥ **System Stats:**\n
-📶 **uptime:** {uptime}
-📟 **system proc:** Online
-🖥 **platform:** {sc}
-🎛 **storage:** used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
-⚙️ **architecture:** {arch}
-💾 **ram:** {ram}
-🐍 **python ver:** {pyver.split()[0]}
-🔥 **pyrogram ver:** {pyrover}
+📶 **Uptime:** {uptime}
+📟 **System Proc:** Online
+🖥 **Platform:** {sc}
+🎛 **Storage:** used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
+⚙️ **Architecture:** {arch}
+💾 **Ram:** {ram}
+🐍 **Python Version:** {pyver.split()[0]}
+🔥 **Pyrogram Version:** {pyrover}
+🐍 **PyTgCalls Version:** {pytover.__version__}
 
 ⩥ **Bot Stats:**\n
-📚 **loaded modules:** {modules_count}
-🚷 **gbanned users:** {blocked}
-👷🏻 **sudo users:** {j}
-🟢 **allowed chats:** {len(served_chats)}
+📚 **Loaded Modules:** {modules_count}
+🚷 **Gbanned Users:** {blocked}
+👷🏻 **Sudo Users:** {j}
+🟢 **Allowed Chats:** {len(served_chats)}
 
 """
     served_chats.pop(0)
