@@ -107,7 +107,6 @@ async def play(_, message: Message):
         if message.chat.username:
             try: 
                 await ASS_ACC.join_chat(f"{message.chat.username}")
-                await message.reply(f"{ASSNAME} Joined Successfully",) 
                 await remove_active_chat(chat_id)
             except Exception as e:
                 await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**:{e}")
@@ -117,7 +116,6 @@ async def play(_, message: Message):
                 xxy = await app.export_chat_invite_link(message.chat.id)
                 yxy = await app.revoke_chat_invite_link(message.chat.id, xxy)
                 await ASS_ACC.join_chat(yxy.invite_link)
-                await message.reply(f"{ASSNAME} joined successfully",) 
                 await remove_active_chat(chat_id)
             except UserAlreadyParticipant:
                 pass
@@ -173,7 +171,7 @@ async def play(_, message: Message):
                 idxz = (result["id"])
                 videoid = (result["id"])
         except Exception as e:
-            return await mystic.edit_text(f"song not found.\n\n**reason:**{e}")    
+            return await mystic.edit_text(f"song not found.\n\n**reason:** {e}")    
         smex = int(time_to_seconds(duration))
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"❌ **__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
