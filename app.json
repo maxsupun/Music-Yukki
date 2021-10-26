@@ -6,15 +6,10 @@
     "repository": "https://github.com/levina-lab/vmusic",
     "stack": "container",
     "env": {
-        "SESSION_NAME1": {
+        "SESSION_NAME": {
             "description": "fill with the pyrogram session string from account 1",
             "required": true,
             "value": "BQBHRIWyOv_pqq8UnJO7CHb_eaNbve85UxPKOgpfdxy6gpZ71mIuTduJz5uVObs_pcj7dz07tT_Z-aOhVKw6OJx-khVUcUvW2dZ3N0la9w3LJHRsIQhb0M6egzH3qhYqsxby1HtGzTT5G657gDdj_GpavlHQ4YUf6KaxLejLpEvSbKBIaiRwCVlk7y3AbxMR4oC6bYa4xRZG7QUS_5LXC9aOWm1pHHi7-wffsUhFEOvCaO6ZfSJ49csC-BLmT8_S6tLeIwMSxvS-7adySfJ--z-HUEaijnP2uBZ8nK738ZmLlvxo8qjvA_GhaMkPbTJyKRWB-KHSHopQZUcxXwmONPL2bwd2XgA"
-        },
-        "SESSION_NAME2": {
-            "description": "fill with the pyrogram session string from account 2",
-            "required": true,
-            "value": "BQCosDypMqf2f39SQ2swnrPpvzglxQFkCbwQJSraVh904HCnwxvd8TTHH68iUALh49PCCy-OT4p7-OD9xasLG4xispCGV3W8wlbKcxBgBAeMHt6pyrYxGNrv4t8LNsqKacgsQnyvwE19yK2IG-_MnatKfiqL62KC4lmy9LJmpl3XMc74BYdqx_wizfKs5LRJVAV52kER8lpd_kFZDrlLdhEV6iiEjbbj1hSy3Y6y1OY8ckWmaA--tC0eUxVKA3LI-8fEiwDOoU1uT9bmMzxYPGFZv2S1eRUez7Caps2TPdFGSMoV_Twqyc2QgU4c9PO_Bc60fmSb0qwgv4FTSbeHZJcJY5Iq2wA"
         },
         "OWNER_ID": {
             "description": "fill with your telegram id as the owner of the bot",
@@ -60,11 +55,6 @@
             "description": "fill with your bot token get from @BotFather on telegram",
             "required": false,
             "value": "2021634838:AAHcxPGU6xV_9HFcPs-2PTm6soNdbjXtx9g"
-        },
-        "MONGO_DB_URI2": {
-            "description": "fill with the mongodb url 1 get from mongodb.cloud.com (don't use mine below !)",
-            "required": false,
-            "value": "mongodb+srv://veez:music@cluster0.p1htj.mongodb.net/veez?retryWrites=true&w=majority"
         },
         "MONGO_DB_URI": {
             "description": "fill with the mongodb url 2 get from mongodb.cloud.com (don't use mine below !)",
