@@ -2,7 +2,7 @@ import asyncio
 import time
 import uvloop
 import importlib
-from pyrogram import Client as Bot
+from pyrogram import Client
 from .config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, LOG_GROUP_ID
 from Yukki import BOT_NAME, ASSNAME, app, chacha, aiohttpsession
 from Yukki.YukkiUtilities.database.functions import clean_restart_stage
@@ -13,7 +13,7 @@ from pytgcalls import idle
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 import time
 
-Bot(
+Client(
     ':yukki:',
     API_ID,
     API_HASH,
