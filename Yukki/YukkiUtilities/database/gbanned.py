@@ -1,5 +1,5 @@
 from typing import Dict, List, Union
-from Yukki import db_old as db
+from Yukki import db
 
 gbansdb = db.gban
 
