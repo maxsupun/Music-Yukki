@@ -1,7 +1,7 @@
 print("[INFO]: INITIALIZING")
 from pyrogram import Client
 import asyncio
-from Yukki.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, MONGO_OLD
+from Yukki.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 import time
 import uvloop
@@ -22,8 +22,6 @@ initialize()
 print("[INFO]: INITIALIZING DATABASE")
 MONGODB_CLI = MongoClient(MONGO_DB_URI)
 db = MONGODB_CLI.wbb
-MONGODB_CLI = MongoClient(MONGO_OLD)
-db_old = MONGODB_CLI.wbb
 SUDOERS = SUDO_USERS
 OWNER = OWNER_ID
 async def load_sudoers():
@@ -64,7 +62,7 @@ app = Client(
 )
 aiohttpsession = ClientSession()
 
-chacha = Client(config.SESSION1, config.API_ID, config.API_HASH)
+chacha = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 
 def all_info(app, chacha):
     global BOT_ID, BOT_NAME, BOT_USERNAME
@@ -90,7 +88,7 @@ def all_info(app, chacha):
     
 print("[INFO]: STARTING BOT CLIENT")
 app.start()
-print("[INFO]: STARTING ASSISTANT ONE CLIENT")
+print("[INFO]: STARTING ASSISTANT CLIENT")
 chacha.start()
 print("[INFO]: LOADING BOT/ASSISTANT PROFILE INFO")
 all_info(app, chacha)
