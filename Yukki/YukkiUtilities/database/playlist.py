@@ -1,5 +1,5 @@
 from typing import Dict, Union, List
-from Yukki import db_old as db
+from Yukki import db
 
 playlistdb = db.playlist
 
