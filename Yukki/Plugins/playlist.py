@@ -10,7 +10,6 @@ from .. import converter
 from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.types import Voice
-from ..config import assnumber
 from Yukki import (app, BOT_USERNAME, BOT_ID)
 from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
@@ -21,7 +20,7 @@ from Yukki.YukkiUtilities.database.playlist import (get_playlist_count, _get_pla
 from Yukki.YukkiUtilities.helpers.inline import play_keyboard, confirm_keyboard, play_list_keyboard, close_keyboard, confirm_group_keyboard
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
-from ..config import DURATION_LIMIT, ASS_ID, assnumber
+from ..config import DURATION_LIMIT, ASS_ID
 from ..YukkiUtilities.helpers.decorators import errors
 from ..YukkiUtilities.helpers.filters import command, other_filters
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
