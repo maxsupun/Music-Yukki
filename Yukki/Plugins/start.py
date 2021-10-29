@@ -45,7 +45,7 @@ pstart_markup=InlineKeyboardMarkup(
                         "💬 Support", url="https://t.me/VeezSupportGroup")
                 ],[
                     InlineKeyboardButton(
-                        "⚡ Maintainer", url="https://t.me/avishkarjuna")
+                        "⚡ Maintainer", url="https://t.me/dlwrml")
                 ]
             ]
         )
@@ -88,7 +88,7 @@ async def play(_, message: Message):
         user_name = message.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")" 
         await app.send_message(message.chat.id,
-            text=f"✨ Welcome {rpk} !\n\n💭 [Veez Mega](https://t.me/VeezMegaBot) **allows** you to **play music** on **groups** through the new **Telegram's voice chats** feature !\n\n💡 **Find out** all the **Bot's commands** and how they work by clicking on the » 📚 **Commands** button!",
+            text=f"✨ Welcome {rpk} !\n\n💭 [Veez Mega](https://t.me/VeezMegaBot) **allows** you to **play music** on **groups** through the new **Telegram's voice chats** feature !\n\n💡 **Find out** all the **Bot's commands** and how they work by clicking on the » 📚 **Commands** button!\n\nℹ️ If you want to add this bot into your group, contact the maintainer first.",
             parse_mode="markdown",
             reply_markup=pstart_markup,
             reply_to_message_id=message.message_id,
