@@ -9,6 +9,7 @@ py-tgcalls==0.8.1rc1
 pytube
 wget
 python-dotenv
+httpx==0.13.3
 search-engine-parser
 git+https://github.com/yt-dlp/yt-dlp@master
 youtube-search-python
