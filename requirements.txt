@@ -10,7 +10,7 @@ pytube
 wget
 python-dotenv
 search-engine-parser
-yt-dlp
+git+https://github.com/yt-dlp/yt-dlp@master
 youtube-search-python
 youtube-search
 speedtest-cli
