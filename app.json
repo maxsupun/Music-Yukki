@@ -26,11 +26,6 @@
             "required": true,
             "value": "-1001306851903"
         },
-        "assnumber": {
-            "description": "just fill 2 you can fill 1 too",
-            "required": true,
-            "value": "1"
-        },
         "API_ID": {
             "description": "your Api ID from my.telegram.org/apps",
             "required": true,
