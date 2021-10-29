@@ -1,6 +1,5 @@
 tgcrypto
 git+https://github.com/pyrogram/pyrogram@master
-httpx==0.13.3
 aiohttp
 aiofiles
 asyncio
