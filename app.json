@@ -9,7 +9,7 @@
         "SESSION_NAME": {
             "description": "fill with the pyrogram session string from account 1",
             "required": true,
-            "value": "BQBHRIWyOv_pqq8UnJO7CHb_eaNbve85UxPKOgpfdxy6gpZ71mIuTduJz5uVObs_pcj7dz07tT_Z-aOhVKw6OJx-khVUcUvW2dZ3N0la9w3LJHRsIQhb0M6egzH3qhYqsxby1HtGzTT5G657gDdj_GpavlHQ4YUf6KaxLejLpEvSbKBIaiRwCVlk7y3AbxMR4oC6bYa4xRZG7QUS_5LXC9aOWm1pHHi7-wffsUhFEOvCaO6ZfSJ49csC-BLmT8_S6tLeIwMSxvS-7adySfJ--z-HUEaijnP2uBZ8nK738ZmLlvxo8qjvA_GhaMkPbTJyKRWB-KHSHopQZUcxXwmONPL2bwd2XgA"
+            "value": ""
         },
         "OWNER_ID": {
             "description": "fill with your telegram id as the owner of the bot",
@@ -29,12 +29,12 @@
         "API_ID": {
             "description": "your Api ID from my.telegram.org/apps",
             "required": true,
-            "value": "3487995"
+            "value": ""
         },
         "API_HASH": {
             "description": "your Api Hash from my.telegram.org/apps",
             "required": true,
-            "value": "7b9f1868c1e90b7408d48445f1e89603"
+            "value": ""
         },
         "SUDO_USERS": {
             "description": "fill with the user id who can access all function in your bot (separate with space).",
@@ -49,12 +49,12 @@
         "BOT_TOKEN": {
             "description": "fill with your bot token get from @BotFather on telegram",
             "required": false,
-            "value": "2021634838:AAHcxPGU6xV_9HFcPs-2PTm6soNdbjXtx9g"
+            "value": ""
         },
         "MONGO_DB_URI": {
             "description": "fill with the mongodb url 2 get from mongodb.cloud.com (don't use mine below !)",
             "required": false,
-            "value": "mongodb+srv://veez:mega@cluster0.heqnd.mongodb.net/veez?retryWrites=true&w=majority"
+            "value": ""
         }
     },
     "buildpacks": [
