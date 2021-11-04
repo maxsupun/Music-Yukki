@@ -101,7 +101,7 @@ async def closesmex(_,CallbackQuery):
         await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
         return 
     if CallbackQuery.from_user.id != int(user_id):
-        await CallbackQuery.answer("💡 only requester can tap this button !", show_alert=True)
+        await CallbackQuery.answer("💡 sorry this is not for you !", show_alert=True)
         return
     await CallbackQuery.message.delete()
     await CallbackQuery.answer()
@@ -111,7 +111,7 @@ async def closesmex(_,CallbackQuery):
 async def pausevc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage video chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -135,7 +135,7 @@ async def pausevc(_,CallbackQuery):
 async def resumevc(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage video chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -145,7 +145,7 @@ async def resumevc(_,CallbackQuery):
         else:
             await music_on(chat_id)
             await yukki.pytgcalls.resume_stream(chat_id)
-            await CallbackQuery.answer("Voicechat Resumed", show_alert=True)
+            await CallbackQuery.answer("video chat resumed", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
@@ -292,15 +292,14 @@ async def skipvc(_,CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(buttons),
                 caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title[:60]}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
                 )
-                return
-            
+                return           
             
        
 @Client.on_callback_query(filters.regex("stopvc"))
 async def stopvc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage video chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -334,7 +333,7 @@ async def play_playlist(_,CallbackQuery):
         user_id,smex = callback_request.split("|") 
     except Exception as e:
         await CallbackQuery.answer()
-        return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
+        return await CallbackQuery.message.edit(f"an error occured\n**reason**: {e}")
     Name = CallbackQuery.from_user.first_name
     chat_title = CallbackQuery.message.chat.title
     if str(smex) == "personal":
@@ -421,8 +420,8 @@ Req By : {Name}
                             except Exception as e:
                                 taken = "00:00"
                             size = d['_total_bytes_str']
-                            mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File**[__FFmpeg processing__]")
-                            print(f"[{videoid}] Downloaded| Elapsed: {taken} seconds")  
+                            mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File** [__FFmpeg processing__]")
+                            print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")  
                     loop = asyncio.get_event_loop()
                     xx = await loop.run_in_executor(None, download, url, my_hook)
                     file = await convert(xx)
@@ -567,7 +566,7 @@ Req By : {Name}
                                 taken = "00:00"
                             size = d['_total_bytes_str']
                             mystic.edit(f"**Downloaded: {title[:50]}...**\n\n**Size:** {size}\n**Time:** `{taken}` sec\n\n**Converting File** [__FFmpeg processing__]")
-                            print(f"[{videoid}] Downloaded| Elapsed: {taken} seconds")  
+                            print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")  
                     loop = asyncio.get_event_loop()
                     xx = await loop.run_in_executor(None, download, url, my_hook)
                     file = await convert(xx)
@@ -600,7 +599,7 @@ Req By : {Name}
         link = await paste(msg)
         preview = link + "/preview.png"
         urlxp = link + "/index.txt"
-        a1 = InlineKeyboardButton(text=f"checkout queued playlist", url=urlxp)
+        a1 = InlineKeyboardButton(text=f"CheckOut Queued PlayList", url=urlxp)
         key = InlineKeyboardMarkup(
             [
                 [
@@ -636,7 +635,7 @@ async def group_playlist(_,CallbackQuery):
     await CallbackQuery.answer()
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage video chat", show_alert=True)
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -727,7 +726,7 @@ async def pla_playylistt(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(userid, videoid, assis)
-    return await CallbackQuery.message.reply_text(f"✅ added to **personal playlist**\n\n👤 **for:** {Name}")   
+    return await CallbackQuery.message.reply_text(f"✅ added to **personal playlist**\n\n👤 **for :** {Name}")   
     
 
 @Client.on_callback_query(filters.regex("P_list"))
@@ -842,7 +841,7 @@ async def G_list(_,CallbackQuery):
 async def cbgroupdel(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage video chat", show_alert=True)
     await CallbackQuery.message.delete() 
     await CallbackQuery.answer()
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
