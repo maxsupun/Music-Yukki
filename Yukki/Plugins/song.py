@@ -67,7 +67,7 @@ async def mpthree(_, message: Message):
     fucksemx = 0
     if url:
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 Searching...")
+        mystic = await message.reply_text("🔎 **searching...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = VideosSearch(query, limit=1)
@@ -85,9 +85,9 @@ async def mpthree(_, message: Message):
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("❌ **sorry, live stream video not supported**")
+            return await mystic.edit_text("❌ **sorry, live stream not supported**")
         if views == "None":
-            return await mystic.edit_text("❌ **sorry, live stream video not supported**")
+            return await mystic.edit_text("❌ **sorry, live stream not supported**")
         thumb = await down_thumb(thumbnail, user_id)
         buttons = gets(videoid, user_id)
         m = await message.reply_photo(
@@ -100,7 +100,7 @@ async def mpthree(_, message: Message):
         if len(message.command) < 2:
             await message.reply_text("**usage:**\n\n/song or /music [yt url/music name]")
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 **Searching...**")
+        mystic = await message.reply_text("🔎 **searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -145,9 +145,9 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"❌ **sorry, live stream video not supported**")      
+        return await CallbackQuery.message.reply_text(f"❌ **sorry, live stream not supported**")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry, this is not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this is not for you", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -191,7 +191,7 @@ async def chonga(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n**reason:** {e}")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry, this is not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this is not for you", show_alert=True)
     i=int(id)
     query = str(query)
     try:
@@ -258,11 +258,11 @@ def search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, dura
                 InlineKeyboardButton(text="4️⃣", callback_data=f'beta {ID4}|{duration4}|{user_id}'),
                 InlineKeyboardButton(text="5️⃣", callback_data=f'beta {ID5}|{duration5}|{user_id}')
             ],
-            [ 
-                
-                InlineKeyboardButton(text="⬅️", callback_data=f'chonga 1|{query}|{user_id}'), 
-                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}") ,
-                InlineKeyboardButton(text="➡️", callback_data=f'chonga 1|{query}|{user_id}')             
+            [
+                InlineKeyboardButton(text="➡️", callback_data=f'chonga 1|{query}|{user_id}')
+            ],
+            [
+                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}")
             ],
         ]
     return buttons   
@@ -279,10 +279,10 @@ def search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, du
                 InlineKeyboardButton(text="🔟", callback_data=f'beta {ID10}|{duration10}|{user_id}')
             ],
             [ 
-                
-                InlineKeyboardButton(text="⬅️", callback_data=f'chonga 2|{query}|{user_id}'), 
-                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}") ,
-                InlineKeyboardButton(text="➡️", callback_data=f'chonga 2|{query}|{user_id}')             
+                InlineKeyboardButton(text="⬅️", callback_data=f'chonga 2|{query}|{user_id}')
+            ],
+            [
+                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}")
             ],
         ]
     return buttons     
@@ -297,4 +297,4 @@ def gets(videoid, user_id):
                 InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
             ],
         ]
-    return buttons 
+    return buttons
