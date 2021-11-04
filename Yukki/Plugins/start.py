@@ -59,9 +59,9 @@ async def welcome(_, message: Message):
     for member in message.new_chat_members:
         try:
             if member.id in OWNER:
-                return await message.reply_text(f"💡 announcement, my owner [{member.mention}] has joined this group.")
+                return await message.reply_text(f"💡 Announcement, My Owner [{member.mention}] has joined this group.")
             if member.id in SUDOERS:
-                return await message.reply_text(f"💡 announcement, sudo member [{member.mention}] has joined this group.")
+                return await message.reply_text(f"💡 Announcement, The Sudo member [{member.mention}] has joined this group.")
             if member.id == ASSID:
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
@@ -116,7 +116,7 @@ async def play(_, message: Message):
 👎 **Dislikes:** `{x["dislike_count"]}`
 ⭐️ **Ratings:** {x["average_rating"]}
 📣 **Channel:** {x["uploader"]}
-🔗 **Link:** [Click Here]({x["webpage_url"]})
+🔗 **Link:** {x["webpage_url"]}
 
 ⚡️ __Powered by Veez Music AI__"""
             link = (x["webpage_url"])
@@ -142,5 +142,4 @@ async def play(_, message: Message):
             if not text:
                 await message.reply_text("❌ no sudo users")  
             else:
-                await message.reply_text(text) 
- 
+                await message.reply_text(text)
