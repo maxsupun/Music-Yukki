@@ -50,21 +50,21 @@ async def gstats(_, message):
     msg = f"""
 📊 **Global stats of veez mega bot**:\n
 ⩥ **System Stats:**\n
- **Uptime:** {uptime}
- **System Proc:** Online
- **Platform:** {sc}
- **Storage:** used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
- **Architecture:** {arch}
- **Ram:** {ram}
- **Python Version:** {pyver.split()[0]}
- **Pyrogram Version:** {pyrover}
- **PyTgCalls Version:** {pytover.__version__}
+**Uptime:** {uptime}
+**System Proc:** Online
+**Platform:** {sc}
+**Storage:** used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
+**Architecture:** {arch}
+**Ram:** {ram}
+**Python Version:** {pyver.split()[0]}
+**Pyrogram Version:** {pyrover}
+**PyTgCalls Version:** {pytover.__version__}
 
 ⩥ **Bot Stats:**\n
- **Loaded Modules:** {modules_count}
- **Gbanned Users:** {blocked}
- **Sudo Users:** {j}
- **Allowed Chats:** {len(served_chats)}
+**Loaded Modules:** {modules_count}
+**Gbanned Users:** {blocked}
+**Sudo Users:** {j}
+**Allowed Chats:** {len(served_chats)}
 """
     served_chats.pop(0)
     await m.edit(msg, disable_web_page_preview=True)
