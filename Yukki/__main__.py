@@ -35,7 +35,7 @@ async def load_start():
             await app.edit_message_text(
                 restart_data["chat_id"],
                 restart_data["message_id"],
-                "**Restarted the Bot Successfully.**",
+                "✅ **bot restarted successfully.**",
             )
         except Exception:
             pass
@@ -64,4 +64,4 @@ run()
 idle()
 loop.close()
 
-print("[LOG] CLOSING BOT")
+print("[LOG] CLOSING BOT AND CLIENT")
