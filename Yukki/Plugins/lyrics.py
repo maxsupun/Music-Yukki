@@ -20,7 +20,7 @@ async def lyricssex(_,CallbackQuery):
     try:
         id, user_id = callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"Error Occured\n**Possible reason could be**:{e}")
+        return await CallbackQuery.message.edit(f"an error occured\n**reason**: {e}")
     url = (f"https://www.youtube.com/watch?v={id}")
     print(url)
     try:
@@ -37,18 +37,18 @@ async def lyricssex(_,CallbackQuery):
     y.verbose = False
     S = y.search_song(t, get_full_info=False)
     if S is None:
-        return await CallbackQuery.answer("❌ lyrics not found", show_alert=True)
+        return await CallbackQuery.answer("❌ results of lyrics not found", show_alert=True)
     await CallbackQuery.message.delete()
     userid = CallbackQuery.from_user.id
     usr = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     xxx = f"""
 ⚡️ __Powered by Veez Music AI__
 
-**Searched By:-** {usr}
-**Searched Song:-** __{title}__
+**Searched By:** {usr}
+**Searched Song:** __{title}__
 
-**Lyrics Found:-** __{S.title}__
-**Artist:-** {S.artist}
+**Lyrics Found:** __{S.title}__
+**Artist:** {S.artist}
 
 **__Lyrics:__**
 
@@ -65,17 +65,16 @@ async def lrsearch(_, message: Message):
     y.verbose = False
     S = y.search_song(query, get_full_info=False)
     if S is None:
-        return await m.edit("❌ lyrics not found")
+        return await m.edit("❌ results of lyrics not found")
     xxx = f"""
 ⚡️ __Powered by Veez Music AI__
 
-**Searched Song:-** __{query}__
+**Searched Song:** __{query}__
 
-**Lyrics Found:-** __{S.title}__
-**Artist:-** {S.artist}
+**Lyrics Found:** __{S.title}__
+**Artist:** {S.artist}
 
 **__Lyrics:__**
 
 {S.lyrics}"""
     await m.edit(xxx)
-    
