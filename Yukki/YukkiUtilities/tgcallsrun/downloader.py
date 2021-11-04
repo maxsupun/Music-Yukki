@@ -5,7 +5,7 @@ from yt_dlp.utils import DownloadError
 ytdl = yt_dlp.YoutubeDL(
     {
         "outtmpl": "downloads/%(id)s.%(ext)s",
-        "format": "bestaudio/best",
+        "format": "bestaudio[ext=m4a]",
         "geo_bypass": True,
         "nocheckcertificate": True,
     }
@@ -14,7 +14,7 @@ ytdl = yt_dlp.YoutubeDL(
 
 def download(url: str, my_hook) -> str:       
     ydl_optssx = {
-        'format' : 'bestaudio/best',
+        'format' : 'bestaudio[ext=m4a]',
         "outtmpl": "downloads/%(id)s.%(ext)s",
         "geo_bypass": True,
         "nocheckcertificate": True,
