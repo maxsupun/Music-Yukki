@@ -31,10 +31,10 @@ async def broadcast_message(_, message):
                 sent += 1
             except Exception:
                 pass
-        await message.reply_text(f"**broadcasted message in {sent}\n\nchats with {pin} pins.**")  
+        await message.reply_text(f"✅ **broadcasted message in {sent} chats\n\n📌 with {pin} pins.**")  
         return
     if len(message.command) < 2:
-        await message.reply_text("**usage**:\n/broadcast [MESSAGE]")
+        await message.reply_text("**usage**:\n/broadcast (message)")
         return  
     text = message.text.split(None, 1)[1]
     sent = 0
@@ -55,4 +55,4 @@ async def broadcast_message(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply_text(f"**broadcasted message in {sent}\n\nchats and {pin} pins.**")
+    await message.reply_text(f"✅ **broadcasted message in {sent} chats\n\n📌 with {pin} pins.**")
