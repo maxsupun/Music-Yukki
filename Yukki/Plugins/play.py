@@ -152,15 +152,15 @@ async def play(_, message: Message):
             )
             else file_name,
         )
-        title = "telegram audio file"
+        title = "Telegram Audio"
         link = "https://t.me/levinachannel"
         thumb = "cache/audio.png"
         videoid = "smex1"
     elif url:
         what = "URL Searched"
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔁 **processing url...**")
-        ydl_opts = {"format": "bestaudio/best"}
+        mystic = await message.reply_text("🔎 **searching...**")
+        ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = VideosSearch(query, limit=1)
             for result in results.result()["result"]:
@@ -231,8 +231,8 @@ async def play(_, message: Message):
                 except Exception as e:
                     taken = "00:00"
                 size = d['_total_bytes_str']
-                mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File**[__FFmpeg processing__]")
-                print(f"[{videoid}] Downloaded| Elapsed: {taken} seconds")  
+                mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File** [__FFmpeg processing__]")
+                print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")  
         loop = asyncio.get_event_loop()
         x = await loop.run_in_executor(None, download, link, my_hook)
         file = await convert(x)
@@ -250,7 +250,7 @@ async def play(_, message: Message):
             return
         what = "Query Given"
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 **Searching...**")
+        mystic = await message.reply_text("🔎 **searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -356,9 +356,9 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"an error occured\n\n**reason**:{e}")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"❌ live stream video not supported")      
+        return await CallbackQuery.message.reply_text(f"❌ live stream not supported")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry, this not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this not for you", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -372,7 +372,7 @@ async def startyuplay(_,CallbackQuery):
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(url, download=False)
     except Exception as e:
-        return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**:{e}") 
+        return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**: {e}") 
     title = (x["title"])
     await CallbackQuery.answer(f"🎧 name: {title[:25]}...\n\n💡 starting download & converting...", show_alert=True)
     mystic = await CallbackQuery.message.reply_text(f"📥 downloading: {title[:45]}")
@@ -424,7 +424,7 @@ async def startyuplay(_,CallbackQuery):
                 taken = "00:00"
             size = d['_total_bytes_str']
             mystic.edit(f"**Downloaded: {title[:50]}...**\n\n**Size:** `{size}`\n**Time:** `{taken}` sec\n\n**Converting File **[__FFmpeg process__]")
-            print(f"[{videoid}] Downloaded| Elapsed: {taken} seconds")    
+            print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")    
     loop = asyncio.get_event_loop()
     x = await loop.run_in_executor(None, download, url, my_hook)
     file = await convert(x)
@@ -491,9 +491,9 @@ async def popat(_, CallbackQuery):
     try:
         id , query, user_id = callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"an error occured\n\n**reason**:{e}")       
+        return await CallbackQuery.message.edit(f"an error occured\n\n**reason**: {e}")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry, this not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this not for you", show_alert=True)
     i=int(id)
     query = str(query)
     try:
