@@ -9,7 +9,6 @@
         "SESSION_NAME": {
             "description": "fill with the pyrogram session string from account 1",
             "required": true,
-            "value": ""
         },
         "OWNER_ID": {
             "description": "fill with your telegram id as the owner of the bot",
@@ -57,12 +56,22 @@
             "value": ""
         }
     },
+    "addons": [],
     "buildpacks": [
-    {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
-    },
-    {
-      "url": "heroku/python"
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "heroku/nodejs"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
     }
-  ]
 }
