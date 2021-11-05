@@ -25,9 +25,11 @@ import asyncio
 from PIL import Image
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+
 user_time = {}
 youtube_next_fetch = 0
 flex = {}
+
 @Client.on_callback_query(filters.regex(pattern=r"other"))
 async def closesmex(_,CallbackQuery):
     callback_data = CallbackQuery.data.strip()
@@ -47,6 +49,7 @@ async def goback(_,CallbackQuery):
     buttons = play_markup(videoid, user_id)
     await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
 
+
 @Client.on_callback_query(filters.regex(pattern=r"good"))
 async def good(_,CallbackQuery):
     callback_data = CallbackQuery.data.strip()
@@ -54,17 +57,20 @@ async def good(_,CallbackQuery):
     userid = CallbackQuery.from_user.id 
     videoid, user_id = callback_request.split("|")    
     buttons = others_markup(videoid, user_id)
-    await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))    
-    
+    await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
+
+
 @Client.on_callback_query(filters.regex("close"))
 async def closed(_, query: CallbackQuery):
     await query.message.delete()
     await query.answer()  
 
+
 @Client.on_callback_query(filters.regex(pattern=r"down"))
 async def down(_,CallbackQuery):
-    await CallbackQuery.answer()  
-    
+    await CallbackQuery.answer()
+
+
 @Client.on_callback_query(filters.regex(pattern=r"gets"))
 async def getspy(_,CallbackQuery):  
     callback_data = CallbackQuery.data.strip()
@@ -76,7 +82,7 @@ async def getspy(_,CallbackQuery):
     try:
         if userLastDownloadTime > datetime.now():
             wait_time = round((userLastDownloadTime - datetime.now()).total_seconds() / 60, 2)
-            return await CallbackQuery.message.reply_text(f"Okay {Name}, fastspeed.. `wait for {wait_time} min(s) before next download request")
+            return await CallbackQuery.message.reply_text(f"hai {Name}, please wait for {wait_time} min(s) before do next download request.")
     except:
         pass
     url = (f"https://www.youtube.com/watch?v={videoid}")
@@ -87,7 +93,7 @@ async def getspy(_,CallbackQuery):
         user_time[userid] = now + \
                                      timedelta(minutes=youtube_next_fetch)
     except Exception:
-        return await CallbackQuery.message.reply_text("Failed To Fetch Data...")
+        return await CallbackQuery.message.reply_text("❌ failed to fetch data.")
     j = 0
     a = 0
     b = 0
@@ -153,7 +159,7 @@ async def getspy(_,CallbackQuery):
             return await CallbackQuery.message.reply_text("❌ video format not found.")
     universal = InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
     if j == 0:
-        return await CallbackQuery.message.reply_text("Video Format Not Found..")
+        return await CallbackQuery.message.reply_text("❌ video format not found.")
     elif j == 1:
         key = InlineKeyboardMarkup(
             [
@@ -439,15 +445,12 @@ async def boom(_,CallbackQuery):
     if med:
         loop.create_task(send_file(CallbackQuery, med, filename, videoid, user_id, link, channel))
     else:
-        print("med not found")
+        print("media not found")
     
 def p_mark(link, channel):
     buttons= [
             [
                 InlineKeyboardButton(text="watch on youtube", url=f'{link}')
-            ],
-            [ 
-                InlineKeyboardButton(text="visit youtube channel", url=f'{channel}')
             ],
         ]
     return buttons    
@@ -510,7 +513,7 @@ def duration(vid_file_path):
             if 'duration' in s:
                 return float(s['duration'])
 
-    raise Exception('duration Not found')
+    raise Exception('duration not found')
     
     
 def humanbytes(num, suffix='B'):
