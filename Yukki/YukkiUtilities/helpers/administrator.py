@@ -15,7 +15,7 @@ async def unauthorised(message: Message):
     chatID = message.chat.id
     text = (
         "you must be admin with permission:"
-        + f"\n\n» ❌ __Can manage voice chat__"
+        + f"\n\n» ❌ __Can manage video chat__"
     )
     try:
         await message.reply_text(text)
@@ -33,4 +33,4 @@ async def adminsOnly(permission, message):
     permissions = await member_permissions(chatID, userID)
     if userID not in SUDOERS and permission not in permissions:
         return await unauthorised(message)
-    return await authorised( message)
+    return await authorised(message)
