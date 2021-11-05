@@ -82,8 +82,9 @@ async def pause_cmd(_, message):
         return await message.reply_text("❌ **no music is currently playing**")   
     await music_off(chat_id)
     await yukki.pytgcalls.pause_stream(chat_id)
-    await message.reply_text("⏸ **music playback has paused**")
-    
+    await message.reply_text("⏸ **Track paused.**\n\n• **To resume the playback, use the**\n» /resume command.")
+
+
 @app.on_message(filters.command("resume"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
@@ -101,7 +102,8 @@ async def stop_cmd(_, message):
     else:
         await music_on(chat_id)
         await yukki.pytgcalls.resume_stream(message.chat.id)
-        await message.reply_text("▶ **music playback has resumed**")
+        await message.reply_text("▶️ **Track resumed.**\n\n• **To pause the playback, use the**\n» /pause command.")
+
 
 @app.on_message(filters.command(["stop", "end"]))
 async def stop_cmd(_, message): 
@@ -123,7 +125,8 @@ async def stop_cmd(_, message):
         await message.reply_text("✅ **music playback has ended.**") 
     else:
         return await message.reply_text("❌ **no music is currently playing**")
-    
+
+
 @app.on_message(filters.command("skip"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
@@ -220,7 +223,7 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> {title[:60]}\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:70]}]({url})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -248,6 +251,6 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> {title[:60]}\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
+                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:70]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
                 )
                 return
