@@ -77,12 +77,12 @@ async def play(_, message: Message):
         return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
     a = await app.get_chat_member(message.chat.id , BOT_ID)
     if a.status != "administrator":
-        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Ban users__\n» ❌ __Add users__\n» ❌ __Manage voice chat__\n\nData is **updated** automatically after you **promote me**")
+        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Restrict users__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
         return
     if not a.can_manage_voice_chats:
         await message.reply_text(
         "missing required permission:"
-        + "\n\n» ❌ __Manage voice chat__")
+        + "\n\n» ❌ __Manage video chat__")
         return
     if not a.can_delete_messages:
         await message.reply_text(
@@ -97,7 +97,7 @@ async def play(_, message: Message):
     if not a.can_restrict_members:
         await message.reply_text(
         "missing required permission:"
-        + "\n\n» ❌ __Ban users__")
+        + "\n\n» ❌ __Restrict users__")
         return
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
@@ -121,7 +121,7 @@ async def play(_, message: Message):
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
-                return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**:{e}")       
+                return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: {e}")       
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
     url = get_url(message)
     fucksemx = 0
