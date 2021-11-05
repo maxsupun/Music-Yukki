@@ -148,7 +148,7 @@ Title: {ctitle}
                 await app.send_photo(chat_id,
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🏷 <b>**Name:** </b>[{title[:60]}]({url})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"🏷 **Name:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -178,7 +178,7 @@ Title: {ctitle}
                 await app.send_photo(chat_id,
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"🏷 <b>**Name:**</b> {title} \n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 <b>**Request by:**</b> {username}",
+                caption=f"🏷 **Name:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
                 )
                 return
            
