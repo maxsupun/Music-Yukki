@@ -5,7 +5,7 @@ import yt_dlp
 from os import path
 from . import queues
 from ... import config
-from typing import Dict, union
+from typing import Dict, Union
 from Yukki import BOT_USERNAME
 from asyncio import QueueEmpty
 from pytgcalls import PyTgCalls
