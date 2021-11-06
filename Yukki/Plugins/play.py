@@ -8,7 +8,7 @@ import shutil
 import psutil
 import subprocess
 from os import path
-from typing import union
+from typing import Union
 from .. import converter
 from pytube import YouTube
 from yt_dlp import YoutubeDL
