@@ -1,22 +1,23 @@
 import os
 import time
-from os import path
+import shutil
 import random
 import asyncio
-import shutil
-from pytube import YouTube
-from yt_dlp import YoutubeDL
-from .. import converter
 import yt_dlp
 import shutil
 import psutil
-from pyrogram import Client
-from pyrogram.types import Message
-from pyrogram.types import Voice
+import subprocess
+from os import path
+from typing import union
+from .. import converter
+from pytube import YouTube
+from yt_dlp import YoutubeDL
+from asyncio import QueueEmpty
 from pytgcalls import StreamType
-from pytgcalls.types.input_stream import InputAudioStream
-from pytgcalls.types.input_stream import InputStream
 from sys import version as pyver
+from pyrogram import Client, filters
+from pyrogram.types import Message, Voice, Audio
+from pytgcalls.types.input_stream import AudioPiped
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, ASS_ACC)
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
@@ -36,15 +37,8 @@ from ..YukkiUtilities.helpers.thumbnails import gen_thumb
 from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from ..YukkiUtilities.helpers.ytdl import ytdl_opts 
 from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup2, search_markup)
-from pyrogram import filters
-from typing import Union
-import subprocess
-from asyncio import QueueEmpty
-import shutil
-import os
 from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
-from pyrogram.types import Message, Audio, Voice
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message)
 
 flex = {}
@@ -316,13 +310,11 @@ async def play(_, message: Message):
         await music_on(chat_id)
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
-            chat_id, 
-            InputStream(
-                InputAudioStream(
-                    file,
-                ),
+            chat_id,
+            AudioPiped(
+                file,
             ),
-            stream_type=StreamType().local_stream,
+            stream_type=StreamType().pulse_stream,
         )
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
@@ -464,12 +456,10 @@ async def startyuplay(_,CallbackQuery):
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
             chat_id, 
-            InputStream(
-                InputAudioStream(
-                    file,
-                ),
+            AudioPiped(
+                file,
             ),
-            stream_type=StreamType().local_stream,
+            stream_type=StreamType().pulse_stream,
         ) 
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
