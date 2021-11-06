@@ -1,18 +1,19 @@
 print("[INFO]: INITIALIZING")
-from pyrogram import Client
+
+import time
+import aiohttp
 import asyncio
+import uvloop
+import importlib
+from Yukki import config
+from pyrogram import Client, idle
+from pyrogram import Client as Bot
+from aiohttp import ClientSession
 from Yukki.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
-import time
-import uvloop
-from Yukki import config
-import importlib
-from pyrogram import Client as Bot
 from Yukki.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, LOG_GROUP_ID, OWNER_ID
-from pyrogram import Client, idle
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
-from aiohttp import ClientSession
-import time
+
 def initialize():
     global dbb
     dbb = {}
@@ -20,6 +21,7 @@ def initialize():
 initialize()
 
 print("[INFO]: INITIALIZING DATABASE")
+
 MONGODB_CLI = MongoClient(MONGO_DB_URI)
 db = MONGODB_CLI.wbb
 SUDOERS = SUDO_USERS
@@ -42,8 +44,6 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(load_sudoers())
 YUKKI_START_TIME = time.time()
 loop = asyncio.get_event_loop()
-
-
 
 
 BOT_ID = 0
@@ -83,7 +83,6 @@ def all_info(app, chacha):
     )
     ASSUSERNAME = getme1.username
     ASSMENTION = getme1.mention
-    
 
     
 print("[INFO]: STARTING BOT CLIENT")
