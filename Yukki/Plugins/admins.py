@@ -6,41 +6,37 @@ from Yukki.YukkiUtilities.helpers.filters import command, other_filters
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, clear, get, is_empty, put, task_done)
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.helpers.inline import play_keyboard
-from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    InputMediaPhoto,
-    Message,
-)
 import os
 import yt_dlp
-from youtubesearchpython import VideosSearch
 from os import path
 import random
 import asyncio
 import shutil
 from time import time
 import time as sedtime
-import os
-from os import path
-import asyncio
+from typing import Union
+from pyrogram import Client, filters
+from youtubesearchpython import VideosSearch
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
 from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done)
-from pyrogram.types import Message
 from Yukki.YukkiUtilities.helpers.thumbnails import gen_thumb
 from Yukki.YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts 
 from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
 from Yukki.YukkiUtilities.tgcallsrun import (convert, download)
-from pyrogram import filters
-from pytgcalls.types.input_stream import InputAudioStream
-from typing import Union
 from youtubesearchpython import VideosSearch
+from pytgcalls.types.input_stream import AudioPiped
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
-from pyrogram.types import Message, Audio, Voice
-from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, )
+from pyrogram.types import (
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InputMediaPhoto,
+    Message,
+    Audio,
+    Voice,
+)
 from Yukki.YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
 flex = {}
 
@@ -160,7 +156,7 @@ async def stop_cmd(_, message):
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
+                    return await mystic.edit(f"failed to download this video.\n\n**reason**: {e}") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -203,7 +199,7 @@ async def stop_cmd(_, message):
                 file = await convert(xxx)
                 await yukki.pytgcalls.change_stream(
                     chat_id, 
-                    InputAudioStream(
+                    AudioPiped(
                         file,
                     ),
                 )
@@ -229,7 +225,7 @@ async def stop_cmd(_, message):
             else:      
                 await yukki.pytgcalls.change_stream(
                     chat_id, 
-                    InputAudioStream(
+                    AudioPiped(
                         afk,
                     ),
                 )
