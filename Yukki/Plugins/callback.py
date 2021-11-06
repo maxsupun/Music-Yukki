@@ -308,7 +308,7 @@ async def stopvc(_,CallbackQuery):
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-        await CallbackQuery.message.reply("✅ music playback has ended")
+        await CallbackQuery.edit_message_text("✅ this music playback has ended")
     else:
         await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
 
