@@ -1,3 +1,17 @@
+import os
+import re
+import aiofiles
+import yt_dlp
+import aiohttp
+import random
+import asyncio
+import shutil
+import requests
+from os import path
+import time as sedtime
+from time import time
+from .. import converter
+from asyncio import QueueEmpty
 from pyrogram import Client, filters
 from pyrogram.types import (
     CallbackQuery,
@@ -7,24 +21,11 @@ from pyrogram.types import (
     Message,
 )
 from pytgcalls import StreamType
-from pytgcalls.types.input_stream import InputAudioStream
-from pytgcalls.types.input_stream import InputStream
-from asyncio import QueueEmpty
-from pyrogram import Client, filters
-from Yukki import app, BOT_USERNAME, dbb, SUDOERS
-import os
-import yt_dlp
-from youtubesearchpython import VideosSearch
 from Yukki.config import LOG_GROUP_ID
+from youtubesearchpython import VideosSearch
 from ..YukkiUtilities.tgcallsrun import ASS_ACC
-from os import path
-import random
-import time as sedtime 
-import asyncio
-import shutil
-from time import time
-from .. import converter
-import aiohttp
+from pytgcalls.types.input_stream import AudioPiped
+from Yukki import app, BOT_USERNAME, dbb, SUDOERS
 from aiohttp import ClientResponseError, ServerTimeoutError, TooManyRedirects
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
@@ -53,7 +54,6 @@ from ..YukkiUtilities.helpers.thumbnails import gen_thumb
 from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from ..YukkiUtilities.helpers.ytdl import ytdl_opts 
 from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup)
-import requests
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardButton,
@@ -61,10 +61,7 @@ from pyrogram.types import (
     InputMediaPhoto,
     Message,
 )
-import re
-import aiofiles
 from pykeyboard import InlineKeyboard
-from pyrogram import filters
 from Yukki import aiohttpsession as session
 
 pattern = re.compile(
@@ -86,7 +83,6 @@ async def isPreviewUp(preview: str) -> bool:
         else:
             return True if status == 200 else False
     return False
-
 
     
 @Client.on_callback_query(filters.regex(pattern=r"ppcl"))
@@ -159,7 +155,7 @@ async def resumevc(_,CallbackQuery):
 async def skipvc(_,CallbackQuery): 
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage voice chat", show_alert=True)
+        return await CallbackQuery.answer("you must be admin with permissions:\n\n❌ » Manage video chat", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
@@ -231,11 +227,9 @@ async def skipvc(_,CallbackQuery):
                 xx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xx)
                 await yukki.pytgcalls.change_stream(
-                    chat_id, 
-                    InputStream(
-                        InputAudioStream(
-                            file,
-                        ),
+                    chat_id,
+                    AudioPiped(
+                        file,
                     ),
                 )
                 thumbnail = (x["thumbnail"])
@@ -262,11 +256,9 @@ async def skipvc(_,CallbackQuery):
                 os.remove(thumb)
             else:      
                 await yukki.pytgcalls.change_stream(
-                    chat_id, 
-                    InputStream(
-                        InputAudioStream(
-                            afk,
-                        ),
+                    chat_id,
+                    AudioPiped(
+                        afk,
                     ),
                 )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
@@ -320,9 +312,7 @@ async def stopvc(_,CallbackQuery):
     else:
         await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
 
-        
-           
-        
+
 @Client.on_callback_query(filters.regex("play_playlist"))
 async def play_playlist(_,CallbackQuery):
     callback_data = CallbackQuery.data.strip()
@@ -428,13 +418,11 @@ Req By : {Name}
                     await music_on(chat_id)
                     await add_active_chat(chat_id)
                     await yukki.pytgcalls.join_group_call(
-                        chat_id, 
-                        InputStream(
-                            InputAudioStream(
-                                file,
-                            ),
+                        chat_id,
+                        AudioPiped(
+                            file,
                         ),
-                        stream_type=StreamType().local_stream,
+                        stream_type=StreamType().pulse_stream,
                     )
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
@@ -486,7 +474,7 @@ Req By : {Name}
     if str(smex) == "group":
         _playlist = await get_note_names(CallbackQuery.message.chat.id)
         if not _playlist:
-            return await CallbackQuery.answer(f"This Group not have a playlist on server, try to adding music in playlist.", show_alert=True)
+            return await CallbackQuery.answer(f"This Group not have a playlist on database, try to adding music into playlist.", show_alert=True)
         else:
             await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
@@ -573,13 +561,11 @@ Req By : {Name}
                     await music_on(chat_id)
                     await add_active_chat(chat_id)
                     await yukki.pytgcalls.join_group_call(
-                        chat_id, 
-                        InputStream(
-                            InputAudioStream(
-                                file,
-                            ),
+                        chat_id,
+                        AudioPiped(
+                            file,
                         ),
-                        stream_type=StreamType().local_stream,
+                        stream_type=StreamType().pulse_stream,
                     )
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
@@ -629,7 +615,8 @@ Req By : {Name}
                     text=msg, reply_markup=key
                 )
             await m.delete()
- 
+
+
 @Client.on_callback_query(filters.regex("group_playlist"))
 async def group_playlist(_,CallbackQuery):
     await CallbackQuery.answer()
@@ -677,7 +664,7 @@ async def group_playlist(_,CallbackQuery):
     }
     await save_playlist(chat_id, videoid, assis)
     Name = CallbackQuery.from_user.first_name
-    return await CallbackQuery.message.reply_text(f"✅ added to **Group's playlist**\n\n👤 **By:** {Name}")
+    return await CallbackQuery.message.reply_text(f"✅ added to **Group's playlist**\n\n👤 **By :** {Name}")
   
 
 @Client.on_callback_query(filters.regex("playlist"))
