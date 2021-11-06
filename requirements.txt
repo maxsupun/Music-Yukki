@@ -1,5 +1,6 @@
 tgcrypto
 git+https://github.com/pyrogram/pyrogram@master
+git+https://github.com/yt-dlp/yt-dlp@master
 aiohttp
 aiofiles
 asyncio
@@ -11,7 +12,6 @@ wget
 python-dotenv
 httpx==0.13.3
 search-engine-parser
-git+https://github.com/yt-dlp/yt-dlp@master
 youtube-search-python
 youtube-search
 speedtest-cli
