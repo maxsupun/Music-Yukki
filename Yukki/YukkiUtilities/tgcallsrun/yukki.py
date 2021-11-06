@@ -1,27 +1,24 @@
 import os
-from typing import Dict
 import random
-from pytgcalls import PyTgCalls
-from pytgcalls.types import Update
-from pytgcalls.types.input_stream import InputAudioStream
-from pytgcalls.types.input_stream import InputStream
-from Yukki import app, BOT_USERNAME
-from ... import config
-from pyrogram import Client
-from asyncio import QueueEmpty
-from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
-from . import queues
-from Yukki.config import LOG_GROUP_ID
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from Yukki.YukkiUtilities.helpers.inline import play_keyboard
-from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
-import os
-from os import path
-from Yukki import BOT_USERNAME
 import asyncio
 import yt_dlp
+from os import path
+from . import queues
+from ... import config
+from typing import Dict, union
+from Yukki import BOT_USERNAME
+from asyncio import QueueEmpty
+from pytgcalls import PyTgCalls
+from pytgcalls.types import Update
+from Yukki import app, BOT_USERNAME
+from pyrogram import Client, filters
 from Yukki.converter import converter
-from pyrogram.types import Message
+from Yukki.config import LOG_GROUP_ID
+from youtubesearchpython import VideosSearch
+from pytgcalls.types.input_stream import AudioPiped
+from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
+from Yukki.YukkiUtilities.helpers.inline import play_keyboard
+from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
 from Yukki.YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
 from Yukki.YukkiUtilities.helpers.thumbnails import gen_thumb
@@ -29,12 +26,9 @@ from Yukki.YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts 
 from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
 from Yukki.YukkiUtilities.tgcallsrun import (convert, download)
-from pyrogram import filters
-from typing import Union
-from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
-from pyrogram.types import Message, Audio, Voice
-from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, )
+from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, Audio, Voice)
+
 flex = {}
 smexy = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 pytgcalls = PyTgCalls(smexy)
@@ -46,7 +40,8 @@ async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
     except QueueEmpty:
         pass
     await remove_active_chat(chat_id)
-            
+
+     
 @pytgcalls.on_closed_voice_chat()
 async def on_closed(client: PyTgCalls, chat_id: int) -> None:
     try:
@@ -125,11 +120,9 @@ Title: {ctitle}
                 xx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xx)
                 await pytgcalls.change_stream(
-                    chat_id, 
-                    InputStream(
-                        InputAudioStream(
-                            file,
-                        ),
+                    chat_id,
+                    AudioPiped(
+                        file,
                     ),
                 )
                 thumbnail = (x["thumbnail"])
@@ -148,16 +141,14 @@ Title: {ctitle}
                 await app.send_photo(chat_id,
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🏷 **Name:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"🏷 **Name:** {title[:70]}\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
                 await pytgcalls.change_stream(
-                    chat_id, 
-                    InputStream(
-                        InputAudioStream(
-                            afk,
-                        ),
+                    chat_id,
+                    AudioPiped(
+                        afk,
                     ),
                 )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
@@ -178,7 +169,7 @@ Title: {ctitle}
                 await app.send_photo(chat_id,
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"🏷 **Name:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
+                caption=f"🏷 **Name:** {title[:70]}\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
                 )
                 return
            
