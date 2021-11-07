@@ -69,6 +69,12 @@ async def closed(_, query: CallbackQuery):
     await query.answer()
 
 
+@Client.on_callback_query(filters.regex("cls"))
+async def closed(_, query: CallbackQuery):
+    await query.message.delete()
+    await query.answer()
+
+
 @Client.on_callback_query(filters.regex(pattern=r"down"))
 async def down(_,CallbackQuery):
     await CallbackQuery.answer()
