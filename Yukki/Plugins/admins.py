@@ -219,10 +219,11 @@ async def stop_cmd(_, message):
                 buttons = play_markup(videoid, user_id)
                 await mystic.delete()
                 semx = await app.get_users(userid)
+                link = (x["webpage_url"])
                 await message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:70]}]({url})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:70]}]({link})\n⏱ <b>**Duration:**</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -252,6 +253,6 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:70]}]({url})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
+                caption=f"<b>⏭ **Skipped to the next music**</b>\n\n🏷 <b>**Name:**</b> [{title[:70]}]({link})\n⏱ <b>**Duration:**</b> {duration} m\n🎧 **Request by:** </b> {username}",
                 )
                 return
