@@ -61,7 +61,7 @@ async def good(_,CallbackQuery):
 
 
 @Client.on_callback_query(filters.regex("close"))
-async def closed(_, query: CallbackQuery):
+async def close_admin(_, query: CallbackQuery):
     a = await _.get_chat_member(query.message.chat.id, query.from_user.id)
     if not a.can_manage_voice_chats:
         return await query.answer("💡 only admin can tap this button !", show_alert=True)
@@ -70,7 +70,7 @@ async def closed(_, query: CallbackQuery):
 
 
 @Client.on_callback_query(filters.regex("cls"))
-async def closed(_, query: CallbackQuery):
+async def close_user(_, query: CallbackQuery):
     await query.message.delete()
     await query.answer()
 
