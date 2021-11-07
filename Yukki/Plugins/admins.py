@@ -26,7 +26,7 @@ from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts
 from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
 from Yukki.YukkiUtilities.tgcallsrun import (convert, download)
 from youtubesearchpython import VideosSearch
-from pytgcalls.types.input_stream import AudioPiped
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import (
     CallbackQuery,
@@ -38,6 +38,7 @@ from pyrogram.types import (
     Voice,
 )
 from Yukki.YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
+
 flex = {}
 
 async def member_permissions(chat_id: int, user_id: int):
@@ -199,8 +200,10 @@ async def stop_cmd(_, message):
                 file = await convert(xxx)
                 await yukki.pytgcalls.change_stream(
                     chat_id, 
-                    AudioPiped(
-                        file,
+                    InputStream(
+                        InputAudioStream(
+                            file,
+                        ),
                     ),
                 )
                 thumbnail = (x["thumbnail"])
@@ -225,8 +228,10 @@ async def stop_cmd(_, message):
             else:      
                 await yukki.pytgcalls.change_stream(
                     chat_id, 
-                    AudioPiped(
-                        afk,
+                    InputStream(
+                        InputAudioStream(
+                            afk,
+                        ),
                     ),
                 )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
