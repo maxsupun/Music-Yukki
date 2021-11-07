@@ -423,8 +423,10 @@ Req By : {Name}
                     await add_active_chat(chat_id)
                     await yukki.pytgcalls.join_group_call(
                         chat_id,
-                        AudioPiped(
-                            file,
+                        InputStream(
+                            InputAudioStream(
+                                file,
+                            ),
                         ),
                         stream_type=StreamType().local_stream,
                     )
