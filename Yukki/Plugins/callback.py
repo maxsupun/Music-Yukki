@@ -24,8 +24,8 @@ from pytgcalls import StreamType
 from Yukki.config import LOG_GROUP_ID
 from youtubesearchpython import VideosSearch
 from ..YukkiUtilities.tgcallsrun import ASS_ACC
-from pytgcalls.types.input_stream import AudioPiped
 from Yukki import app, BOT_USERNAME, dbb, SUDOERS
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from aiohttp import ClientResponseError, ServerTimeoutError, TooManyRedirects
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
@@ -228,8 +228,10 @@ async def skipvc(_,CallbackQuery):
                 file = await convert(xx)
                 await yukki.pytgcalls.change_stream(
                     chat_id,
-                    AudioPiped(
-                        file,
+                    InputStream(
+                        InputAudioStream(
+                            file,
+                        ),
                     ),
                 )
                 thumbnail = (x["thumbnail"])
@@ -257,8 +259,10 @@ async def skipvc(_,CallbackQuery):
             else:      
                 await yukki.pytgcalls.change_stream(
                     chat_id,
-                    AudioPiped(
-                        afk,
+                    InputStream(
+                        InputAudioStream(
+                            afk,
+                        ),
                     ),
                 )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
@@ -422,7 +426,7 @@ Req By : {Name}
                         AudioPiped(
                             file,
                         ),
-                        stream_type=StreamType().pulse_stream,
+                        stream_type=StreamType().local_stream,
                     )
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
@@ -562,10 +566,12 @@ Req By : {Name}
                     await add_active_chat(chat_id)
                     await yukki.pytgcalls.join_group_call(
                         chat_id,
-                        AudioPiped(
-                            file,
+                        InputStream(
+                            InputAudioStream(
+                                file,
+                            ),
                         ),
-                        stream_type=StreamType().pulse_stream,
+                        stream_type=StreamType().local_stream,
                     )
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
