@@ -129,11 +129,12 @@ def search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, du
 def personal_markup(link):
     buttons= [
             [ 
-                InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
+                InlineKeyboardButton(text="🗑 Close", callback_data=f'cls')
             ],
         ]
-    return buttons   
-  
+    return buttons
+
+
 start_keyboard = InlineKeyboardMarkup( 
             [
                 [
