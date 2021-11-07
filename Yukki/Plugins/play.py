@@ -17,7 +17,7 @@ from pytgcalls import StreamType
 from sys import version as pyver
 from pyrogram import Client, filters
 from pyrogram.types import Message, Voice, Audio
-from pytgcalls.types.input_stream import AudioPiped
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, ASS_ACC)
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
@@ -312,10 +312,12 @@ async def play(_, message: Message):
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
             chat_id,
-            AudioPiped(
-                file,
+            InputStream(
+                InputAudioStream(
+                    file,
+                ),
             ),
-            stream_type=StreamType().pulse_stream,
+            stream_type=StreamType().local_stream,
         )
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
@@ -457,10 +459,12 @@ async def startyuplay(_,CallbackQuery):
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
             chat_id, 
-            AudioPiped(
-                file,
+            InputStream(
+                InputAudioStream(
+                    file,
+                ),
             ),
-            stream_type=StreamType().pulse_stream,
+            stream_type=StreamType().local_stream,
         ) 
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
