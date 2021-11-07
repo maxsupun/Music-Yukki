@@ -15,7 +15,7 @@ from pyrogram import Client, filters
 from Yukki.converter import converter
 from Yukki.config import LOG_GROUP_ID
 from youtubesearchpython import VideosSearch
-from pytgcalls.types.input_stream import AudioPiped
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.helpers.inline import play_keyboard
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
@@ -121,8 +121,10 @@ Title: {ctitle}
                 file = await convert(xx)
                 await pytgcalls.change_stream(
                     chat_id,
-                    AudioPiped(
-                        file,
+                    InputStream(
+                        InputAudioStream(
+                            file,
+                        ),
                     ),
                 )
                 thumbnail = (x["thumbnail"])
@@ -147,8 +149,10 @@ Title: {ctitle}
             else:      
                 await pytgcalls.change_stream(
                     chat_id,
-                    AudioPiped(
-                        afk,
+                    InputStream(
+                        InputAudioStream(
+                            afk,
+                        ),
                     ),
                 )
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
