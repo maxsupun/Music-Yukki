@@ -11,7 +11,7 @@ py-tgcalls==0.8.1rc1
 pytube
 wget
 python-dotenv
-httpx>=0.14.2
+httpx==0.14.2
 search-engine-parser
 youtube-search
 speedtest-cli
