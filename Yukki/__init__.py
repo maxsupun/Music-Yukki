@@ -1,11 +1,13 @@
 print("[INFO]: INITIALIZING")
 
 import time
+import logging
 import aiohttp
 import asyncio
 import uvloop
 import importlib
 from Yukki import config
+from logging import getLogger
 from pyrogram import Client, idle
 from pyrogram import Client as Bot
 from aiohttp import ClientSession
@@ -21,6 +23,8 @@ def initialize():
 initialize()
 
 print("[INFO]: INITIALIZING DATABASE")
+
+LOGS = getLogger(__name__)
 
 MONGODB_CLI = MongoClient(MONGO_DB_URI)
 db = MONGODB_CLI.wbb
