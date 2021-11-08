@@ -6,7 +6,7 @@ async def LOG_CHAT(message, what):
     if message.chat.username:
         chatusername = (f"@{message.chat.username}")
     else:
-        chatusername = ("veez mega chat")
+        chatusername = ("VeezMegaBotChat")
     user_id = message.from_user.id
     user_name = message.from_user.first_name
     mention = "["+user_name+"](tg://user?id="+str(user_id)+")" 
@@ -20,4 +20,3 @@ __**New {what}**__
 **Chat Link:** {chatusername}
 **Query:** {message.text}"""
     await ASS_ACC.send_message(LOG_GROUP_ID, f"{logger_text}", disable_web_page_preview=True)
-    
