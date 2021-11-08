@@ -447,7 +447,7 @@ Req By : {Name}
         link = await paste(msg)
         preview = link + "/preview.png"
         urlxp = link + "/index.txt"
-        a1 = InlineKeyboardButton(text=f"checkout queued playlist", url=urlxp)
+        a1 = InlineKeyboardButton(text=f"Checkout Queued Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
                 [
@@ -593,7 +593,7 @@ Req By : {Name}
         link = await paste(msg)
         preview = link + "/preview.png"
         urlxp = link + "/index.txt"
-        a1 = InlineKeyboardButton(text=f"CheckOut Queued PlayList", url=urlxp)
+        a1 = InlineKeyboardButton(text=f"Checkout Queued Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
                 [
