@@ -6,7 +6,7 @@ from pytgcalls import idle
 from pyrogram import Client
 from .YukkiUtilities.tgcallsrun import run
 from .config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, LOG_GROUP_ID
-from Yukki import BOT_NAME, ASSNAME, app, chacha, aiohttpsession
+from Yukki import BOT_NAME, ASSNAME, app, chacha, aiohttpsession, LOGS
 from Yukki.YukkiUtilities.database.functions import clean_restart_stage
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, remove_active_chat)
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
@@ -57,9 +57,11 @@ async def load_start():
    
 loop = asyncio.get_event_loop()
 loop.run_until_complete(load_start())
-
 run()
 idle()
-loop.close()
 
+LOGS.info(
+    f"⚡ VEEZ MEGA ⚡ [SUCCESSFULLY ACTIVATED]")
+
+loop.close()
 print("[LOG] CLOSING BOT AND CLIENT")
