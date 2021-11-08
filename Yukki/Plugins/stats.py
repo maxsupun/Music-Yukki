@@ -1,3 +1,7 @@
+import os 
+import time
+from pymongo import MongoClient
+from ..config import MONGO_DB_URI as smex
 from Yukki import app, SUDOERS, BOT_ID
 from pyrogram import filters, Client
 from sys import version as pyver
@@ -12,15 +16,11 @@ from Yukki.YukkiUtilities.database.playlist import get_playlist_count
 from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.time import get_readable_time
 from Yukki import app, SUDOERS, YUKKI_START_TIME
-import os 
-import time
-from pymongo import MongoClient
-from ..config import MONGO_DB_URI as smex
 
 
 @app.on_message(command("stats") & filters.user(SUDOERS))
 async def gstats(_, message):
-    m = await message.reply_text("🔄 **getting bot stats...**\n\n» please wait for some time.")
+    m = await message.reply_text("🔄 **Getting bot stats...**\n\n» please wait for some time.")
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
