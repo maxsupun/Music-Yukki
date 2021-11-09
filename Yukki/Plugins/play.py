@@ -104,7 +104,7 @@ async def play(_, message: Message):
                 await ASS_ACC.join_chat(f"{message.chat.username}")
                 await remove_active_chat(chat_id)
             except Exception as e:
-                await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**:{e}")
+                await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")
                 return
         else:
             try:
@@ -115,7 +115,7 @@ async def play(_, message: Message):
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
-                return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: {e}")       
+                return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")       
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
     url = get_url(message)
     fucksemx = 0
@@ -174,7 +174,7 @@ async def play(_, message: Message):
             return await mystic.edit_text("❌ live stream video not supported")
         if views == "None":
             return await mystic.edit_text("❌ live stream video not supported")
-        semxbabes = (f"📥 downloading: {title[:35]}")
+        semxbabes = (f"📥 downloading: {title[:50]}")
         await mystic.edit(semxbabes)
         theme = random.choice(themes)
         ctitle = message.chat.title
@@ -369,7 +369,6 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**: {e}") 
     title = (x["title"])
-    await CallbackQuery.answer(f"🎧 name: {title[:25]}...\n\n💡 starting download & converting...", show_alert=True)
     mystic = await CallbackQuery.message.reply_text(f"📥 downloading: {title[:45]}")
     thumbnail = (x["thumbnail"])
     idx = (x["id"])
