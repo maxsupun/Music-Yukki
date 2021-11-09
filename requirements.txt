@@ -1,13 +1,13 @@
 tgcrypto
 git+https://github.com/pyrogram/pyrogram@master
 git+https://github.com/yt-dlp/yt-dlp@master
-youtube-search-python
+youtube-search-python==1.4.9
+py-tgcalls==0.8.1rc1
 aiohttp
 aiofiles
 asyncio
 ffmpeg-python
 Pillow
-py-tgcalls==0.8.1rc1
 pytube
 wget
 python-dotenv
