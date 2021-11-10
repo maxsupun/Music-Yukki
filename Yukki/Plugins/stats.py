@@ -2,7 +2,7 @@ import os
 import time
 from pymongo import MongoClient
 from ..config import MONGO_DB_URI as smex
-from Yukki import app, SUDOERS, BOT_ID, yukki_version
+from Yukki import app, SUDOERS, BOT_ID, __version__ as yukki_version
 from pyrogram import filters, Client
 from sys import version as pyver
 from pyrogram import __version__ as pyrover
