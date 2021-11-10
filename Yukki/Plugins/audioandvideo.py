@@ -359,8 +359,7 @@ async def boom(_,CallbackQuery):
 💡 **Song downloaded**
 
 🏷 **Name:** {x["title"]}
-⏱ **Duration:** `{round(x["duration"] / 60)}` m
-👀 **Views:** `{x["view_count"]}`
+⏱ **Duration:** `{round(x["duration"] / 60)}` min(s)
 📣 **Channel:** {x["uploader"]}
 
 ⚡️ __Powered by Veez Music AI__"""    
