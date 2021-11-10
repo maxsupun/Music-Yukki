@@ -16,11 +16,11 @@ async def smex(_, message):
     if state == "enable":
         user_id = 1
         await add_on(user_id)
-        await message.reply_text("✅ veez mega maintenance mode enabled")
+        await message.reply_text("✅ maintenance mode enabled\n\n• from now on, user can't play music after the maintenance mode is disabled.")
     elif state == "disable":
         user_id = 1
         await add_off(user_id)
-        await message.reply_text("❌ veez mega maintenance mode disabled")
+        await message.reply_text("❌ maintenance mode disabled\n\n• from now on, user can play music again.")
     else:
         await message.reply_text(usage)
 
