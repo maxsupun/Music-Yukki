@@ -331,7 +331,7 @@ def inl_mark(videoid, user_id):
     return buttons 
 
 
-ytdl_opts = {"format" : "bestaudio", "quiet":True}
+ytdl_opts = {"format" : "bestaudio/best", "quiet":True}
 
 
 @Client.on_callback_query(filters.regex(pattern=r"boom"))
