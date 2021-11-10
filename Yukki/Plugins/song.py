@@ -68,7 +68,7 @@ async def mpthree(_, message: Message):
     if url:
         query = " ".join(message.command[1:])
         mystic = await message.reply_text("🔎 **searching...**")
-        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        ydl_opts = {"format": "bestaudio/best"}
         try:
             results = VideosSearch(query, limit=1)
             for result in results.result()["result"]:
@@ -93,7 +93,7 @@ async def mpthree(_, message: Message):
         m = await message.reply_photo(
             photo=thumb,
             reply_markup=InlineKeyboardMarkup(buttons),    
-            caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n\n💡 [check music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
+            caption=(f"🏷 <b>Name:</b> [{title[:65]}]({url})\n\n💡 [Check music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
         )   
         os.remove(thumb)
     else:
@@ -173,12 +173,10 @@ async def startyuplay(_,CallbackQuery):
     m = await CallbackQuery.message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n\n💡 [check music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
+        caption=(f"🏷 <b>Name:</b> [{title[:65]}]({url})\n\n💡 [Check music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
     )   
     os.remove(thumb)
     await CallbackQuery.message.delete()
-
-        
         
         
 @Client.on_callback_query(filters.regex(pattern=r"chonga"))
