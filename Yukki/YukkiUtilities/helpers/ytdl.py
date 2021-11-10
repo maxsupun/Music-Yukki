@@ -9,4 +9,4 @@ ytdl = YoutubeDL(
     }
 )
 
-ytdl_opts = {"format" : "bestaudio", "quiet":True}
+ytdl_opts = {"format" : "bestaudio[ext=m4a]", "quiet":True}
