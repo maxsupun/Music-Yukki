@@ -50,7 +50,7 @@ def time_to_seconds(time):
 
 
 @Client.on_message(command(["music", "song"]) & other_filters)
-async def mpthree(_, message: Message):
+async def musicdl(_, message: Message):
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
@@ -67,7 +67,7 @@ async def mpthree(_, message: Message):
     fucksemx = 0
     if url:
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔎 **searching...**")
         ydl_opts = {"format": "bestaudio/best"}
         try:
             results = VideosSearch(query, limit=1)
@@ -100,7 +100,7 @@ async def mpthree(_, message: Message):
         if len(message.command) < 2:
             await message.reply_text("**usage:**\n\n/song or /music [yt url/music name]")
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔎 **searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -135,7 +135,7 @@ async def mpthree(_, message: Message):
     
     
 @Client.on_callback_query(filters.regex(pattern=r"beta"))
-async def startyuplay(_,CallbackQuery): 
+async def download_data(_,CallbackQuery): 
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
@@ -164,7 +164,6 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.reply_text(f"failed to download this video.\n\n**reason:** {e}") 
     title = (x["title"])
-    await CallbackQuery.answer(f"🎧 name: {title[:25]}...\n\n💡 processing download...", show_alert=True)
     thumbnail = (x["thumbnail"])
     idx = (x["id"])
     videoid = (x["id"])
@@ -188,7 +187,7 @@ async def chonga(_,CallbackQuery):
     try:
         id , query, user_id = callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"❌ an error occured\n**reason:** {e}")       
+        return await CallbackQuery.message.edit(f"❌ an error occured\n**reason:** `{e}`")       
     if CallbackQuery.from_user.id != int(user_id):
         return await CallbackQuery.answer("💡 sorry this is not for you", show_alert=True)
     i=int(id)
