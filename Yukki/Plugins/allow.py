@@ -32,7 +32,7 @@ async def whitelist_chat_func(_, message: Message):
         await message.reply_text("❌ chat has denied.")
         return
     except Exception as e:
-      await message.reply_text("Error.")
+      await message.reply_text(f"error: `{e}`")
 
 
 @app.on_message(filters.command("allowedchat") & filters.user(SUDOERS))
