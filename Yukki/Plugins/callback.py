@@ -179,13 +179,13 @@ async def skipvc(_,CallbackQuery):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply("💡 bot is currently playing playlist...\n\n📥 downloading next music from playlist...")
+                mystic = await CallbackQuery.message.reply("💡 currently playing playlist.\n\n📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
+                    return await mystic.edit(f"failed to download this video.\n\n**reason:** `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -332,10 +332,10 @@ async def play_playlist(_,CallbackQuery):
     chat_title = CallbackQuery.message.chat.title
     if str(smex) == "personal":
         if CallbackQuery.from_user.id != int(user_id):
-            return await CallbackQuery.answer("💡 this is not for you, play your own playlist", show_alert=True)
+            return await CallbackQuery.answer("💡 this is not your playlist", show_alert=True)
         _playlist = await get_note_names(CallbackQuery.from_user.id)
         if not _playlist:
-            return await CallbackQuery.answer(f"❌ you have no playlist on server", show_alert=True)
+            return await CallbackQuery.answer(f"❌ you have no playlist on database", show_alert=True)
         else:
             await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
@@ -638,7 +638,7 @@ async def group_playlist(_,CallbackQuery):
     try:
         url,smex= callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
+        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     Name = CallbackQuery.from_user.first_name
     _count = await get_note_names(chat_id)
     count = 0
@@ -651,7 +651,7 @@ async def group_playlist(_,CallbackQuery):
             count += 1   
     count = int(count)
     if count == 30:
-        return await CallbackQuery.message.reply_text("💡 sorry, you can only have 30 music in group's playlist.")
+        return await CallbackQuery.message.reply_text("💡 sorry you can only have 30 music in Group's playlist.")
     try:
         url = (f"https://www.youtube.com/watch?v={url}")
         results = VideosSearch(url, limit=1)
@@ -660,7 +660,7 @@ async def group_playlist(_,CallbackQuery):
             duration = (result["duration"])
             videoid = (result["id"])
     except Exception as e:
-            return await CallbackQuery.message.reply_text(f"❌ an error occured.\n\nplease forward to @VeezSupportGroup\n\n**reason:** {e}") 
+            return await CallbackQuery.message.reply_text(f"❌ an error occured.\n\nplease forward to @VeezSupportGroup\n\n**reason:** `{e}`") 
     _check = await get_playlist(chat_id, videoid)
     title = title[:50]
     if _check:
@@ -672,7 +672,7 @@ async def group_playlist(_,CallbackQuery):
     }
     await save_playlist(chat_id, videoid, assis)
     Name = CallbackQuery.from_user.first_name
-    return await CallbackQuery.message.reply_text(f"✅ added to **Group's playlist**\n\n👤 **By :** {Name}")
+    return await CallbackQuery.message.reply_text(f"✅ Added to **Group's playlist**\n │\n ├ **Request by:** {Name}")
   
 
 @Client.on_callback_query(filters.regex("playlist"))
@@ -685,7 +685,7 @@ async def pla_playylistt(_,CallbackQuery):
     try:
         url,smex= callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
+        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     Name = CallbackQuery.from_user.first_name
     _count = await get_note_names(userid)
     count = 0
@@ -701,7 +701,7 @@ async def pla_playylistt(_,CallbackQuery):
         if userid in SUDOERS:
             pass
         else:
-            return await CallbackQuery.message.reply_text("💡 sorry, you can only have 30 music in your playlist.")
+            return await CallbackQuery.message.reply_text("💡 sorry you can only have 30 music in your playlist.")
     try:
         url = (f"https://www.youtube.com/watch?v={url}")
         results = VideosSearch(url, limit=1)
@@ -721,7 +721,7 @@ async def pla_playylistt(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(userid, videoid, assis)
-    return await CallbackQuery.message.reply_text(f"✅ added to **personal playlist**\n\n👤 **for :** {Name}")   
+    return await CallbackQuery.message.reply_text(f"✅ Added to **personal playlist**\n │\n ├ **Request by:** {Name}")   
     
 
 @Client.on_callback_query(filters.regex("P_list"))
