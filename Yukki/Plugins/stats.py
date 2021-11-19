@@ -34,7 +34,7 @@ async def gstats(_, message):
             j += 1
         except Exception:
             continue                     
-    modules_count ="17"
+    modules_count ="20"
     sc = platform.system()
     arch = platform.machine()
     ram = str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
