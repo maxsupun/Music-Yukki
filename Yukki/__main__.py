@@ -50,9 +50,9 @@ async def load_start():
         except Exception as e:
             print("Error came while clearing db")
             pass     
-    await app.send_message(LOG_GROUP_ID, "✅ bot started successfully")
-    await chacha.send_message(LOG_GROUP_ID, "✅ assistant started successfully")
-    print("[INFO]: VEEZ CLIENT STARTED")
+    await app.send_message(LOG_GROUP_ID, "✅ client 2.0 started")
+    await chacha.send_message(LOG_GROUP_ID, "✅ client 2.1 started")
+    print("[INFO]: VEEZ MEGA CLIENT STARTED")
     
    
 loop = asyncio.get_event_loop()
@@ -64,4 +64,4 @@ LOGS.info(
     f"⚡ VEEZ MEGA ⚡ [SUCCESSFULLY ACTIVATED]")
 
 loop.close()
-print("[LOG] CLOSING BOT AND CLIENT")
+print("[LOG] TURNED OFF BOT AND CLIENT")
