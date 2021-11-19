@@ -153,7 +153,7 @@ async def play(_, message: Message):
     elif url:
         what = "URL Searched"
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔎 **searching...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = VideosSearch(query, limit=1)
@@ -244,7 +244,7 @@ async def play(_, message: Message):
             return
         what = "Query Given"
         query = " ".join(message.command[1:])
-        mystic = await message.reply_text("🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔎 **searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
