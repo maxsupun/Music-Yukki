@@ -44,7 +44,7 @@ async def blacklisted_chats_func(_, message: Message):
         for chat in chats:
             served_chats.append(int(chat["chat_id"]))
     except Exception as e:
-        await message.reply_text("Error.")
+        await message.reply_text(f"error: `{e}`")
         return
     count = 0
     for served_chat in served_chats:
