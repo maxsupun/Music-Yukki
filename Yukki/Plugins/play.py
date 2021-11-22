@@ -71,7 +71,7 @@ async def play(_, message: Message):
         return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
     a = await app.get_chat_member(message.chat.id , BOT_ID)
     if a.status != "administrator":
-        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Restrict users__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
+        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
         return
     if not a.can_manage_voice_chats:
         await message.reply_text(
@@ -87,11 +87,6 @@ async def play(_, message: Message):
         await message.reply_text(
         "missing required permission:"
         + "\n\n» ❌ __Add users__")
-        return
-    if not a.can_restrict_members:
-        await message.reply_text(
-        "missing required permission:"
-        + "\n\n» ❌ __Restrict users__")
         return
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
@@ -171,10 +166,10 @@ async def play(_, message: Message):
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"❌ **__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("❌ live stream video not supported")
+            return await mystic.edit_text("❌ live stream not supported")
         if views == "None":
-            return await mystic.edit_text("❌ live stream video not supported")
-        semxbabes = (f"📥 downloading: {title[:50]}")
+            return await mystic.edit_text("❌ live stream not supported")
+        semxbabes = (f"📥 downloading: {title[:55]}")
         await mystic.edit(semxbabes)
         theme = random.choice(themes)
         ctitle = message.chat.title
