@@ -44,13 +44,13 @@ async def lyricssex(_,CallbackQuery):
     xxx = f"""
 ⚡️ __Powered by Veez Music AI__
 
-**Searched By:** {usr}
-**Searched Song:** __{title}__
+**Request By:** {usr}
+**Song Name:** __{title}__
 
-**Lyrics Found:** __{S.title}__
-**Artist:** {S.artist}
+**Lyric Found:** __{S.title}__
+**Artist Name:** {S.artist}
 
-**__Lyrics:__**
+🎧 **__Lyrics:__**
 
 {S.lyrics}"""
     await CallbackQuery.message.reply_text(xxx)
@@ -69,12 +69,12 @@ async def lrsearch(_, message: Message):
     xxx = f"""
 ⚡️ __Powered by Veez Music AI__
 
-**Searched Song:** __{query}__
+**Song Name:** __{query}__
 
-**Lyrics Found:** __{S.title}__
-**Artist:** {S.artist}
+**Lyric Found:** __{S.title}__
+**Artist Name:** {S.artist}
 
-**__Lyrics:__**
+🎧 **__Lyrics:__**
 
 {S.lyrics}"""
     await m.edit(xxx)
