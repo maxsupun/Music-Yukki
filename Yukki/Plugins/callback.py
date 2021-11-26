@@ -307,8 +307,7 @@ async def stopvc(_,CallbackQuery):
             await yukki.pytgcalls.leave_group_call(chat_id)
         except Exception as e:
             pass
-        await remove_active_chat(CallbackQuery.message.chat.id) 
-        await CallbackQuery.answer("✅ music playback has ended", show_alert=True)
+        await remove_active_chat(CallbackQuery.message.chat.id)
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
