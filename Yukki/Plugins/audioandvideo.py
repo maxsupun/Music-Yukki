@@ -64,7 +64,7 @@ async def good(_,CallbackQuery):
 async def close_admin(_, query: CallbackQuery):
     a = await _.get_chat_member(query.message.chat.id, query.from_user.id)
     if not a.can_manage_voice_chats:
-        return await query.answer("💡 only admin can tap this button !", show_alert=True)
+        return await query.answer("💡 Only admin with manage video chat permission that can tap this button !", show_alert=True)
     await query.message.delete()
     await query.answer()
 
@@ -102,7 +102,7 @@ async def getspy(_,CallbackQuery):
         user_time[userid] = now + \
                                      timedelta(minutes=youtube_next_fetch)
     except Exception:
-        return await CallbackQuery.message.reply_text("❌ failed to fetch data.")
+        return await CallbackQuery.message.reply_text("❌ failed to fetch data")
     j = 0
     a = 0
     b = 0
