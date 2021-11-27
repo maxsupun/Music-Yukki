@@ -330,7 +330,7 @@ async def play(_, message: Message):
         await message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🏷 <b>Name:</b> [{title[:65]}]({link})\n⏱ <b>Duration:</b> `{duration}`\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
+        caption=(f"🏷 <b>Name:</b> [{title[:75]}]({link})\n⏱ <b>Duration:</b> `{duration}`\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
     )   
         return await mystic.delete()
          
@@ -349,7 +349,7 @@ async def startyuplay(_,CallbackQuery):
     if duration == "None":
         return await CallbackQuery.message.reply_text(f"❌ live stream not supported")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry this not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this not your request", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -363,7 +363,7 @@ async def startyuplay(_,CallbackQuery):
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(url, download=False)
     except Exception as e:
-        return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**: {e}") 
+        return await CallbackQuery.message.reply_text(f"❌ failed to download video.\n\n**reason**: `{e}`") 
     title = (x["title"])
     mystic = await CallbackQuery.message.reply_text(f"📥 downloading: {title[:45]}")
     thumbnail = (x["thumbnail"])
@@ -466,7 +466,7 @@ async def startyuplay(_,CallbackQuery):
         m = await CallbackQuery.message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🏷 <b>Name:</b> [{title[:65]}]({url}) \n⏱ <b>Duration:</b> `{duration}`\n💡 **Status:** `Playing`\n🎧 **Request by:** {checking}")
+        caption=(f"🏷 <b>Name:</b> [{title[:75]}]({url}) \n⏱ <b>Duration:</b> `{duration}`\n💡 **Status:** `Playing`\n🎧 **Request by:** {checking}")
     )   
         os.remove(thumb)
         await CallbackQuery.message.delete()
@@ -483,7 +483,7 @@ async def popat(_, CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"an error occured\n\n**reason**: {e}")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry this not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this not your request", show_alert=True)
     i=int(id)
     query = str(query)
     try:
