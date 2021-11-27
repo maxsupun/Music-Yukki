@@ -103,9 +103,10 @@ async def play(_, message: Message):
                 return
         else:
             try:
-                xxy = await app.export_chat_invite_link(message.chat.id)
-                yxy = await app.revoke_chat_invite_link(message.chat.id, xxy)
-                await ASS_ACC.join_chat(yxy.invite_link)
+                link = await app.export_chat_invite_link(chat_id)
+                if "+" in link:
+                    link_hash = (link.replace("+", "")).split("t.me/")[1]
+                    await ASS_ACC.join_chat(link_hash)
                 await remove_active_chat(chat_id)
             except UserAlreadyParticipant:
                 pass
