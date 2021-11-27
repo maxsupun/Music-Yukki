@@ -85,9 +85,9 @@ async def musicdl(_, message: Message):
         if smex > DURATION_LIMIT:
             return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("❌ **sorry, live stream not supported**")
+            return await mystic.edit_text("❌ **live stream not supported**")
         if views == "None":
-            return await mystic.edit_text("❌ **sorry, live stream not supported**")
+            return await mystic.edit_text("❌ **live stream not supported**")
         thumb = await down_thumb(thumbnail, user_id)
         buttons = gets(videoid, user_id)
         m = await message.reply_photo(
@@ -144,11 +144,11 @@ async def download_data(_,CallbackQuery):
     try:
         id,duration,user_id = callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
+        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"❌ **sorry, live stream not supported**")      
+        return await CallbackQuery.message.reply_text(f"❌ **live stream not supported**")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry this is not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -189,7 +189,7 @@ async def chonga(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n**reason:** `{e}`")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry this is not for you", show_alert=True)
+        return await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
     i=int(id)
     query = str(query)
     try:
