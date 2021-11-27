@@ -334,7 +334,7 @@ async def play_playlist(_,CallbackQuery):
             return await CallbackQuery.answer("💡 this is not your playlist", show_alert=True)
         _playlist = await get_note_names(CallbackQuery.from_user.id)
         if not _playlist:
-            return await CallbackQuery.answer(f"❌ you have no playlist on database", show_alert=True)
+            return await CallbackQuery.answer(f"❌ you not have playlist on database", show_alert=True)
         else:
             await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
@@ -638,7 +638,7 @@ async def group_playlist(_,CallbackQuery):
         url,smex= callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
-    Name = CallbackQuery.from_user.first_name
+    Name = CallbackQuery.from_user.mention
     _count = await get_note_names(chat_id)
     count = 0
     if not _count:
@@ -685,7 +685,7 @@ async def pla_playylistt(_,CallbackQuery):
         url,smex= callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
-    Name = CallbackQuery.from_user.first_name
+    Name = CallbackQuery.from_user.mention
     _count = await get_note_names(userid)
     count = 0
     if not _count:
