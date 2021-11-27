@@ -110,8 +110,6 @@ async def play(_, message: Message):
                 await remove_active_chat(chat_id)
             except UserAlreadyParticipant:
                 pass
-            await asyncio.sleep(3)
-            await app.revoke_chat_invite_link(chat_id, link)
             except Exception as e:
                 return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")       
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
