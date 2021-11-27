@@ -116,7 +116,6 @@ async def play(_, message: Message):
 ⏱ **Duration:** {round(x["duration"] / 60)} min(s)
 👀 **Views:** `{x["view_count"]}`
 👍🏻 **Likes:** `{x["like_count"]}`
-👎🏻 **Dislikes:** `{x["dislike_count"]}`
 ⭐️ **Ratings:** {x["average_rating"]}
 📣 **Channel:** {x["uploader"]}
 🔗 **Link:** {x["webpage_url"]}
