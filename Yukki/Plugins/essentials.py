@@ -68,7 +68,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 )
 async def executor(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="__please give me some command to execute.__")
+        return await edit_or_reply(message, text="» please give me some command to execute.")
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -95,8 +95,8 @@ async def executor(client, message):
     elif stdout:
         evaluation = stdout
     else:
-        evaluation = "Success"
-    final_output = f"• **OUTPUT**:\n\n```{evaluation.strip()}```"
+        evaluation = ".:: SUCCESS ::."
+    final_output = f"**:: OUTPUT ::**\n\n```{evaluation.strip()}```"
     if len(final_output) > 4096:
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:
@@ -148,7 +148,7 @@ async def runtime_func_cq(_, cq):
 )
 async def shellrunner(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="**usage:**\n\n/sh git pull")
+        return await edit_or_reply(message, text="**usage:**\n\n» /sh git pull")
     text = message.text.split(None, 1)[1]
     if "\n" in text:
         code = text.split("\n")
@@ -204,4 +204,4 @@ async def shellrunner(client, message):
             return os.remove("output.txt")
         await edit_or_reply(message, text=f"**OUTPUT:**\n```{output}```")
     else:
-        await edit_or_reply(message, text="**OUTPUT: **\n`No output`")
+        await edit_or_reply(message, text="**OUTPUT: **\n`no output`")
