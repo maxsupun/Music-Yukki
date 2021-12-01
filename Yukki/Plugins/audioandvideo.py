@@ -71,8 +71,11 @@ async def close_admin(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cls"))
 async def close_user(_, query: CallbackQuery):
-    await query.message.delete()
-    await query.answer()
+    try:
+        await query.message.delete()
+        await query.message.reply_to_message.delete()
+    except:
+        pass
 
 
 @Client.on_callback_query(filters.regex(pattern=r"down"))
