@@ -29,6 +29,10 @@ def others_markup(videoid, user_id):
                 InlineKeyboardButton(text="➕ Group Playlist", callback_data=f'group_playlist {videoid}|{user_id}')
             ],
             [
+                InlineKeyboardButton(text="📥 Get Audio", callback_data=f'gets audio|{videoid}|{user_id}'),
+                InlineKeyboardButton(text="📥 Get Video", callback_data=f'gets video|{videoid}|{user_id}')
+            ],
+            [
                 InlineKeyboardButton(text="🔙 Go Back", callback_data=f'goback {videoid}|{user_id}')
             ],
         ]
