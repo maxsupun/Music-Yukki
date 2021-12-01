@@ -351,6 +351,7 @@ async def startyuplay(_,CallbackQuery):
     if CallbackQuery.from_user.id != int(user_id):
         return await CallbackQuery.answer("💡 sorry this not your request", show_alert=True)
     await CallbackQuery.message.delete()
+    await CallbackQuery.message.reply_to_message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
     videoid = id
