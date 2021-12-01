@@ -97,9 +97,10 @@ async def closesmex(_,CallbackQuery):
         await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
         return 
     if CallbackQuery.from_user.id != int(user_id):
-        await CallbackQuery.answer("💡 sorry this is not for you !", show_alert=True)
+        await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
         return
     await CallbackQuery.message.delete()
+    await CallbackQuery.message.reply_to_message.delete()
     await CallbackQuery.answer()
     
     
