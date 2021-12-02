@@ -49,6 +49,7 @@ async def member_permissions(chat_id: int, user_id: int):
     return perms
 from Yukki.YukkiUtilities.helpers.administrator import adminsOnly
 
+
 @app.on_message(filters.command("cleandb"))
 async def stop_cmd(_, message): 
     chat_id = message.chat.id
@@ -62,7 +63,8 @@ async def stop_cmd(_, message):
     except:
         pass   
     await message.reply_text("🗑 Cleaned databae, queues, logs, raw files, downloads")
-    
+
+
 @app.on_message(filters.command("pause"))
 async def pause_cmd(_, message): 
     if message.sender_chat:
@@ -119,7 +121,7 @@ async def stop_cmd(_, message):
             pass                        
         await remove_active_chat(chat_id)
         await yukki.pytgcalls.leave_group_call(message.chat.id)
-        await message.reply_text("✅ **music playback has ended.**") 
+        await message.reply_text("✅ The userbot has disconnected from the voice chat.") 
     else:
         return await message.reply_text("❌ **no music is currently playing**")
 
@@ -127,7 +129,7 @@ async def stop_cmd(_, message):
 @app.on_message(filters.command("skip"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
+        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -141,7 +143,7 @@ async def stop_cmd(_, message):
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("❌ no more music in __Queue__ \n\n» userbot leaving voice chat")
+            await message.reply_text("❌ no more music in __Queues__ \n\n» userbot leaving vjdeo chat")
             await yukki.pytgcalls.leave_group_call(message.chat.id)
             return  
         else:
@@ -151,13 +153,13 @@ async def stop_cmd(_, message):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await message.reply_text("💡 bot currently playing playlist...\n\n💭 downloading next music from playlist...")
+                mystic = await message.reply_text("💡 currently playing playlist !\n\n💭 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this video.\n\n**reason**: {e}") 
+                    return await mystic.edit(f"failed to download this video.\n\n**reason**: `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
