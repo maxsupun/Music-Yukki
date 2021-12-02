@@ -94,13 +94,12 @@ async def closesmex(_,CallbackQuery):
     try:
         smex, user_id = callback_request.split("|") 
     except Exception as e:
-        await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** {e}")
+        await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
         return 
     if CallbackQuery.from_user.id != int(user_id):
         await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
         return
     await CallbackQuery.message.delete()
-    await CallbackQuery.message.reply_to_message.delete()
     await CallbackQuery.answer()
     
     
@@ -671,7 +670,7 @@ async def group_playlist(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(chat_id, videoid, assis)
-    Name = CallbackQuery.from_user.first_name
+    Name = CallbackQuery.from_user.mention
     return await CallbackQuery.message.reply_text(f"✅ Added to **Group's playlist**\n │\n └ **Request by:** {Name}")
   
 
