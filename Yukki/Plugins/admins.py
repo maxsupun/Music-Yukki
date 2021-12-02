@@ -68,7 +68,7 @@ async def stop_cmd(_, message):
 @app.on_message(filters.command("pause"))
 async def pause_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
+        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -87,7 +87,7 @@ async def pause_cmd(_, message):
 @app.on_message(filters.command("resume"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
+        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -107,7 +107,7 @@ async def stop_cmd(_, message):
 @app.on_message(filters.command(["stop", "end"]))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account.") 
+        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
