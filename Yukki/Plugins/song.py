@@ -56,7 +56,7 @@ async def musicdl(_, message: Message):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account from admin rights.")  
+        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account from admin rights.")  
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
