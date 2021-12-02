@@ -172,11 +172,23 @@ confirm_group_keyboard = InlineKeyboardMarkup(
             ]
         )
 
+
 close_keyboard = InlineKeyboardMarkup( 
             [
                 [
                     InlineKeyboardButton(
                         "🗑 Close", callback_data="close2"
+                    )
+                ]    
+            ]
+        )
+
+
+none_keyboard = InlineKeyboardMarkup( 
+            [
+                [
+                    InlineKeyboardButton(
+                        "🗑 Close", callback_data="cls"
                     )
                 ]    
             ]
