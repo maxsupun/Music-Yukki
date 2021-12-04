@@ -23,7 +23,7 @@ from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, i
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
-from ..YukkiUtilities.helpers.inline import (play_keyboard, none_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard)
+from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard)
 from Yukki.YukkiUtilities.database.blacklistchat import (blacklisted_chats, blacklist_chat, whitelist_chat)
 from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
@@ -232,7 +232,6 @@ async def play(_, message: Message):
             user_name = message.from_user.first_name
             thumb ="cache/playlist.png"
             buttons = playlist_markup(user_name, user_id)
-            tombol = none_keyboard
             hmo = await message.reply_photo(
             photo=thumb, 
             caption=("**usage:** /play (music name/youtube url/audio file)\n\nIf you want to play from playlist, select one from below."),    
@@ -261,13 +260,14 @@ async def play(_, message: Message):
             ID4 = (result[3]["id"])
             ID5 = (result[4]["id"])
         except Exception as e:
-            return await mystic.edit(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**", reply_markup=InlineKeyboardMarkup(tombol))
+            return await mystic.edit_text(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
         thumb = "cache/results.png"
         url = "https://www.youtube.com/watch?v={id}"
         await mystic.delete()   
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
-        await mystic.edit(
-            1️⃣ <b>[{title1[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n └ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n └ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n └ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n └ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n └ ⚡ __Powered by Veez Music AI__"),    
+        hmo = await message.reply_photo(
+            photo=thumb, 
+            caption=(f"1️⃣ <b>[{title1[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})**\n └ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})**\n └ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})**\n └ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})**\n └ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}...]({url})</b>\n ├ 💡 **[More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})**\n └ ⚡ __Powered by Veez Music AI__"),    
             reply_markup=InlineKeyboardMarkup(buttons),
         )  
         disable_web_page_preview=True
@@ -478,10 +478,9 @@ async def popat(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
     print(callback_request)
-    userid = CallbackQuery.from_user.id
-    tombol = none_keyboard
+    userid = CallbackQuery.from_user.id 
     try:
-        id , query, user_id = callback_request.split("|") 
+        id, query, user_id = callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"an error occured\n\n**reason**: {e}")       
     if CallbackQuery.from_user.id != int(user_id):
@@ -522,7 +521,7 @@ async def popat(_, CallbackQuery):
         ID9 = (result[8]["id"])
         ID10 = (result[9]["id"])                    
     except Exception as e:
-        return await mystic.edit("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**", reply_markup=InlineKeyboardMarkup(tombol))
+        return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
     if i == 1:
         url = "https://www.youtube.com/watch?v={id}"
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
