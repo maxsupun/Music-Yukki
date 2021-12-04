@@ -1,9 +1,8 @@
-TgCrypto
-git+https://github.com/pyrogram/pyrogram@master
+tgcrypto
+pyrogram
 youtube-search-python==1.4.9
 yt-dlp==2021.11.10.1
 py-tgcalls
-httpx==0.13.3
 aiohttp
 aiofiles
 asyncio
