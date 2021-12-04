@@ -221,7 +221,7 @@ async def play(_, message: Message):
                 except Exception as e:
                     taken = "00:00"
                 size = d['_total_bytes_str']
-                mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File** [__FFmpeg processing__]")
+                mystic.edit(f"**Downloaded {title[:55]}...**\n\n**size:** {size} mb\n**time:** {taken} sec\n\n**Converting file** [ffmpeg process]")
                 print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")  
         loop = asyncio.get_event_loop()
         x = await loop.run_in_executor(None, download, link, my_hook)
@@ -414,7 +414,7 @@ async def startyuplay(_,CallbackQuery):
             except Exception as e:
                 taken = "00:00"
             size = d['_total_bytes_str']
-            mystic.edit(f"**Downloaded: {title[:50]}...**\n\n**Size:** `{size}`\n**Time:** `{taken}` sec\n\n**Converting File **[__FFmpeg process__]")
+            mystic.edit(f"**Downloaded: {title[:55]}...**\n\n**size:** `{size}` mb\n**time:** `{taken}` sec\n\n**Converting file [ffmpeg process]")
             print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")    
     loop = asyncio.get_event_loop()
     x = await loop.run_in_executor(None, download, url, my_hook)
