@@ -32,7 +32,7 @@ async def ban_globally(_, message):
             chats = await get_served_chats()
             for chat in chats:
                 served_chats.append(int(chat["chat_id"]))
-            m = await message.reply_text(f"**Initializing Global ban of {user.mention}**\n\nExpected Time: {len(served_chats)}")    
+            m = await message.reply_text(f"**Initializing Global ban of {user.mention}**\n\nExpected time: `{len(served_chats)}`")    
             number_of_chats = 0
             for sex in served_chats:
                 try:
@@ -44,7 +44,7 @@ async def ban_globally(_, message):
                 except Exception:
                     pass    
             ban_text = f"""
-__**new global ban on veez mega**__
+🚷 **new global ban on veez mega**
 
 **Origin:** {message.chat.title} [`{message.chat.id}`]
 **Sudo User:** {from_user.mention}
@@ -90,7 +90,7 @@ __**new global ban on veez mega**__
                 except Exception:
                     pass    
             ban_text = f"""
-__**new global ban on veez mega**__
+🚷 **new global ban on veez mega**
 
 **Origin:** {message.chat.title} [`{message.chat.id}`]
 **Sudo User:** {from_user_mention}
