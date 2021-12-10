@@ -1,14 +1,15 @@
-from pyrogram import filters, Client
-from pyrogram.types import Message
-from Yukki import app, SUDOERS
-from sys import version as pyver
-import subprocess
-import shutil
 import os
-from Yukki.YukkiUtilities.database.functions import start_restart_stage
-from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done)
-from Yukki.YukkiUtilities.database.queue import get_active_chats
+import shutil
+import asyncio
+import subprocess
+from sys import version as pyver
+from pyrogram import filters, Client
+from pyrogram.errors import FloodWait
+from pyrogram.types import Message
+
+from Yukki import app, SUDOERS
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
+
 
 @app.on_message(filters.command("restart") & filters.user(SUDOERS))
 async def theme_func(_, message):
@@ -16,6 +17,7 @@ async def theme_func(_, message):
     B = "raw_files"
     shutil.rmtree(A)
     shutil.rmtree(B)
+    await asyncio.sleep(2)
     os.mkdir(A)
     os.mkdir(B)
     served_chats = []
@@ -27,23 +29,22 @@ async def theme_func(_, message):
         pass
     for x in served_chats:
         try:
-            await app.send_message(x, "veez mega server has just restarted.\n\nsorry for the issues, start playing after 15-20 seconds again.")
+            await app.send_message(
+                x,
+                f"veez mega server has just restarted.\n\nsorry for the issues, start playing after 15-20 seconds again.",
+            )
+            await remove_active_chat(x)
         except Exception:
             pass
-    served_chatss = []
-    try:
-        chats = await get_active_chats()
-        for chat in chats:
-            served_chatss.append(int(chat["chat_id"]))
-    except Exception as e:
-        pass
-    for served_chat in served_chatss:
-        try:
-            await remove_active_chat(served_chat)   
-        except Exception as e:
-            await message.reply_text(f"{e}")
-            pass    
-    x = await message.reply_text(f"🔄 __restarting veez mega bot...__")   
-    await start_restart_stage(x.chat.id, x.message_id)
-    os.execvp(f"python{str(pyver.split(' ')[0])[:3]}", [
-              f"python{str(pyver.split(' ')[0])[:3]}", "-m", "Yukki"])    
+    x = await message.reply_text(f"restarting veez mega bot.")
+    os.system(f"kill -9 {os.getpid()} && python3 -m Yukki")
+
+
+@app.on_message(filters.command("update") & filters.user(SUDOERS))
+async def update(_, message):
+    m = subprocess.check_output(["git", "pull"]).decode("UTF-8")
+    if str(m[0]) != "A":
+        x = await message.reply_text("update found, pushing now !")
+        return os.system(f"kill -9 {os.getpid()} && python3 -m Yukki")
+    else:
+        await message.reply_text("bot is already up-to-date")
