@@ -14,7 +14,7 @@ from pyrogram.errors import MessageNotModified
 from pyrogram.types import Message, ReplyKeyboardMarkup
 
 from Yukki import SUDOERS, app
-from Yukki.Utilities.tasks import add_task, rm_task
+from Yukki.YukkiUtilities.helpers.tasks import add_task, rm_task
 
 
 m = None
