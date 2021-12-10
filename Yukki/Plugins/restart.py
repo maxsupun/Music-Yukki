@@ -3,15 +3,16 @@ import shutil
 import asyncio
 import subprocess
 from sys import version as pyver
+from pyrogram.types import Message
 from pyrogram import filters, Client
 from pyrogram.errors import FloodWait
-from pyrogram.types import Message
+
 from Yukki import app, SUDOERS
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 
 
 @app.on_message(filters.command("restart") & filters.user(SUDOERS))
-async def theme_func(_, message):
+async def restart_server(_, message):
     A = "downloads"
     B = "raw_files"
     shutil.rmtree(A)
@@ -40,7 +41,7 @@ async def theme_func(_, message):
 
 
 @app.on_message(filters.command("update") & filters.user(SUDOERS))
-async def update(_, message):
+async def update_bot(_, message):
     m = subprocess.check_output(["git", "pull"]).decode("UTF-8")
     if str(m[0]) != "A":
         x = await message.reply_text("update found, pushing now !")
@@ -80,3 +81,20 @@ async def activevc(_, message: Message):
             f"💡 **Active voice chats:**\n\n{text}",
             disable_web_page_preview=True,
         )
+
+
+@app.on_message(filters.command("leavebot") & filters.user(SUDOERS))
+async def bot_leave_group(_, message):
+    if len(message.command) != 2:
+        await message.reply_text(
+            "**usage:**\n\n/leavebot [chat username or chat id]"
+        )
+        return
+    chat = message.text.split(None, 2)[1]
+    try:
+        await app.leave_chat(chat)
+    except Exception as e:
+        await message.reply_text(f"❌ procces failed\n\nreason: `{e}`")
+        print(e)
+        return
+    await message.reply_text("✅ bot successfully left chat")
