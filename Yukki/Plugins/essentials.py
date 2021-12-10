@@ -72,7 +72,7 @@ async def iter_edit(message: Message, text: str):
 async def executor(client, message: Message):
     global m, p, r
     if len(message.command) < 2:
-        return await eor(message, text="Command needed to execute")
+        return await eor(message, text="Give a command to execute")
 
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
@@ -105,7 +105,7 @@ async def executor(client, message: Message):
             m,
         )
 
-        text = f"{arrow('')} Pending Task `{task_id}`"
+        text = f"{arrow('')} pending task `{task_id}`"
         if not message.edit_date:
             status = await m.reply(text, quote=True)
 
@@ -167,7 +167,7 @@ async def executor(client, message: Message):
 )
 async def shellrunner(_, message: Message):
     if len(message.command) < 2:
-        return await eor(message, text="**Usage:**\n/sh git pull")
+        return await eor(message, text="**usage:**\n\n/sh git pull")
 
     if message.reply_to_message:
         r = message.reply_to_message
