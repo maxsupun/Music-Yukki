@@ -6,7 +6,6 @@ from sys import version as pyver
 from pyrogram import filters, Client
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
-
 from Yukki import app, SUDOERS
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 
@@ -48,3 +47,36 @@ async def update(_, message):
         return os.system(f"kill -9 {os.getpid()} && python3 -m Yukki")
     else:
         await message.reply_text("bot is already up-to-date")
+
+
+@app.on_message(filters.command("activevc") & filters.user(SUDOERS))
+async def activevc(_, message: Message):
+    served_chats = []
+    try:
+        chats = await get_active_chats()
+        for chat in chats:
+            served_chats.append(int(chat["chat_id"]))
+    except Exception as e:
+        await message.reply_text(f"error: `{e}`")
+    text = ""
+    j = 0
+    for x in served_chats:
+        try:
+            title = (await app.get_chat(x)).title
+        except Exception:
+            title = "Private Group"
+        if (await app.get_chat(x)).username:
+            user = (await app.get_chat(x)).username
+            text += (
+                f"<b>{j + 1}.</b>  [{title}](https://t.me/{user})[`{x}`]\n"
+            )
+        else:
+            text += f"<b>{j + 1}. {title}</b> [`{x}`]\n"
+        j += 1
+    if not text:
+        await message.reply_text("❌ no active voice chats")
+    else:
+        await message.reply_text(
+            f"💡 **Active voice chats:**\n\n{text}",
+            disable_web_page_preview=True,
+        )
