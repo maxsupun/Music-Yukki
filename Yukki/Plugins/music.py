@@ -54,6 +54,7 @@ def time_to_seconds(time):
 
 @Client.on_message(command(["play", "play@VeezMegaBot"]) & other_filters)
 async def play(_, message: Message):
+    await message.delete()
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
@@ -103,10 +104,14 @@ async def play(_, message: Message):
                 return
         else:
             try:
-                link = await app.export_chat_invite_link(chat_id)
-                if "+" in link:
-                    link_hash = (link.replace("+", "")).split("t.me/")[1]
-                    await ASS_ACC.join_chat(link_hash)
+                invitelink = await app.export_chat_invite_link(
+                    message.chat.id
+                )
+                if invitelink.startswith("https://t.me/+"):
+                    invitelink = invitelink.replace(
+                        "https://t.me/+", "https://t.me/joinchat/"
+                    )
+                await ASS_ACC.join_chat(invitelink)
                 await remove_active_chat(chat_id)
             except UserAlreadyParticipant:
                 pass
@@ -149,7 +154,7 @@ async def play(_, message: Message):
     elif url:
         what = "URL Searched"
         query = " ".join(message.command[1:])
-        mystic = await _.send_message(chat_id, "🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = VideosSearch(query, limit=1)
@@ -240,7 +245,7 @@ async def play(_, message: Message):
             return
         what = "Query Given"
         query = " ".join(message.command[1:])
-        mystic = await _.send_message(chat_id, "🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
