@@ -51,6 +51,7 @@ def time_to_seconds(time):
 
 @Client.on_message(command(["music", "song"]) & other_filters)
 async def musicdl(_, message: Message):
+    await message.delete()
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats. ask any sudo user to allow your chat.\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
@@ -67,7 +68,7 @@ async def musicdl(_, message: Message):
     fucksemx = 0
     if url:
         query = " ".join(message.command[1:])
-        mystic = await _.send_message(chat_id, "🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         ydl_opts = {"format": "bestaudio/best"}
         try:
             results = VideosSearch(query, limit=1)
@@ -100,7 +101,7 @@ async def musicdl(_, message: Message):
         if len(message.command) < 2:
             await message.reply_text("**usage:**\n\n/song or /music [yt url/music name]")
         query = " ".join(message.command[1:])
-        mystic = await _.send_message(chat_id, "🔎 **searching...**")
+        mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -162,7 +163,7 @@ async def download_data(_,CallbackQuery):
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(url, download=False)
     except Exception as e:
-        return await CallbackQuery.message.reply_text(f"failed to download this video.\n\n**reason:** {e}") 
+        return await CallbackQuery.message.reply_text(f"failed to download this video.\n\n**reason:** `{e}`") 
     title = (x["title"])
     thumbnail = (x["thumbnail"])
     idx = (x["id"])
