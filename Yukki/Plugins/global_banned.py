@@ -26,13 +26,12 @@ async def ban_globally(_, message):
         elif user.id in sudoers:
             await message.reply_text("you can't block a sudo user !")
         else:
-            
             await add_gban_user(user.id)
             served_chats = []
             chats = await get_served_chats()
             for chat in chats:
                 served_chats.append(int(chat["chat_id"]))
-            m = await message.reply_text(f"**Initializing Global ban of {user.mention}**\n\nExpected time: `{len(served_chats)}`")    
+            m = await message.reply_text("🚷 **Globally banning {user.mention}**\n⏱ Expected time: `{len(served_chats)}`")    
             number_of_chats = 0
             for sex in served_chats:
                 try:
@@ -78,7 +77,7 @@ async def ban_globally(_, message):
             chats = await get_served_chats()
             for chat in chats:
                 served_chats.append(int(chat["chat_id"]))
-            m = await message.reply_text(f"**Initializing Global ban of {mention}**\n\nExpected Time: {len(served_chats)}")    
+            m = await message.reply_text(f"🚷 **Globally banning {user.mention}**\n⏱ Expected time: `{len(served_chats)}`")    
             number_of_chats = 0
             for sex in served_chats:
                 try:
