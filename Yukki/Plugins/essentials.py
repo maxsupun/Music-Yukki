@@ -10,7 +10,7 @@ from time import time
 from inspect import getfullargspec
 
 from Yukki import SUDOERS, app
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from asyncio import create_subprocess_shell, sleep, subprocess
 
@@ -67,7 +67,7 @@ async def executor(_, message: Message):
     else:
         evaluation = ".:: SUCCESS ::."
     final_output = f"**:: OUTPUT ::**\n\n```{evaluation.strip()}```"
-    if len(final_output) > 4102:
+    if len(final_output) > 4096:
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:
             out_file.write(str(evaluation.strip()))
@@ -163,7 +163,7 @@ async def shellrunner(_, message: Message):
     if str(output) == "\n":
         output = None
     if output:
-        if len(output) > 4102:
+        if len(output) > 4096:
             with open("output.txt", "w+") as file:
                 file.write(output)
             await app.send_document(
