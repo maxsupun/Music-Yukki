@@ -1,20 +1,52 @@
+
+from pyrogram import filters
 import os
-import re
-import shutil
 import subprocess
+import shutil
+import re
 import sys
 import traceback
-from html import escape
+from inspect import getfullargspec
 from io import StringIO
 from time import time
-from inspect import getfullargspec
-
-from Yukki import SUDOERS, app
-from pyrogram import Client, filters
+from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
+from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
+from Yukki.YukkiUtilities.database.blacklistchat import (blacklisted_chats, blacklist_chat, whitelist_chat)
+from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
+from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
+from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
+from ..config import DURATION_LIMIT
+from Yukki.YukkiUtilities.tgcallsrun import (yukki, clear, get, is_empty, put, task_done)
+from ..YukkiUtilities.helpers.decorators import errors
+from ..YukkiUtilities.helpers.filters import command
+from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
+from ..YukkiUtilities.helpers.logger import LOG_CHAT
+from ..YukkiUtilities.helpers.thumbnails import gen_thumb
+from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
+from ..YukkiUtilities.helpers.ytdl import ytdl
+from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup)
+from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from asyncio import create_subprocess_shell, sleep, subprocess
+from sys import version as pyver
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from Yukki import app, SUDOERS, OWNER
+from ..YukkiUtilities.helpers.filters import command
+from ..YukkiUtilities.helpers.decorators import errors
+from Yukki.YukkiUtilities.database.functions import start_restart_stage
 
 
+@Client.on_message(command('gakbisa') & filters.user(OWNER))
+@errors
+async def update(_, message: Message):
+    m = subprocess.check_output(["git", "pull"]).decode("UTF-8")
+    if str(m[0]) != "A":
+        x = await message.reply_text("found updates, pulling now...")
+        await start_restart_stage(x.chat.id, x.message_id)
+        os.execvp("python3", ["python3", "-m", "Yukki"])
+    else:
+        await message.reply_text("bot is up-to-date")
+        
 async def aexec(code, client, message):
     exec(
         "async def __aexec(client, message): "
@@ -33,12 +65,11 @@ async def edit_or_reply(msg: Message, **kwargs):
     filters.user(SUDOERS)
     & ~filters.forwarded
     & ~filters.via_bot
-    & ~filters.edited
     & filters.command("eval")
 )
-async def executor(_, message: Message):
+async def executor(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="» Give a command to execute")
+        return await edit_or_reply(message, text="» please give me some command to execute.")
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -76,7 +107,7 @@ async def executor(_, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text="⏳", callback_data=f"runtime {t2-t1} seconds"
+                        text="⏳", callback_data=f"runtime {t2-t1} Seconds"
                     )
                 ]
             ]
@@ -114,10 +145,9 @@ async def runtime_func_cq(_, cq):
     filters.user(SUDOERS)
     & ~filters.forwarded
     & ~filters.via_bot
-    & ~filters.edited
     & filters.command("sh"),
 )
-async def shellrunner(_, message: Message):
+async def shellrunner(client, message):
     if len(message.command) < 2:
         return await edit_or_reply(message, text="**usage:**\n\n» /sh git pull")
     text = message.text.split(None, 1)[1]
