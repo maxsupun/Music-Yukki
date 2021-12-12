@@ -65,11 +65,12 @@ async def edit_or_reply(msg: Message, **kwargs):
     filters.user(SUDOERS)
     & ~filters.forwarded
     & ~filters.via_bot
+    & ~filters.edited
     & filters.command("eval")
 )
 async def executor(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="» please give me some command to execute.")
+        return await edit_or_reply(message, text="» Give a command to execute.")
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -127,7 +128,7 @@ async def executor(client, message):
                 [
                     InlineKeyboardButton(
                         text="⏳",
-                        callback_data=f"runtime {round(t2-t1, 3)} Seconds",
+                        callback_data=f"runtime {round(t2-t1, 3)} seconds",
                     )
                 ]
             ]
@@ -145,6 +146,7 @@ async def runtime_func_cq(_, cq):
     filters.user(SUDOERS)
     & ~filters.forwarded
     & ~filters.via_bot
+    & ~filters.edited
     & filters.command("sh"),
 )
 async def shellrunner(client, message):
