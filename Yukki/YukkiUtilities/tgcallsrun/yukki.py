@@ -31,7 +31,7 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardM
 
 flex = {}
 smexy = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
-pytgcalls = PyTgCalls(smexy)
+pytgcalls = PyTgCalls(smexy, overload_quiet_mode=True)
 
 @pytgcalls.on_kicked()
 async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
