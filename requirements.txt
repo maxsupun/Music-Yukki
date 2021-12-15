@@ -1,13 +1,12 @@
 tgcrypto
-httpx==0.13.3
-git+https://github.com/pyrogram/pyrogram@master
+pyrogram
+py-tgcalls
 youtube-search-python==1.4.9
 yt-dlp==2021.11.10.1
-py-tgcalls
+ffmpeg-python
 aiohttp
 aiofiles
 asyncio
-ffmpeg-python
 Pillow
 pytube
 wget
