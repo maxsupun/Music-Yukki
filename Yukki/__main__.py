@@ -12,7 +12,7 @@ from Yukki.YukkiUtilities.database.queue import (get_active_chats, remove_active
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 
 Client(
-    ':yukki:',
+    ':mega:',
     API_ID,
     API_HASH,
     bot_token=BOT_TOKEN,
@@ -64,4 +64,4 @@ LOGS.info(
     f"⚡ VEEZ MEGA ⚡ [SUCCESSFULLY ACTIVATED]")
 
 loop.close()
-print("[LOG] TURNED OFF BOT AND CLIENT")
+print("[INFO] TURNED OFF BOT AND CLIENT")
