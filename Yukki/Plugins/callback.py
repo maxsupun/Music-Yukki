@@ -117,8 +117,7 @@ async def pausevc(_,CallbackQuery):
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-            await CallbackQuery.message.reply(f"⏸ music playback has paused", reply_markup=play_keyboard)
-            await CallbackQuery.message.delete()
+            await CallbackQuery.edit_message_text(f"⏸ music playback has paused", reply_markup=play_keyboard)
         else:
             await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
             return
@@ -143,8 +142,7 @@ async def resumevc(_,CallbackQuery):
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-            await CallbackQuery.message.reply(f"▶ music playback has resumed", reply_markup=play_keyboard)
-            await CallbackQuery.message.delete()
+            await CallbackQuery.edit_message_text(f"▶ music playback has resumed", reply_markup=play_keyboard)
     else:
         await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
    
