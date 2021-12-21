@@ -313,7 +313,7 @@ inl = InlineKeyboardMarkup(
 upl = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="📤 Uploading......", callback_data=f'down')
+                    InlineKeyboardButton(text="📤 Uploading...", callback_data=f'down')
                 ]   
             ]
         )
@@ -356,7 +356,7 @@ async def boom(_,CallbackQuery):
         await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons)) 
     mystic = await CallbackQuery.edit_message_text("📥 **download started** !\n\n» Downloading speed could be slow, please wait for a while...", reply_markup = inl)
     fetched = f"""
-💡 **Song downloaded**
+💡 **Media Downloaded.**
 
 🏷 **Name:** {x["title"]}
 ⏱ **Duration:** `{round(x["duration"] / 60)}` min(s)
