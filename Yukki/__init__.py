@@ -26,7 +26,7 @@ print("[INFO]: INITIALIZING DATABASE")
 
 LOGS = getLogger(__name__)
 
-__version__ = "4.0.8 beta 1"
+__version__ = "5.0.0"
 
 MONGODB_CLI = MongoClient(MONGO_DB_URI)
 db = MONGODB_CLI.wbb
@@ -61,7 +61,7 @@ ASSUSERNAME = ""
 ASSMENTION = ""
 print("[INFO]: INITIALIZING BOT CLIENT")
 app = Client(
-    'YukkiBot',
+    'mega',
     API_ID,
     API_HASH,
     bot_token=BOT_TOKEN,
