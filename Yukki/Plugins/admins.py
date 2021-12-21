@@ -143,7 +143,7 @@ async def stop_cmd(_, message):
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("❌ no more music in __Queues__ \n\n» userbot leaving vjdeo chat")
+            await message.reply_text("❌ no more music in __Queues__ \n\n» userbot leaving video chat")
             await yukki.pytgcalls.leave_group_call(message.chat.id)
             return  
         else:
