@@ -51,7 +51,7 @@ from Yukki.YukkiUtilities.helpers.administrator import adminsOnly
 
 
 @app.on_message(filters.command("cleandb"))
-async def stop_cmd(_, message): 
+async def stop_cmd(_, message): # clean database of current chat (used by admin group only)
     chat_id = message.chat.id
     try:
         clear(message.chat.id)
@@ -62,7 +62,7 @@ async def stop_cmd(_, message):
         await yukki.pytgcalls.leave_group_call(message.chat.id)
     except:
         pass   
-    await message.reply_text("🗑 Cleaned databae, queues, logs, raw files, downloads")
+    await message.reply_text("🗑 Cleaned database of this chat !")
 
 
 @app.on_message(filters.command("pause"))
