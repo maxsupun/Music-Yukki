@@ -10,4 +10,4 @@ Don't ask about is clone / kang or not, Use your mind to know about it !
 
 ### Deploy To Heroku 
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/levina-lab/vmusic)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/levina-lab/YukkiMusic-Old)
