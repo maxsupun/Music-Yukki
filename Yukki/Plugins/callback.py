@@ -114,7 +114,6 @@ async def pausevc(_,CallbackQuery):
         if await is_music_playing(chat_id):
             await yukki.pytgcalls.pause_stream(chat_id)
             await music_off(chat_id)
-            await CallbackQuery.answer("💡 music is paused", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
@@ -141,7 +140,6 @@ async def resumevc(_,CallbackQuery):
         else:
             await music_on(chat_id)
             await yukki.pytgcalls.resume_stream(chat_id)
-            await CallbackQuery.answer("💡 music is resumed", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
@@ -783,7 +781,7 @@ async def G_list(_,CallbackQuery):
     user_id = CallbackQuery.from_user.id
     _playlist = await get_note_names(CallbackQuery.message.chat.id)
     if not _playlist:
-        return await CallbackQuery.answer(f"❌ you not have Group playlist on database, try to adding music in playlist.", show_alert=True)
+        return await CallbackQuery.answer(f"❌ you not have Group playlist on database, try to adding music into playlist.", show_alert=True)
     else:
         await CallbackQuery.answer()
         j = 0
@@ -840,7 +838,7 @@ async def cbgroupdel(_,CallbackQuery):
     await CallbackQuery.answer()
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
     if not _playlist:
-        return await CallbackQuery.message.reply_text("💡 Group not have a playlist on veez music mega database.")
+        return await CallbackQuery.message.reply_text("❌ This Group not have a playlist on database.")
     else:
         titlex = []
         for note in _playlist:
@@ -854,7 +852,7 @@ async def delplcb(_,CallbackQuery):
     await CallbackQuery.message.delete() 
     _playlist = await get_note_names(CallbackQuery.from_user.id)                                    
     if not _playlist:
-        return await CallbackQuery.message.reply_text("💡 you not have a playlist on veez music mega database.")
+        return await CallbackQuery.message.reply_text("❌ You not have a playlist on database.")
     else:
         titlex = []
         for note in _playlist:
