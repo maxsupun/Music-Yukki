@@ -114,6 +114,7 @@ async def pausevc(_,CallbackQuery):
         if await is_music_playing(chat_id):
             await yukki.pytgcalls.pause_stream(chat_id)
             await music_off(chat_id)
+            await CallbackQuery.answer("streaming paused")
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
@@ -139,6 +140,7 @@ async def resumevc(_,CallbackQuery):
         else:
             await music_on(chat_id)
             await yukki.pytgcalls.resume_stream(chat_id)
+            await CallbackQuery.answer("streaming resumed")
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
