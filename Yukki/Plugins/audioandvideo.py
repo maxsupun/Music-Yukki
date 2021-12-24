@@ -34,6 +34,7 @@ flex = {}
 async def closesmex(_,CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
+    await CallbackQuery.answer("menu opened")
     userid = CallbackQuery.from_user.id 
     videoid, user_id = callback_request.split("|")    
     buttons = others_markup(videoid, user_id)
@@ -44,6 +45,7 @@ async def closesmex(_,CallbackQuery):
 async def goback(_,CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
+    await CallbackQuery.answer("menu closed")
     userid = CallbackQuery.from_user.id 
     videoid, user_id = callback_request.split("|")    
     buttons = play_markup(videoid, user_id)
