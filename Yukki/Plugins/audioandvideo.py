@@ -58,6 +58,16 @@ async def good(_,CallbackQuery):
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     videoid, user_id = callback_request.split("|")    
+    buttons = others_markup(videoid, user_id)
+    await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
+
+
+@Client.on_callback_query(filters.regex(pattern=r"nope"))
+async def nope(_,CallbackQuery):
+    callback_data = CallbackQuery.data.strip()
+    callback_request = callback_data.split(None, 1)[1]
+    userid = CallbackQuery.from_user.id 
+    videoid, user_id = callback_request.split("|")    
     buttons = dl_media_markup(videoid, user_id)
     await CallbackQuery.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
 
