@@ -97,7 +97,9 @@ async def play(_, message: Message):
             reply_to_message_id=message.message_id,
             disable_web_page_preview=True
         )
-    elif len(message.command) == 2:                                                           
+    elif len(message.command) == 2:
+        chat_id = message.chat.id
+        boom = await app.send_message(chat_id, "🔍 Getting info...")                                                       
         query = message.text.split(None, 1)[1]
         f1 = (query[0])
         f2 = (query[1])
@@ -120,11 +122,12 @@ async def play(_, message: Message):
 📣 **Channel:** {x["uploader"]}
 🔗 **Link:** {x["webpage_url"]}
 
-⚡️ __Powered by Veez Music Mega AI__"""
+⚡️ __Powered by Veez Mega AI__"""
             link = (x["webpage_url"])
             buttons = personal_markup(link)
             userid = message.from_user.id
             thumb = await down_thumb(thumbnail, userid)
+            await boom.delete()
             await app.send_photo(message.chat.id,
                 photo=thumb,                 
                 caption=searched_text,
