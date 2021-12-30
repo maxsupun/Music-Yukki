@@ -39,19 +39,6 @@ def others_markup(videoid, user_id):
     return buttons
 
 
-def dl_media_markup(videoid, user_id):
-    buttons= [
-            [
-                InlineKeyboardButton(text="📥 Get Audio", callback_data=f'gets audio|{videoid}|{user_id}'),
-                InlineKeyboardButton(text="📥 Get Video", callback_data=f'gets video|{videoid}|{user_id}')
-            ],
-            [
-                InlineKeyboardButton(text="🗑 Close", callback_data="close")
-            ],
-        ]
-    return buttons
-
-
 play_keyboard = InlineKeyboardMarkup(
             [
                 [
