@@ -8,7 +8,7 @@ from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_cha
 async def blacklist_chat_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "**usage:**\n/allow [CHAT_ID]"
+            "**usage:**\n/add [CHAT_ID]"
         )
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
@@ -17,11 +17,11 @@ async def blacklist_chat_func(_, message: Message):
     else:
         await message.reply_text("✅ This Chat already added.")
     
-@app.on_message(filters.command("deny") & filters.user(SUDOERS))
+@app.on_message(filters.command("del") & filters.user(SUDOERS))
 async def whitelist_chat_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "**usage:**\n/deny [CHAT_ID]"
+            "**usage:**\n/del [CHAT_ID]"
         )
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
