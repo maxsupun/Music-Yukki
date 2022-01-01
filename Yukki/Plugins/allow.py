@@ -25,7 +25,7 @@ async def whitelist_chat_func(_, message: Message):
         )
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
-        await message.reply_text("❌ This Chat not in database.)
+        await message.reply_text("❌ This Chat not in database.")
         return
     try:
         await remove_served_chat(chat_id)
