@@ -4,18 +4,18 @@ from pyrogram.types import Message
 from ..YukkiUtilities.helpers.filters import command
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats, remove_served_chat)  
 
-@app.on_message(filters.command("allow") & filters.user(SUDOERS))
+@app.on_message(filters.command("add") & filters.user(SUDOERS))
 async def blacklist_chat_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "**Usage:**\n/allow [CHAT_ID]"
+            "**usage:**\n/allow [CHAT_ID]"
         )
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
         await add_served_chat(chat_id)
-        await message.reply_text("✅ **chat added to allowed group list**")
+        await message.reply_text("✅ Chat added to database.")
     else:
-        await message.reply_text("✅ **already added to allowed list**")
+        await message.reply_text("✅ This Chat already added.")
     
 @app.on_message(filters.command("deny") & filters.user(SUDOERS))
 async def whitelist_chat_func(_, message: Message):
@@ -25,11 +25,11 @@ async def whitelist_chat_func(_, message: Message):
         )
     chat_id = int(message.text.strip().split()[1])
     if not await is_served_chat(chat_id):
-        await message.reply_text("❌ chat not allowed.")
+        await message.reply_text("❌ This Chat not in database.)
         return
     try:
         await remove_served_chat(chat_id)
-        await message.reply_text("❌ chat has denied.")
+        await message.reply_text("❌ Chat removed from database.")
         return
     except Exception as e:
       await message.reply_text(f"error: `{e}`")
