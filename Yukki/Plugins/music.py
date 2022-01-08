@@ -310,19 +310,19 @@ async def play(_, message: Message):
         )
         return await mystic.delete()     
     else:
-     try:
-        await yukki.pytgcalls.join_group_call(
-            chat_id,
-            InputStream(
-                InputAudioStream(
-                    file,
+        try:
+            await music_on(chat_id)
+            await yukki.pytgcalls.join_group_call(
+                chat_id,
+                InputStream(
+                    InputAudioStream(
+                        file,
+                    ),
                 ),
-            ),
-            stream_type=StreamType().local_stream,
-        )
-     except NoActiveGroupCall:
-        return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
-        await music_on(chat_id)
+                stream_type=StreamType().local_stream,
+            )
+        except NoActiveGroupCall:
+            return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         await add_active_chat(chat_id)
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
@@ -459,19 +459,19 @@ async def startyuplay(_,CallbackQuery):
         os.remove(thumb)
         await CallbackQuery.message.delete()       
     else:
-     try:
-        await yukki.pytgcalls.join_group_call(
-            chat_id, 
-            InputStream(
-                InputAudioStream(
-                    file,
+        try:
+            await music_on(chat_id)
+            await yukki.pytgcalls.join_group_call(
+                chat_id,
+                InputStream(
+                    InputAudioStream(
+                        file,
+                    ),
                 ),
-            ),
-            stream_type=StreamType().local_stream,
-        ) 
-     except NoActiveGroupCall:
-        return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
-        await music_on(chat_id)
+                stream_type=StreamType().local_stream,
+            ) 
+        except NoActiveGroupCall:
+            return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         await add_active_chat(chat_id)
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
