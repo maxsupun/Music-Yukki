@@ -16,6 +16,7 @@ from asyncio import QueueEmpty
 from pytgcalls import StreamType
 from sys import version as pyver
 from pyrogram import Client, filters
+from pytgcalls.exceptions import NoActiveGroupCall
 from pyrogram.types import Message, Voice, Audio
 from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
@@ -23,7 +24,7 @@ from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, i
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
-from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard)
+from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard, close_keyboard)
 from Yukki.YukkiUtilities.database.blacklistchat import (blacklisted_chats, blacklist_chat, whitelist_chat)
 from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
@@ -265,10 +266,9 @@ async def play(_, message: Message):
             ID4 = (result[3]["id"])
             ID5 = (result[4]["id"])
         except Exception as e:
-            return await mystic.edit_text(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
+            return await mystic.edit_text(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**", reply_markup=close_keyboard)
         thumb = "cache/results.png"
         url = "https://www.youtube.com/watch?v={id}"
-        await mystic.delete()   
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
@@ -309,6 +309,7 @@ async def play(_, message: Message):
         )
         return await mystic.delete()     
     else:
+     try:
         await music_on(chat_id)
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
@@ -320,6 +321,8 @@ async def play(_, message: Message):
             ),
             stream_type=StreamType().local_stream,
         )
+     except NoActiveGroupCall:
+        return await mystic.edit_text("😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         if fucksemx != 1:
@@ -455,6 +458,7 @@ async def startyuplay(_,CallbackQuery):
         os.remove(thumb)
         await CallbackQuery.message.delete()       
     else:
+     try:
         await music_on(chat_id)
         await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
@@ -466,6 +470,8 @@ async def startyuplay(_,CallbackQuery):
             ),
             stream_type=StreamType().local_stream,
         ) 
+     except NoActiveGroupCall:
+        return await mystic.edit_text("😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
@@ -525,7 +531,7 @@ async def popat(_, CallbackQuery):
         ID9 = (result[8]["id"])
         ID10 = (result[9]["id"])                    
     except Exception as e:
-        return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
+        return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**", reply_markup=close_keyboard)
     if i == 1:
         url = "https://www.youtube.com/watch?v={id}"
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
