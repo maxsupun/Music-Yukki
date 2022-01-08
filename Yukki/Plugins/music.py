@@ -269,6 +269,7 @@ async def play(_, message: Message):
             return await mystic.edit_text(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**", reply_markup=close_keyboard)
         thumb = "cache/results.png"
         url = "https://www.youtube.com/watch?v={id}"
+        await mystic.delete()
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         hmo = await message.reply_photo(
             photo=thumb, 
@@ -322,7 +323,7 @@ async def play(_, message: Message):
             stream_type=StreamType().local_stream,
         )
      except NoActiveGroupCall:
-        return await mystic.edit_text("😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
+        return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         if fucksemx != 1:
@@ -471,7 +472,7 @@ async def startyuplay(_,CallbackQuery):
             stream_type=StreamType().local_stream,
         ) 
      except NoActiveGroupCall:
-        return await mystic.edit_text("😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
+        return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
