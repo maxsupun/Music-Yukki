@@ -311,8 +311,6 @@ async def play(_, message: Message):
         return await mystic.delete()     
     else:
      try:
-        await music_on(chat_id)
-        await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
             chat_id,
             InputStream(
@@ -324,6 +322,8 @@ async def play(_, message: Message):
         )
      except NoActiveGroupCall:
         return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
+        await music_on(chat_id)
+        await add_active_chat(chat_id)
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))                                                                                           
         checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         if fucksemx != 1:
@@ -460,8 +460,6 @@ async def startyuplay(_,CallbackQuery):
         await CallbackQuery.message.delete()       
     else:
      try:
-        await music_on(chat_id)
-        await add_active_chat(chat_id)
         await yukki.pytgcalls.join_group_call(
             chat_id, 
             InputStream(
@@ -473,6 +471,8 @@ async def startyuplay(_,CallbackQuery):
         ) 
      except NoActiveGroupCall:
         return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
+        await music_on(chat_id)
+        await add_active_chat(chat_id)
         buttons = play_markup(videoid, user_id)
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
