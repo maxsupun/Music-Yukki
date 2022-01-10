@@ -93,7 +93,7 @@ async def play(_, message: Message):
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
-            await message.reply_text(f"{ASSNAME}(@{ASSUSERNAME}) is banned in group **{chat_title}**\n\n» unban the userbot first to use this bot")
+            await app.unban_chat_member(message.chat.id, ASSID)
             return
     except UserNotParticipant:
         if message.chat.username:
@@ -269,14 +269,12 @@ async def play(_, message: Message):
             return await mystic.edit_text(f"😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**", reply_markup=close_keyboard)
         thumb = "cache/results.png"
         url = "https://www.youtube.com/watch?v={id}"
-        await mystic.delete()
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
-        hmo = await message.reply_photo(
-            photo=thumb, 
-            caption=(f"1️⃣ <b>[{title1[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})\n └ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})\n └ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})\n └ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})\n └ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})\n └ ⚡ __Powered by Veez Music AI__"),    
+        await mystic.edit(
+            f"1️⃣ <b>[{title1[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})\n └ ⚡ __Powered by Veez Music AI__\n\n2️⃣ <b>[{title2[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})\n └ ⚡ __Powered by Veez Music AI__\n\n3️⃣ <b>[{title3[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})\n └ ⚡ __Powered by Veez Music AI__\n\n4️⃣ <b>[{title4[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})\n └ ⚡ __Powered by Veez Music AI__\n\n5️⃣ <b>[{title5[:25]}...]({url})</b>\n ├ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})\n └ ⚡ __Powered by Veez Music AI__",    
             reply_markup=InlineKeyboardMarkup(buttons),
-        )  
-        disable_web_page_preview=True
+            disable_web_page_preview=True
+        )
         return   
     if await is_active_chat(chat_id):
         position = await put(chat_id, file=file)
