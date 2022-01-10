@@ -3,7 +3,7 @@ import re
 
 import lyricsgenius
 from Yukki import app
-from pyrogram.types import Message
+from pyrogram.types import Message, CallbackQuery
 from pyrogram import Client, filters
 from youtubesearchpython import VideosSearch
 
