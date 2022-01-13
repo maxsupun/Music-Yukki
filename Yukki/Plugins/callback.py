@@ -242,16 +242,17 @@ async def skipvc(_,CallbackQuery):
                 userid =(f2.read())
                 thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                 user_id = userid
-                buttons = play_markup(videoid, user_id)
+                buttons = stream_markup(videoid, user_id)
                 await mystic.delete()
                 semx = await app.get_users(userid)
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
                 rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-                await CallbackQuery.message.reply_photo(
-                photo= thumb,
+                await CallbackQuery.send_photo(
+                chat_id,
+                photo=thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title[:60]}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -277,14 +278,15 @@ async def skipvc(_,CallbackQuery):
                 if videoid == "smex1":
                     buttons = audio_markup(videoid, user_id)
                 else:
-                    buttons = play_markup(videoid, user_id)
+                    buttons = stream_markup(videoid, user_id)
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
                 rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"    
-                await CallbackQuery.message.reply_photo(
+                await CallbackQuery.send_photo(
+                chat_id,
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"⏭ <b>Skipped to the next music</b>\n\n🏷 <b>Name:</b> {title[:60]}\n⏱ <b>Duration:</b> `{duration} m`\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
+                caption=f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}",
                 )
                 return           
             
