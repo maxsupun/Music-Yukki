@@ -6,6 +6,17 @@ from pyrogram.types import (
     Message,
 )
 
+
+def stream_markup(videoid, user_id):
+    buttons= [
+            [
+                InlineKeyboardButton(text="❌ Cancel", callback_data=f'stopvc2'),      
+                InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
+            ],
+        ]
+    return buttons
+
+
 def play_markup(videoid, user_id):
     buttons= [
             [
