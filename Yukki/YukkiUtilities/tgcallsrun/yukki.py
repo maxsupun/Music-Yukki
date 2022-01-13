@@ -17,7 +17,7 @@ from Yukki.config import LOG_GROUP_ID
 from youtubesearchpython import VideosSearch
 from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
-from Yukki.YukkiUtilities.helpers.inline import play_keyboard
+from Yukki.YukkiUtilities.helpers.inline import stream_markup, play_keyboard
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
 from Yukki.YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
@@ -137,13 +137,13 @@ Title: {ctitle}
                 thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                 user_id = userid
                 videoid = afk
-                buttons = play_markup(videoid, user_id)
+                buttons = stream_markup(videoid, user_id)
                 await mystic.delete()
                 semx = await app.get_users(userid)
                 await app.send_photo(chat_id,
-                photo= thumb,
+                photo=thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🏷 **Name:** {title[:70]}\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {semx.mention}")
+                caption=(f"🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -169,11 +169,11 @@ Title: {ctitle}
                 if videoid == "smex1":
                     buttons = audio_markup(videoid, user_id)
                 else:
-                    buttons = play_markup(videoid, user_id)
+                    buttons = stream_markup(videoid, user_id)
                 await app.send_photo(chat_id,
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"🏷 **Name:** {title[:70]}\n⏱ **Duration:** `{duration}` m\n💡 **Status:** `Playing`\n🎧 **Request by:** {username}",
+                caption=f"🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}",
                 )
                 return
            
