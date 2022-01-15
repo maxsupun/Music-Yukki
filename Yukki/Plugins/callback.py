@@ -37,7 +37,7 @@ from Yukki.YukkiUtilities.tgcallsrun import (yukki, clear, get, is_empty, put, t
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.database.playlist import (get_playlist_count, _get_playlists, get_note_names, get_playlist, save_playlist, delete_playlist)
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
-from Yukki.YukkiUtilities.helpers.inline import (stream_markup, play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
+from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
 from Yukki.YukkiUtilities.helpers.inline import play_keyboard, confirm_keyboard, play_list_keyboard, close_keyboard, confirm_group_keyboard
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
@@ -242,7 +242,7 @@ async def skipvc(_,CallbackQuery):
                 userid =(f2.read())
                 thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                 user_id = userid
-                buttons = stream_markup(videoid, user_id)
+                buttons = play_markup(videoid, user_id)
                 await mystic.delete()
                 semx = await app.get_users(userid)
                 user_id = CallbackQuery.from_user.id
@@ -278,7 +278,7 @@ async def skipvc(_,CallbackQuery):
                 if videoid == "smex1":
                     buttons = audio_markup(videoid, user_id)
                 else:
-                    buttons = stream_markup(videoid, user_id)
+                    buttons = play_markup(videoid, user_id)
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
                 rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"    
@@ -437,7 +437,7 @@ Req By : {Name}
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> {duration}\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
+                    caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
@@ -582,7 +582,7 @@ Req By : {Name}
                     m = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🏷 <b>Name:</b> [{title[:60]}]({url})\n⏱ <b>Duration:</b> `{duration}` m\n💡 **Status:** `Playing`\n🎧 <b>Request by:</b> {checking}")
+                    caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}")
                 )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
