@@ -94,6 +94,7 @@ async def play(_, message: Message):
         await message.reply_text(
         "missing required permission:"
         + "\n\n» ❌ __Add new Admins__")
+        return
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
