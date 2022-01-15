@@ -90,7 +90,7 @@ async def play(_, message: Message):
         "missing required permission:"
         + "\n\n» ❌ __Add users__")
         return
-    try: 
+    try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
             await app.unban_chat_member(message.chat.id, ASSID)
@@ -110,10 +110,10 @@ async def play(_, message: Message):
                     )
             await ASS_ACC.join_chat(invitelink)
             await remove_active_chat(chat_id)
-    except UserAlreadyParticipant:
-        pass
-    except Exception as e:
-        return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")       
+        except UserAlreadyParticipant:
+            pass
+        except Exception as e:
+            return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
     url = get_url(message)
     fucksemx = 0
