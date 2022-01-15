@@ -73,7 +73,7 @@ async def play(_, message: Message):
         return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
     a = await app.get_chat_member(message.chat.id , BOT_ID)
     if a.status != "administrator":
-        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
+        await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Add users__\n» ❌ __Add new Admins__ \n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
         return
     if not a.can_manage_voice_chats:
         await message.reply_text(
@@ -90,6 +90,10 @@ async def play(_, message: Message):
         "missing required permission:"
         + "\n\n» ❌ __Add users__")
         return
+    if not a.can_promote_members:
+        await message.reply_text(
+        "missing required permission:"
+        + "\n\n» ❌ __Add new Admins__")
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
@@ -100,6 +104,9 @@ async def play(_, message: Message):
                         "https://t.me/+", "https://t.me/joinchat/"
                     )
             await ASS_ACC.join_chat(invitelink)
+            await message.chat.promote_member(
+                ASSID, can_manage_voice_chats=True
+            )
             await remove_active_chat(chat_id)
     except UserNotParticipant:
         try:
@@ -109,6 +116,9 @@ async def play(_, message: Message):
                         "https://t.me/+", "https://t.me/joinchat/"
                     )
             await ASS_ACC.join_chat(invitelink)
+            await message.chat.promote_member(
+                ASSID, can_manage_voice_chats=True
+            )
             await remove_active_chat(chat_id)
         except UserAlreadyParticipant:
             pass
