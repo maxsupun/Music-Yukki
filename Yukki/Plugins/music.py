@@ -24,7 +24,7 @@ from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, i
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
-from ..YukkiUtilities.helpers.inline import (stream_markup, play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard, close_keyboard)
+from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard, close_keyboard)
 from Yukki.YukkiUtilities.database.blacklistchat import (blacklisted_chats, blacklist_chat, whitelist_chat)
 from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
@@ -90,34 +90,28 @@ async def play(_, message: Message):
         "missing required permission:"
         + "\n\n» ❌ __Add users__")
         return
-    try:
+    try: 
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
             await app.unban_chat_member(message.chat.id, ASSID)
-            return
+            invite_link = await app.export_chat_invite_link(message.chat.id)
+            if "+" in invite_link:
+                const = (invite_link.replace("+", "")).split("t.me/")[1]
+                tl = f"https://t.me/joinchat/{const}"
+            await ASS_ACC.join_chat(tl)
+            await remove_active_chat(chat_id)
     except UserNotParticipant:
-        if message.chat.username:
-            try: 
-                await ASS_ACC.join_chat(f"{message.chat.username}")
-                await remove_active_chat(chat_id)
-            except Exception as e:
-                await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")
-                return
-        else:
-            try:
-                invitelink = await app.export_chat_invite_link(
-                    message.chat.id
-                )
-                if invitelink.startswith("https://t.me/+"):
-                    invitelink = invitelink.replace(
-                        "https://t.me/+", "https://t.me/joinchat/"
-                    )
-                await ASS_ACC.join_chat(invitelink)
-                await remove_active_chat(chat_id)
-            except UserAlreadyParticipant:
-                pass
-            except Exception as e:
-                return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")       
+        try:
+            invite_link = await app.export_chat_invite_link(message.chat.id)
+            if "+" in invite_link:
+                const = (invite_link.replace("+", "")).split("t.me/")[1]
+                tl = f"https://t.me/joinchat/{const}"
+            await ASS_ACC.join_chat(tl)
+            await remove_active_chat(chat_id)
+    except UserAlreadyParticipant:
+        pass
+    except Exception as e:
+        return await message.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")       
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
     url = get_url(message)
     fucksemx = 0
@@ -294,7 +288,7 @@ async def play(_, message: Message):
             f28 = open(f'search/{_chat_}videoid.txt', 'w')
             f28.write(f"{videoid}") 
             f28.close()
-            buttons = stream_markup(videoid, user_id)
+            buttons = play_markup(videoid, user_id)
         else:
             f28 = open(f'search/{_chat_}videoid.txt', 'w')
             f28.write(f"{videoid}") 
@@ -328,7 +322,7 @@ async def play(_, message: Message):
             f28 = open(f'search/{_chat_}videoid.txt', 'w')
             f28.write(f"{videoid}") 
             f28.close()
-            buttons = stream_markup(videoid, user_id)
+            buttons = play_markup(videoid, user_id)
         else:
             f28 = open(f'search/{_chat_}videoid.txt', 'w')
             f28.write(f"{videoid}") 
@@ -432,7 +426,7 @@ async def startyuplay(_,CallbackQuery):
     await mystic.delete()
     if await is_active_chat(chat_id):
         position = await put(chat_id, file=file)
-        buttons = stream_markup(videoid, user_id)
+        buttons = play_markup(videoid, user_id)
         _chat_ = ((str(file)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
         cpl=(f"downloads/{_chat_}final.png")     
         shutil.copyfile(thumb, cpl) 
@@ -471,7 +465,7 @@ async def startyuplay(_,CallbackQuery):
         except NoActiveGroupCall:
             return await app.send_message(chat_id, "😕 Sorry, **no** active video chat!\n\n• to use me, **start one.**", reply_markup=close_keyboard)
         await add_active_chat(chat_id)
-        buttons = stream_markup(videoid, user_id)
+        buttons = play_markup(videoid, user_id)
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
         photo=thumb,
