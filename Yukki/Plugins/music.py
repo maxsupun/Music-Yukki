@@ -94,19 +94,21 @@ async def play(_, message: Message):
         b = await app.get_chat_member(message.chat.id , ASSID) 
         if b.status == "kicked":
             await app.unban_chat_member(message.chat.id, ASSID)
-            invite_link = await app.export_chat_invite_link(message.chat.id)
-            if "+" in invite_link:
-                const = (invite_link.replace("+", "")).split("t.me/")[1]
-                tl = f"https://t.me/joinchat/{const}"
-            await ASS_ACC.join_chat(tl)
+            invitelink = await app.export_chat_invite_link(message.chat.id)
+            if invitelink.startswith("https://t.me/+"):
+                    invitelink = invitelink.replace(
+                        "https://t.me/+", "https://t.me/joinchat/"
+                    )
+            await ASS_ACC.join_chat(invitelink)
             await remove_active_chat(chat_id)
     except UserNotParticipant:
         try:
-            invite_link = await app.export_chat_invite_link(message.chat.id)
-            if "+" in invite_link:
-                const = (invite_link.replace("+", "")).split("t.me/")[1]
-                tl = f"https://t.me/joinchat/{const}"
-            await ASS_ACC.join_chat(tl)
+            invitelink = await app.export_chat_invite_link(message.chat.id)
+            if invitelink.startswith("https://t.me/+"):
+                    invitelink = invitelink.replace(
+                        "https://t.me/+", "https://t.me/joinchat/"
+                    )
+            await ASS_ACC.join_chat(invitelink)
             await remove_active_chat(chat_id)
     except UserAlreadyParticipant:
         pass
