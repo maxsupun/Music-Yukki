@@ -14,8 +14,8 @@ async def authorised(message):
 async def unauthorised(message: Message):
     chatID = message.chat.id
     text = (
-        "you must be admin with permission:"
-        + f"\n\n» ❌ __Can manage video chat__"
+        "You're missing admin rights to use this command."
+        + f"\n\n» ❌ can_manage_voice_chats"
     )
     try:
         await message.reply_text(text)
