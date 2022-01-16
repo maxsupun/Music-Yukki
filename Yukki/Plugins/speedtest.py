@@ -15,13 +15,13 @@ async def gstats(_, message):
             pass
         else:
             return
-    m = await message.reply_text("⚡️ __running server speedtest...__")
+    m = await message.reply_text("⚡️ running server speedtest.")
     try:
         test = speedtest.Speedtest()
         test.get_best_server()
-        m = await m.edit("⚡️ __running download speedtest...__")
+        m = await m.edit("⚡️ running download speedtest..")
         test.download()
-        m = await m.edit("⚡️ __running upload speedtest...__")
+        m = await m.edit("⚡️ running upload speedtest...")
         test.upload()
         test.results.share()
         result = test.results.dict()
