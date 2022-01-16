@@ -1,4 +1,4 @@
-print("[INFO]: INITIALIZING")
+print("[INFO]: STARTING CLIENT :: STAND BY !!")
 
 import time
 import logging
@@ -91,10 +91,10 @@ def all_info(app, chacha):
     ASSMENTION = getme1.mention
 
     
-print("[INFO]: STARTING BOT CLIENT")
+print("[INFO]: STARTING TELEBOT CLIENT")
 app.start()
-print("[INFO]: STARTING ASSISTANT CLIENT")
+print("[INFO]: STARTING USERBOT CLIENT")
 chacha.start()
-print("[INFO]: LOADING BOT/ASSISTANT PROFILE INFO")
+print("[INFO]: GENERATING BOT/ASSISTANT PROFILE INFO")
 all_info(app, chacha)
-print("[INFO]: LOADED BOT/ASSISTANT PROFILE INFO")
+print("[INFO]: GENERATED- BOT/ASSISTANT PROFILE INFO")
