@@ -1,7 +1,7 @@
 tgcrypto
 pyrogram
 py-tgcalls
-youtube-search-python==1.4.9
+youtube-search-python
 yt-dlp==2021.11.10.1
 ffmpeg-python
 aiohttp
@@ -17,13 +17,11 @@ speedtest-cli
 cryptography
 dnspython
 future
-googletrans==4.0.0-rc1
 hurry.filesize
 motor
 pillow
 psutil
 pykeyboard
-pyromod
 requests
 speedtest-cli
 uvloop
