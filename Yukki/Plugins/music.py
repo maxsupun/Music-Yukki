@@ -77,18 +77,18 @@ async def play(_, message: Message):
         return
     if not a.can_manage_voice_chats:
         await message.reply_text(
-        "💡 To use me, Give the permission below:"
-        + "\n\n» ❌ __Manage video chat__")
+        "💡 To use me, Give me the following permission below:"
+        + "\n\n» ❌ __Manage video chat__Once done, try again.")
         return
     if not a.can_delete_messages:
         await message.reply_text(
-        "💡 To use me, Give the permission below:"
-        + "\n\n» ❌ __Delete messages__")
+        "💡 To use me, Give me the following permission below:"
+        + "\n\n» ❌ __Delete messages__\n\nOnce done, try again.")
         return
     if not a.can_invite_users:
         await message.reply_text(
-        "💡 To use me, Give the permission below:"
-        + "\n\n» ❌ __Add users__")
+        "💡 To use me, Give me the following permission below:"
+        + "\n\n» ❌ __Add users__\n\nOnce done, try again.")
         return
     try:
         b = await app.get_chat_member(message.chat.id , ASSID) 
