@@ -1,14 +1,15 @@
 {
     "name": "Veez Mega Bot",
-    "logo": "https://telegra.ph/file/9dd9b20abcda2d7bb6725.png",
-    "description": "veez music mega allow you to stream music trought the telegram voice chat feature.",
+    "logo": "https://telegra.ph/file/e17ae80eefd44ab387aaf.jpg",
+    "description": "Create your own bot to stream music trought the new Telegram video chat feature.",
     "keywords": ["music", "voice chat", "telegram"],
-    "repository": "https://github.com/levina-lab/vmusic",
+    "repository": "https://github.com/levina-lab/YukkiMusic-Old",
     "stack": "container",
     "env": {
         "SESSION_NAME": {
-            "description": "fill with the pyrogram session string from account 1",
+            "description": "fill with the pyrogram session string",
             "required": true
+            "value": ""
         },
         "OWNER_ID": {
             "description": "fill with your telegram id as the owner of the bot",
@@ -16,7 +17,7 @@
             "value": "1757169682"
         },
         "ASS_ID": {
-            "description": "fill with telegram id of account 1",
+            "description": "fill with the telegram id of account you used for the assistant/userbot",
             "required": true,
             "value": "1727937540"
         },
@@ -41,18 +42,18 @@
             "value": "1952053555 1738637033 1253367088"
         },
         "DURATION_LIMIT": {
-            "description": "filled, don't change this !",
-            "required": true,
+            "description": "The duration limit of the video allowed to play",
+            "required": false,
             "value": "540000"
         },
         "BOT_TOKEN": {
             "description": "fill with your bot token get from @BotFather on telegram",
-            "required": false,
+            "required": true,
             "value": ""
         },
         "MONGO_DB_URI": {
-            "description": "fill with the mongodb url 2 get from mongodb.cloud.com (don't use mine below !)",
-            "required": false,
+            "description": "fill with the mongodb url get from mongodb.cloud.com",
+            "required": true,
             "value": ""
         }
     },
