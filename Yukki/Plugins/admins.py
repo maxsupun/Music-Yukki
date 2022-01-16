@@ -1,20 +1,18 @@
-from asyncio import QueueEmpty
-from pyrogram import Client, filters
-from Yukki import app
 from Yukki.YukkiUtilities.helpers.decorators import errors
 from Yukki.YukkiUtilities.helpers.filters import command, other_filters
 from Yukki.YukkiUtilities.tgcallsrun import (yukki, clear, get, is_empty, put, task_done)
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
-from Yukki.YukkiUtilities.helpers.inline import play_keyboard
 import os
 import yt_dlp
-from os import path
 import random
 import asyncio
 import shutil
+from os import path
+from Yukki import app
 from time import time
 import time as sedtime
 from typing import Union
+from asyncio import QueueEmpty
 from pyrogram import Client, filters
 from youtubesearchpython import VideosSearch
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
@@ -25,7 +23,6 @@ from Yukki.YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts 
 from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
 from Yukki.YukkiUtilities.tgcallsrun import (convert, download)
-from youtubesearchpython import VideosSearch
 from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import (
@@ -126,7 +123,7 @@ async def stop_cmd(_, message):
         return await message.reply_text("❌ **no music is currently playing**")
 
 
-@app.on_message(filters.command("skip"))
+@app.on_message(filters.command(["skip", "next"]))
 async def stop_cmd(_, message): 
     if message.sender_chat:
         return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
