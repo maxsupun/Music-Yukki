@@ -62,9 +62,9 @@ async def welcome(_, message: Message):
     for member in message.new_chat_members:
         try:
             if member.id in OWNER:
-                return await message.reply_text(f"💡 Announcement, My Owner [{member.mention}] has joined this group.")
+                return await message.reply_text(f"🧙🏻‍♂️ [{member.mention}]\n\n• **Staff** of Veez Mega has joined this Group.")
             if member.id in SUDOERS:
-                return await message.reply_text(f"💡 Announcement, The Sudo member [{member.mention}] has joined this group.")
+                return await message.reply_text(f"🧙🏻‍♂️ [{member.mention}]\n\n• **Staff** of Veez Mega has joined this Group.")
             if member.id == ASSID:
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
@@ -81,7 +81,7 @@ async def start(_, message: Message):
         await message.reply_text(f"❌ **not in allowed chat**\n\nveez mega is only for allowed chats, ask any sudo user to allow your chat.\n\ncheck sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)")
         return await app.leave_chat(chat_id)
     out = start_pannel()
-    await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm a Veez Mega bot.\n\n💭 Make me admin in your group so I can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
+    await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm a Veez Mega bot.\n\n💭 Appoint me as admin in your Group so i can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
     return
         
 @Client.on_message(filters.private & filters.incoming & filters.command("start"))
