@@ -8,7 +8,7 @@
     "env": {
         "SESSION_NAME": {
             "description": "fill with the pyrogram session string",
-            "required": true
+            "required": true,
             "value": ""
         },
         "OWNER_ID": {
