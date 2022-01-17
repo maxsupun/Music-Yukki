@@ -25,7 +25,7 @@ async def useradd(_, message: Message):
             return await message.reply_text("✅ already a **sudo user**")
         added = await add_sudo(user.id)
         if added:
-            await message.reply_text(f"✅ added **{user.mention}** as super sudo user")
+            await message.reply_text(f"✅ added **{user.mention}** to sudo user list !")
             return os.execvp("python3", ["python3", "-m", "Yukki"])
         await edit_or_reply(message, text="something wrong happened, check logs.")  
         return
@@ -37,7 +37,7 @@ async def useradd(_, message: Message):
         return await message.reply_text("✅ already a **sudo user**")
     added = await add_sudo(user_id)
     if added:
-        await message.reply_text(f"✅ added **{mention}** as super sudo user")
+        await message.reply_text(f"✅ added **{mention}** sudo user list !")
         return os.execvp("python3", ["python3", "-m", "Yukki"])
     await edit_or_reply(message, text="something wrong happened, check logs.")  
     return    
@@ -58,7 +58,7 @@ async def userdel(_, message: Message):
             return await message.reply_text(f"❌ user is not a part of veez mega")        
         removed = await remove_sudo(user.id)
         if removed:
-            await message.reply_text(f"✅ removed **{user.mention}** from sudo user")
+            await message.reply_text(f"✅ removed **{user.mention}** from sudo user list")
             return os.execvp("python3", ["python3", "-m", "Yukki"])
         await message.reply_text(f"something wrong happened, check logs.")
         return
@@ -69,7 +69,7 @@ async def userdel(_, message: Message):
         return await message.reply_text(f"❌ user is not a part of **veez mega**")        
     removed = await remove_sudo(user_id)
     if removed:
-        await message.reply_text(f"✅ removed **{mention}** from sudo user")
+        await message.reply_text(f"✅ removed **{mention}** from sudo user list")
         return os.execvp("python3", ["python3", "-m", "Yukki"])
     await message.reply_text(f"something wrong happened, check logs.")
                 
@@ -86,6 +86,6 @@ async def sudoers_list(_, message: Message):
             continue                     
         text += f"➤ {user}\n"
     if not text:
-        await message.reply_text("❌ no sudo users")  
+        await message.reply_text("❌ no sudo users found")  
     else:
         await message.reply_text(text) 
