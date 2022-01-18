@@ -17,7 +17,7 @@ def _netcat(host, port, content):
 
 
 async def paste(content):
-    loop = asyncio.get_running_loop()
+    loop = asyncio.get_event_loop()
     link = await loop.run_in_executor(
         None, partial(_netcat, "ezup.dev", 9999, content)
     )
