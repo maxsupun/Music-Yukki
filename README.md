@@ -27,7 +27,7 @@ cd YukkiMusic-Old
 pip3 install -U -r requirements.txt
 cp sample.env .env # use vim to edit ENVs
 vim .env # fill up the ENVs (Steps: press i to enter in insert mode then edit the file. Press Esc to exit the editing mode then type :wq! and press Enter key to save the file).
-python3 main.py # run the bot.
+python3 -m Yukki # run the bot.
 
 # continue the host with screen or anything else, thanks for reading.
 ```
