@@ -77,7 +77,7 @@ async def ban_globally(_, message):
             chats = await get_served_chats()
             for chat in chats:
                 served_chats.append(int(chat["chat_id"]))
-            m = await message.reply_text(f"🚷 **Globally banning {user.mention}**\n⏱ Expected time: `{len(served_chats)}`")    
+            m = await message.reply_text(f"🚷 **Globally banning {mention}**\n⏱ Expected time: `{len(served_chats)}`")    
             number_of_chats = 0
             for sex in served_chats:
                 try:
