@@ -143,7 +143,7 @@ Title: {ctitle}
                 await app.send_photo(chat_id,
                 photo=thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
+                caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -166,15 +166,6 @@ Title: {ctitle}
                 videoid =(f4.read())
                 user_id = 1
                 videoid = str(videoid)
-                if videoid == "smex1":
-                    buttons = audio_markup(videoid, user_id)
-                else:
-                    buttons = play_markup(videoid, user_id)
-                await app.send_photo(chat_id,
-                photo=f"downloads/{_chat_}final.png",
-                reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}",
-                )
                 return
            
     except Exception as e:
