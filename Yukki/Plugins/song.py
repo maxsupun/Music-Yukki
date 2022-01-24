@@ -18,7 +18,6 @@ from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, A
 from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
 from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard)
-from Yukki.YukkiUtilities.database.blacklistchat import (blacklisted_chats, blacklist_chat, whitelist_chat)
 from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
@@ -130,7 +129,7 @@ async def musicdl(_, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True
         )
-        return   
+        return await mystic.delete()
     
     
 @Client.on_callback_query(filters.regex(pattern=r"beta"))
