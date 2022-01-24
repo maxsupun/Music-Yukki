@@ -129,7 +129,7 @@ async def musicdl(_, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True
         )
-        return await mystic.delete()
+        return
     
     
 @Client.on_callback_query(filters.regex(pattern=r"beta"))
