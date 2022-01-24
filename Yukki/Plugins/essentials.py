@@ -1,31 +1,15 @@
-
-from pyrogram import filters
 import os
 import subprocess
 import shutil
 import re
 import sys
 import traceback
-from inspect import getfullargspec
 from io import StringIO
 from time import time
-from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
-from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
-from Yukki.YukkiUtilities.database.blacklistchat import (blacklisted_chats, blacklist_chat, whitelist_chat)
-from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
-from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
-from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
-from ..config import DURATION_LIMIT
-from Yukki.YukkiUtilities.tgcallsrun import (yukki, clear, get, is_empty, put, task_done)
+from pyrogram import filters
+from inspect import getfullargspec
 from ..YukkiUtilities.helpers.decorators import errors
 from ..YukkiUtilities.helpers.filters import command
-from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
-from ..YukkiUtilities.helpers.logger import LOG_CHAT
-from ..YukkiUtilities.helpers.thumbnails import gen_thumb
-from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
-from ..YukkiUtilities.helpers.ytdl import ytdl
-from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup)
-from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from sys import version as pyver
 from pyrogram import Client, filters
@@ -33,20 +17,8 @@ from pyrogram.types import Message
 from Yukki import app, SUDOERS, OWNER
 from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.decorators import errors
-from Yukki.YukkiUtilities.database.functions import start_restart_stage
 
 
-@Client.on_message(command('gakbisa') & filters.user(OWNER))
-@errors
-async def update(_, message: Message):
-    m = subprocess.check_output(["git", "pull"]).decode("UTF-8")
-    if str(m[0]) != "A":
-        x = await message.reply_text("found updates, pulling now...")
-        await start_restart_stage(x.chat.id, x.message_id)
-        os.execvp("python3", ["python3", "-m", "Yukki"])
-    else:
-        await message.reply_text("bot is up-to-date")
-        
 async def aexec(code, client, message):
     exec(
         "async def __aexec(client, message): "
@@ -97,8 +69,8 @@ async def executor(client, message):
     elif stdout:
         evaluation = stdout
     else:
-        evaluation = ".:: SUCCESS ::."
-    final_output = f"**:: OUTPUT ::**\n\n```{evaluation.strip()}```"
+        evaluation = "SUCCESS"
+    final_output = f"`OUTPUT:`\n\n```{evaluation.strip()}```"
     if len(final_output) > 4096:
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:
@@ -115,7 +87,7 @@ async def executor(client, message):
         )
         await message.reply_document(
             document=filename,
-            caption=f"**INPUT:**\n`{cmd[0:980]}`\n\n**OUTPUT:**\n`Attached Document`",
+            caption=f"`INPUT:`\n`{cmd[0:980]}`\n\n`OUTPUT:`\n`Attached Document`",
             quote=False,
             reply_markup=keyboard,
         )
@@ -166,7 +138,7 @@ async def shellrunner(client, message):
                 )
             except Exception as err:
                 print(err)
-                await edit_or_reply(message, text=f"**ERROR:**\n```{err}```")
+                await edit_or_reply(message, text=f"`ERROR:`\n```{err}```")
             output += f"**{code}**\n"
             output += process.stdout.read()[:-1].decode("utf-8")
             output += "\n"
@@ -189,7 +161,7 @@ async def shellrunner(client, message):
                 tb=exc_tb,
             )
             return await edit_or_reply(
-                message, text=f"**ERROR:**\n```{''.join(errors)}```"
+                message, text=f"`ERROR:`\n```{''.join(errors)}```"
             )
         output = process.stdout.read()[:-1].decode("utf-8")
     if str(output) == "\n":
@@ -205,6 +177,6 @@ async def shellrunner(client, message):
                 caption="`Output`",
             )
             return os.remove("output.txt")
-        await edit_or_reply(message, text=f"**OUTPUT:**\n```{output}```")
+        await edit_or_reply(message, text=f"`OUTPUT:`\n```{output}```")
     else:
-        await edit_or_reply(message, text="**OUTPUT: **\n`no output`")
+        await edit_or_reply(message, text="`OUTPUT:`\n`no output`")
