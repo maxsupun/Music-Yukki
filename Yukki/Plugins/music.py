@@ -52,6 +52,13 @@ def time_to_seconds(time):
         int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
 
+def convert_seconds(seconds):
+    seconds = seconds % (24 * 3600)
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%02d:%02d" % (minutes, seconds)
+
 
 @Client.on_message(command(["play", "play@VeezMegaBot"]) & other_filters)
 async def play(_, message: Message):
@@ -119,10 +126,9 @@ async def play(_, message: Message):
     fucksemx = 0
     if audio:
         fucksemx = 1
-        what = "Audio Searched"
-        mystic = await message.reply_text("**🔄 processing audio...**")
+        mystic = await message.reply_text("🔄 Converting audio...")
         if audio.file_size > 157286400:
-            await mystic.edit_text("audio file size must be less than 150 mb.") 
+            await mystic.edit_text("audio file size must be less than `150 mb`") 
             return
         duration = round(audio.duration / 60)
         if duration > DURATION_LIMIT:
@@ -144,12 +150,27 @@ async def play(_, message: Message):
             )
             else file_name,
         )
-        title = "Telegram Audio"
-        link = "https://t.me/levinachannel"
-        thumb = "cache/audio.png"
+        
+        num = message.reply_to_message
+        if num.audio:
+           title = audio.title
+        elif num.voice:
+           title = "telegram audio"
+        link = message.reply_to_message.link
+        thumbnail = "https://telegra.ph/file/82862f0af1d599cdea127.jpg"
         videoid = "smex1"
+        message.chat.title
+        if len(message.chat.title) > 10:
+            ctitle = message.chat.title[:10] + "..."
+        else:
+            ctitle = message.chat.title
+        ctitle = await CHAT_TITLE(ctitle) 
+        duration = convert_seconds(audio.duration)
+        theme = random.choice(themes)
+        userid = message.from_user.id 
+        thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
+        
     elif url:
-        what = "URL Searched"
         query = " ".join(message.command[1:])
         mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
@@ -228,9 +249,9 @@ async def play(_, message: Message):
         loop = asyncio.get_event_loop()
         x = await loop.run_in_executor(None, download, link, my_hook)
         file = await convert(x)
+        
     else:
         if len(message.command) < 2:
-            what = "Command"
             user_name = message.from_user.first_name
             thumb ="cache/playlist.png"
             buttons = playlist_markup(user_name, user_id)
@@ -240,7 +261,7 @@ async def play(_, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
             ) 
             return
-        what = "Query Given"
+        
         query = " ".join(message.command[1:])
         mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         try:
