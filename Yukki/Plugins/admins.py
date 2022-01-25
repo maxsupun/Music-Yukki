@@ -46,6 +46,12 @@ async def member_permissions(chat_id: int, user_id: int):
     return perms
 from Yukki.YukkiUtilities.helpers.administrator import adminsOnly
 
+def convert_seconds(seconds):
+    seconds = seconds % (24 * 3600)
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%02d:%02d" % (minutes, seconds)
 
 @app.on_message(filters.command("cleandb"))
 async def stop_cmd(_, message): # clean database of current chat (used by admin group only)
@@ -206,8 +212,7 @@ async def stop_cmd(_, message):
                     ),
                 )
                 thumbnail = (x["thumbnail"])
-                duration = (x["duration"])
-                duration = round(x["duration"] / 60)
+                duration = convert_seconds(x["duration"] / 60)
                 taut = (x["webpage_url"])
                 theme = random.choice(themes)
                 ctitle = (await app.get_chat(chat_id)).title
