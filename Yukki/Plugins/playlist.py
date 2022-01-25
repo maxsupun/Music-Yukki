@@ -84,7 +84,7 @@ async def delmyplaylist(_, message):
 async def delchatplaylist(_, message):
     a = await app.get_chat_member(message.chat.id , message.from_user.id)
     if not a.can_manage_voice_chats:
-        return await message.reply_text("you must be admin with permission:\n\n» ❌ __Can manage video chat__")
+        return await message.reply_text("You're missing admin rights to use this command.\n\n» ❌ can_manage_voice_chats")
     usage = ("usage:\n\n/delchatplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\n/delchatplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
         return await message.reply_text(usage)
