@@ -33,6 +33,13 @@ flex = {}
 smexy = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 pytgcalls = PyTgCalls(smexy, overload_quiet_mode=True)
 
+def convert_seconds(seconds):
+    seconds = seconds % (24 * 3600)
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%02d:%02d" % (minutes, seconds)
+
 @pytgcalls.on_kicked()
 async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
     try:
@@ -128,8 +135,7 @@ Title: {ctitle}
                     ),
                 )
                 thumbnail = (x["thumbnail"])
-                duration = (x["duration"])
-                duration = round(x["duration"] / 60)
+                duration = convert_seconds(x["duration"] / 60)
                 theme = random.choice(themes)
                 ctitle = await CHAT_TITLE(ctitle)
                 f2 = open(f'search/{afk}id.txt', 'r')        
