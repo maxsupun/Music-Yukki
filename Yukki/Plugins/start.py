@@ -83,7 +83,17 @@ async def start(_, message: Message):
     out = start_pannel()
     await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm a Veez Mega bot.\n\n💭 Appoint me as admin in your Group so i can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
     return
-        
+
+
+# Convert seconds to mm:ss
+def convert_seconds(seconds):
+    seconds = seconds % (24 * 3600)
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%02d:%02d" % (minutes, seconds)
+
+
 @Client.on_message(filters.private & filters.incoming & filters.command("start"))
 async def play(_, message: Message):
     if len(message.command) == 1:
@@ -115,7 +125,7 @@ async def play(_, message: Message):
 💡 **Track Informations**
 
 🏷 **Name:** {x["title"]}
-⏱ **Duration:** {round(x["duration"] / 60)} min(s)
+⏱ **Duration:** {convert_seconds(x["duration"] / 60)} min(s)
 👀 **Views:** `{x["view_count"]}`
 👍🏻 **Likes:** `{x["like_count"]}`
 ⭐️ **Ratings:** {x["average_rating"]}
