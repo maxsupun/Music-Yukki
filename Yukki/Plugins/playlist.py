@@ -39,7 +39,7 @@ options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", 
 
 
 @Client.on_message(command(["playlist", "playlist@VeezMegaBot"]) & other_filters)
-async def pause_cmd(_, message):
+async def start_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
     await message.reply_photo(
     photo=thumb, 
@@ -59,11 +59,11 @@ async def delmyplaylist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 18:
-        return await message.reply_text(f"💡 **confirmation** !\n\nare you sure want to delete your whole playlist ?", reply_markup=confirm_keyboard)
+        return await message.reply_text(f"💡 **Confirmation** !!\n\nAre you sure want to delete your whole playlist ?", reply_markup=confirm_keyboard)
     else:
          _playlist = await get_note_names(message.from_user.id)
     if not _playlist:
-        await message.reply_text("you have no playlist on veez mega database !")
+        await message.reply_text("You not have playlist on database !")
     else:
         titlex = []
         j = 0
@@ -74,10 +74,10 @@ async def delmyplaylist(_, message):
             if j == count:
                 deleted = await delete_playlist(message.from_user.id, note)
                 if deleted:
-                    return await message.reply_text(f"**deleted the {count} music in playlist**")
+                    return await message.reply_text(f"✅ Deleted the {count} music in playlist")
                 else:
-                    return await message.reply_text(f"**no such saved music in playlist.**")                                
-        await message.reply_text("you have no such music in playlist.")                             
+                    return await message.reply_text("no such saved music in playlist !")                                
+        await message.reply_text("You not have such music in playlist !")                             
 
 
 @Client.on_message(command(["delchatplaylist", "delchatplaylist@VeezMegaBot"]) & other_filters)
@@ -94,11 +94,11 @@ async def delchatplaylist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 21:
-        return await message.reply_text(f"💡 confirmation !\n\nare you sure want to delete whole whole playlist ?", reply_markup=confirm_group_keyboard)
+        return await message.reply_text(f"💡 Confirmation !\n\nAre you sure want to delete your whole Group playlist ?", reply_markup=confirm_group_keyboard)
     else:
          _playlist = await get_note_names(message.chat.id)
     if not _playlist:
-        await message.reply_text("Group's has no playlist on veez mega database.")
+        await message.reply_text("Group's has no playlist on database !")
     else:
         titlex = []
         j = 0
@@ -109,7 +109,7 @@ async def delchatplaylist(_, message):
             if j == count:
                 deleted = await delete_playlist(message.chat.id, note)
                 if deleted:
-                    return await message.reply_text(f"**deleted the {count} music in group's playlist**")
+                    return await message.reply_text(f"**✅ Deleted the {count} music in group's playlist**")
                 else:
-                    return await message.reply_text(f"**no such saved music in Group playlist.**")                                
-        await message.reply_text("you have no such music in Group's playlist.")
+                    return await message.reply_text(f"**no such saved music in group playlist !**")                                
+        await message.reply_text("You not have such music in Group's playlist !")
