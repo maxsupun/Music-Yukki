@@ -28,7 +28,7 @@ async def convert(file_path: str) -> str:
                 "-acodec pcm_s16le " 
                 f"{out}"
             ),
-            stdout=asyncio.subprocess.PIPE,
+            stdin=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
 
