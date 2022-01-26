@@ -1,6 +1,7 @@
 import asyncio
 from os import path
 
+
 class FFmpegReturnCodeError(Exception):
     pass
   
@@ -27,7 +28,7 @@ async def convert(file_path: str) -> str:
                 "-acodec pcm_s16le " 
                 f"{out}"
             ),
-            stdin=asyncio.subprocess.PIPE,
+            stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
 
