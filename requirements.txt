@@ -2,7 +2,7 @@ tgcrypto
 pyrogram
 py-tgcalls
 youtube-search-python
-yt-dlp
+yt-dlp==2021.11.10.1
 ffmpeg-python
 aiohttp
 aiofiles
