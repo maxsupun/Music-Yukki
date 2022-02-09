@@ -1,6 +1,7 @@
 import yt_dlp
 from pyrogram import filters
 from pyrogram import Client
+from youtubesearchpython import VideosSearch
 from Yukki import app, SUDOERS, BOT_ID, BOT_USERNAME, OWNER
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME
 from ..YukkiUtilities.helpers.inline import start_keyboard, personal_markup
