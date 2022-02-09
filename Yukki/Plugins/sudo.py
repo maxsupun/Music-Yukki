@@ -9,6 +9,7 @@ from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove
 from pyrogram import filters, Client
 from pyrogram.types import Message
 
+
 @app.on_message(filters.command("addsudo") & filters.user(OWNER))
 async def useradd(_, message: Message):
     if not message.reply_to_message:
@@ -77,7 +78,7 @@ async def userdel(_, message: Message):
 @app.on_message(filters.command("sudolist"))
 async def sudoers_list(_, message: Message):
     sudoers = await get_sudoers()
-    text = "💡 **sudo users list:**\n\n"
+    text = "🧙🏻‍♂️ **List of sudo users:**\n\n"
     for count, user_id in enumerate(sudoers, 1):
         try:                     
             user = await app.get_users(user_id)
