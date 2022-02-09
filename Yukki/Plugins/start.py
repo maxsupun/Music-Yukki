@@ -29,7 +29,8 @@ def start_pannel():
                 InlineKeyboardButton(text="💭 Group", url="https://t.me/VeezSupportGroup")
             ],
     ]
-    return "✨  **Welcome to veez music mega bot.**", buttons
+    return "✨ This is veez
+mega, a bot that can play music trought the Telegram Group video chat.", buttons
 
 pstart_markup=InlineKeyboardMarkup(
             [
@@ -82,7 +83,7 @@ async def start(_, message: Message):
         await message.reply(f"❌ **This chat not authorized !**\n\nI can't stream music in non-authorized chat, ask to sudo user to auth this chat.\n\nCheck the sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
         return await app.leave_chat(chat_id)
     out = start_pannel()
-    await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm a Veez Mega bot.\n\n💭 Appoint me as admin in your Group so i can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
+    await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm Veez Mega bot.\n\n💭 Appoint me as admin in your Group so i can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
     return
 
 
@@ -116,19 +117,18 @@ async def play(_, message: Message):
                 duration = result["duration"]
                 views = result["viewCount"]["short"]
                 thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-                channelurl = result["channel"]["link"]
                 channel = result["channel"]["name"]
                 link = result["link"]
             searched_text = f"""
 💡 **Track Informations**
 
-🏷 **Name:** [{title}]({link})
-⏱ **Duration:** `{duration}`
-👀 **Views:** `{views}`
-📣 **Channel:** [{channel}]({channelurl})
+🏷 **Name:** {title}
+⏱ **Duration:** {duration}
+👀 **Views:** {views}
+📣 **Channel:** {channel}
 🔗 **Link:** {link}
 
-⚡️ __Powered by Veez Mega AI__"""
+⚡️ __Powered by Veez Music AI__"""
             buttons = personal_markup(link)
             userid = message.from_user.id
             thumb = await down_thumb(thumbnail, userid)
