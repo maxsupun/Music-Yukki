@@ -1,5 +1,6 @@
 import os 
 import time
+
 from pymongo import MongoClient
 from ..config import MONGO_DB_URI as smex
 from Yukki import app, SUDOERS, BOT_ID, __version__ as yukki_version
@@ -20,7 +21,7 @@ from Yukki import app, SUDOERS, YUKKI_START_TIME
 
 @app.on_message(command("stats") & filters.user(SUDOERS))
 async def gstats(_, message):
-    m = await message.reply_text("🔄 **Getting bot stats...**\n\n» please wait for some time.")
+    m = await message.reply_text("🔄 **Getting bot stats...**")
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
@@ -48,9 +49,9 @@ async def gstats(_, message):
     free = (hdd.free / (1024.0 ** 3))
     free = str(free)
     msg = f"""
-📊 **Global stats of veez mega bot**:\n
+📊 **Current Bot Statistic**:\n
 ⩥ **System Stats:**\n
-**Uptime:** {uptime}
+**Uptime:** `{uptime}`
 **System Proc:** Online
 **Platform:** {sc}
 **Storage:** used {used[:4]} GiB out of {total[:4]} GiB, free {free[:4]} GiB
@@ -62,10 +63,10 @@ async def gstats(_, message):
 **PyTgCalls Version:** `{pytover.__version__}`
 
 ⩥ **Bot Stats:**\n
-**Loaded Modules:** {modules_count}
-**Gbanned Users:** {blocked}
+**Loaded Modules:** `{modules_count}`
+**Gbanned Users:** `{blocked}`
 **Sudo Users:** {j}
-**Allowed Chats:** {len(served_chats)}
+**Authorized Chats:** `{len(served_chats)}`
 """
     served_chats.pop(0)
     await m.edit(msg, disable_web_page_preview=True)
