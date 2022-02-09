@@ -62,9 +62,9 @@ async def welcome(_, message: Message):
     for member in message.new_chat_members:
         try:
             if member.id in OWNER:
-                return await message.reply_text(f"🧙🏻‍♂️ • {member.mention} •\n\n• **Staff** of Veez Mega has joined this Group.")
+                return await message.reply_text(f"🧙🏻‍♂️ • {member.mention} •\n\n• **Staff** of veez mega has joined this Group.")
             if member.id in SUDOERS:
-                return await message.reply_text(f"🧙🏻‍♂️ • {member.mention} •\n\n• **Staff** of Veez Mega has joined this Group.")
+                return await message.reply_text(f"🧙🏻‍♂️ • {member.mention} •\n\n• **Staff** of veez mega has joined this Group.")
             if member.id == ASSID:
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
@@ -85,15 +85,6 @@ async def start(_, message: Message):
     return
 
 
-# Convert seconds to mm:ss
-def convert_seconds(seconds):
-    seconds = seconds % (24 * 3600)
-    seconds %= 3600
-    minutes = seconds // 60
-    seconds %= 60
-    return "%02d:%02d" % (minutes, seconds)
-
-
 @Client.on_message(filters.private & filters.incoming & filters.command("start"))
 async def play(_, message: Message):
     if len(message.command) == 1:
@@ -108,32 +99,35 @@ async def play(_, message: Message):
             disable_web_page_preview=True
         )
     elif len(message.command) == 2:
-        chat_id = message.chat.id
-        boom = await app.send_message(chat_id, "🔍 Getting info...")                                                       
+        chat_id = message.chat.id                                                       
         query = message.text.split(None, 1)[1]
         f1 = (query[0])
         f2 = (query[1])
         f3 = (query[2])
         finxx = (f"{f1}{f2}{f3}")
         if str(finxx) == "inf":
+            boom = await app.send_message(chat_id, "🔍 Getting info...")
             query = ((str(query)).replace("info_","", 1))
             query = (f"https://www.youtube.com/watch?v={query}")
-            with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
-                x = ytdl.extract_info(query, download=False)
-            thumbnail = (x["thumbnail"])
+            results = VideosSearch(query, limit=1)
+            for result in results.result()["result"]:
+                title = result["title"]
+                duration = result["duration"]
+                views = result["viewCount"]["short"]
+                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+                channelurl = result["channel"]["link"]
+                channel = result["channel"]["name"]
+                link = result["link"]
             searched_text = f"""
 💡 **Track Informations**
 
-🏷 **Name:** {x["title"]}
-⏱ **Duration:** {convert_seconds(x["duration"] / 60)} min(s)
-👀 **Views:** `{x["view_count"]}`
-👍🏻 **Likes:** `{x["like_count"]}`
-⭐️ **Ratings:** {x["average_rating"]}
-📣 **Channel:** {x["uploader"]}
-🔗 **Link:** {x["webpage_url"]}
+🏷 **Name:** [{title}]({link})
+⏱ **Duration:** `{duration}`
+👀 **Views:** `{views}`
+📣 **Channel:** [{channel}]({channelurl})
+🔗 **Link:** {link}
 
 ⚡️ __Powered by Veez Mega AI__"""
-            link = (x["webpage_url"])
             buttons = personal_markup(link)
             userid = message.from_user.id
             thumb = await down_thumb(thumbnail, userid)
@@ -146,7 +140,7 @@ async def play(_, message: Message):
             )
         if str(finxx) == "sud":
             sudoers = await get_sudoers()
-            text = "**💡 sudo users list:**\n\n"
+            text = "🧙🏻‍♂️ **List of sudo users:**\n\n"
             for count, user_id in enumerate(sudoers, 1):
                 try:                     
                     user = await app.get_users(user_id)
