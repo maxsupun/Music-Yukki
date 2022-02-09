@@ -371,7 +371,7 @@ async def startyuplay(_,CallbackQuery):
     except Exception as e:
         return await CallbackQuery.message.edit(f"an error occured\n\n**reason**:{e}")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"❌ live stream not supported")      
+        return await CallbackQuery.answer("❌ live stream not supported", show_alert=True)      
     if CallbackQuery.from_user.id != int(user_id):
         return await CallbackQuery.answer("💡 sorry this not your request", show_alert=True)
     await CallbackQuery.message.delete()
