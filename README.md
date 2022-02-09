@@ -4,7 +4,7 @@ Credit for [@TeamYukki](https://t.me/OfficialYukki) as the owner & creator of th
 
 ### String Session
 
-[![GenerateString](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](https://replit.com/@levinalab/StringSession#main.py)
+[![GenerateString](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](https://replit.com/@levinalab/Session-Generator?lite=1&outputonly=1#main.py)
 
 Generate & Choose pyrogram session string for session var.
 
