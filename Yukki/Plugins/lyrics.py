@@ -46,6 +46,7 @@ async def lyrics_data(_, CallbackQuery):
 **Requested By:** {usr}
 
 **__Lyrics:__**
+
 {S.lyrics}"""
     if len(xxx) > 4096:
         filename = "lyrics.txt"
@@ -78,6 +79,7 @@ async def lyric_search(_, message: Message):
 **Artist Name:** {S.artist}
 
 **__Lyrics:__**
+
 {S.lyrics}"""
     if len(xxx) > 4096:
         await m.delete()
