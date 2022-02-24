@@ -1,14 +1,16 @@
 import os
-import speedtest
 import wget
-from ..YukkiUtilities.helpers.gets import bytes
-from Yukki import app, SUDOERS, BOT_ID
+import speedtest
+
+from PIL import Image
+from Yukki import app, SUDOERS
+from Yukki.YukkiUtilities.database.onoff import is_on_off
 from pyrogram import filters, Client
-from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from pyrogram.types import Message
 
+
 @app.on_message(filters.command("speedtest") & ~filters.edited)
-async def gstats(_, message):
+async def run_speedtest(_, message):
     userid = message.from_user.id
     if await is_on_off(2):
         if userid in SUDOERS:
@@ -30,6 +32,12 @@ async def gstats(_, message):
         return 
     m = await m.edit("🔄 sharing speedtest results...")
     path = wget.download(result["share"])
+    try:
+        img = Image.open(path)
+        c = img.crop((17, 11, 727, 389))
+        c.save(path)
+    except BaseException:
+        pass
     output = f"""💡 **SpeedTest Results**
     
 <u>**Client:**</u>
