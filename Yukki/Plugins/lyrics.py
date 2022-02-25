@@ -1,10 +1,11 @@
 import os
 import re
-
 import lyricsgenius
+
 from Yukki import app
-from pyrogram.types import Message, CallbackQuery
+
 from pyrogram import Client, filters
+from pyrogram.types import Message, CallbackQuery
 from youtubesearchpython import VideosSearch
 
 
@@ -41,11 +42,11 @@ async def lyrics_data(_, CallbackQuery):
     userid = CallbackQuery.from_user.id
     usr = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     xxx = f"""
-**Song Name:** __{title}__
-**Artist Name:** {S.artist}
-**Requested By:** {usr}
+**Title song:** {title}
+**Artist name:** {S.artist}
+**Request by:** {usr}
 
-**__Lyrics:__**
+**Lyrics:**
 
 {S.lyrics}"""
     if len(xxx) > 4096:
@@ -74,11 +75,14 @@ async def lyric_search(_, message: Message):
     S = y.search_song(query, get_full_info=False)
     if S is None:
         return await m.edit("sorry lyrics not found")
+    userid = message.from_user.id
+    usr = f"[{message.from_user.first_name}](tg://user?id={userid})"
     xxx = f"""
-**Song Name:** __{query}__
-**Artist Name:** {S.artist}
+**Title song:** {query}
+**Artist name:** {S.artist}
+**Request by:** {usr}
 
-**__Lyrics:__**
+**Lyrics:**
 
 {S.lyrics}"""
     if len(xxx) > 4096:
