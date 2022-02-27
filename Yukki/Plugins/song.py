@@ -33,14 +33,14 @@ from pyrogram import filters
 from typing import Union
 import subprocess
 from asyncio import QueueEmpty
-import shutil
-import os
 from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import Message, Audio, Voice
-from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, )
+from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message)
+
 flex = {}
 chat_watcher_group = 3
+
 def time_to_seconds(time):
     stringt = str(time)
     return sum(
@@ -53,7 +53,7 @@ async def musicdl(_, message: Message):
     await message.delete()
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply(f"❌ **This chat not authorized !**\n\nI can't stream music in non-authorized chat, ask to sudo user to auth this chat.\n\nCheck the sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
+        await message.reply_text(f"❌ **This chat not authorized !**\n\nI can't stream music in non-authorized chat, ask to sudo user to auth this chat.\n\nCheck the sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
         return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account from admin rights.")  
@@ -61,9 +61,7 @@ async def musicdl(_, message: Message):
     chat_title = message.chat.title
     username = message.from_user.first_name
     checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
-    
     url = get_url(message)
-    await message.delete()
     fucksemx = 0
     if url:
         query = " ".join(message.command[1:])
