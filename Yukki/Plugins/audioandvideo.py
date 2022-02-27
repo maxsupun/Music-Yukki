@@ -10,6 +10,7 @@ from pyrogram.types import (
     Message,
 )
 
+import os
 import wget
 import yt_dlp
 import asyncio
