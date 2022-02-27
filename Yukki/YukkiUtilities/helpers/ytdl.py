@@ -4,8 +4,10 @@ ytdl = YoutubeDL(
     {
         "format": "bestaudio[ext=m4a]",
         "geo-bypass": True,
+        "noprogress": True,
         "nocheckcertificate": True,
         "outtmpl": "downloads/%(id)s.%(ext)s",
+        "quite": True,
     }
 )
 
