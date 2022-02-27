@@ -76,8 +76,8 @@ async def play(_, message: Message):
     if await is_on_off(1):
         LOG_ID = "-1001306851903"
         if int(chat_id) != int(LOG_ID):
-            return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
-        return await message.reply_text("» bot is under maintenance, sorry for the inconvenience!")
+            return await message.reply_text("» Bot is under maintenance, sorry for the inconvenience!")
+        return await message.reply_text("» Bot is under maintenance, sorry for the inconvenience!")
     a = await app.get_chat_member(message.chat.id , BOT_ID)
     if a.status != "administrator":
         await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
@@ -98,25 +98,35 @@ async def play(_, message: Message):
         + "\n\n» ❌ __Add users__\n\nOnce done, try again.")
         return
     try:
-        b = await app.get_chat_member(message.chat.id , ASSID) 
-        if b.status == "kicked":
-            await app.unban_chat_member(message.chat.id, ASSID)
-            invitelink = await app.export_chat_invite_link(message.chat.id)
+        b = await app.get_chat_member(message.chat.id, ASSID)
+        if b.status == "banned":
+            try:
+                await message.reply_text("❌ The userbot is banned in this chat, unban the userbot first to be able to play music !")
+                await remove_active_chat(message.chat.id)
+            except BaseException:
+                pass
+            invitelink = (await app.get_chat(message.chat.id)).invite_link
+            if not invitelink:
+                await app.export_chat_invite_link(message.chat.id)
+                invitelink = (await app.get_chat(message.chat.id)).invite_link
             if invitelink.startswith("https://t.me/+"):
-                    invitelink = invitelink.replace(
-                        "https://t.me/+", "https://t.me/joinchat/"
-                    )
+                invitelink = invitelink.replace(
+                    "https://t.me/+", "https://t.me/joinchat/"
+                )
             await ASS_ACC.join_chat(invitelink)
-            await remove_active_chat(chat_id)
+            await remove_active_chat(message.chat.id)
     except UserNotParticipant:
         try:
-            invitelink = await app.export_chat_invite_link(message.chat.id)
+            invitelink = (await app.get_chat(message.chat.id)).invite_link
+            if not invitelink:
+                await app.export_chat_invite_link(message.chat.id)
+                invitelink = (await app.get_chat(message.chat.id)).invite_link
             if invitelink.startswith("https://t.me/+"):
-                    invitelink = invitelink.replace(
-                        "https://t.me/+", "https://t.me/joinchat/"
-                    )
+                invitelink = invitelink.replace(
+                    "https://t.me/+", "https://t.me/joinchat/"
+                )
             await ASS_ACC.join_chat(invitelink)
-            await remove_active_chat(chat_id)
+            await remove_active_chat(message.chat.id)
         except UserAlreadyParticipant:
             pass
         except Exception as e:
@@ -576,7 +586,7 @@ async def play_playlist_cmd(_, message):
     buttons = playlist_markup(user_name, user_id)
     await message.reply_photo(
     photo=thumb, 
-    caption=("**❓ Which playlist do you want to play ?**"),    
+    caption=("**❓ Which playlist do you want to play?**"),    
     reply_markup=InlineKeyboardMarkup(buttons),
     )
     return
