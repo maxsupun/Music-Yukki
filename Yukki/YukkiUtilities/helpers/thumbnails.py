@@ -1,7 +1,8 @@
 import os
-from os import path
 import aiohttp
 import aiofiles
+
+from os import path
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
