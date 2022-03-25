@@ -1,4 +1,5 @@
 import yt_dlp
+
 from pyrogram import filters
 from pyrogram import Client
 from youtubesearchpython import VideosSearch
@@ -19,8 +20,9 @@ from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_cha
 from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove_sudo)
 
+
 def start_pannel():  
-    buttons  = [
+    buttons = [
             [
                 InlineKeyboardButton(text="📚 Commands", url="https://telegra.ph/Veez-Mega-Guide-01-10")
             ],
@@ -29,31 +31,30 @@ def start_pannel():
                 InlineKeyboardButton(text="💭 Group", url="https://t.me/VeezSupportGroup")
             ],
     ]
-    return "✨ This is veez mega, a bot that can play music trought the Telegram Group video chat.", buttons
+    return "✨ This is veez mega, a bot that can play music trough the Telegram Group video chat.", buttons
 
-pstart_markup=InlineKeyboardMarkup(
+pstart_markup = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "➕ Add me to a Group ➕", url="https://t.me/VeezMegaBot?startgroup=true")
+                        "➕ Add me to your Group ➕", url="https://t.me/VeezMegaBot?startgroup=true")
                 ],[
                     InlineKeyboardButton(
                         "📚 Commands", url="https://telegra.ph/Veez-Mega-Guide-01-10"),
                     InlineKeyboardButton(
-                        "♥️ Donate", url="https://t.me/VMDonationBot")
+                        "❓ Setup Guide", url="https://telegra.ph/Veez-Mega-Guid-11-19")
                 ],[
                     InlineKeyboardButton(
                         "👥 Official Group", url="https://t.me/VeezSupportGroup"), 
                     InlineKeyboardButton(
-                        "📣 Official Channel", url="https://t.me/levinachannel")
-                ],[
-                    InlineKeyboardButton(
-                        "❓ Setup Guide", url="https://telegra.ph/Veez-Mega-Guid-11-19")
-                ]
+                        "📎 Official Channel", url="https://t.me/levinachannel")
+                ],
             ]
         )
 
+
 welcome_captcha_group = 2
+
 @app.on_message(filters.new_chat_members, group=welcome_captcha_group)
 async def welcome(_, message: Message):
     chat_id = message.chat.id

@@ -1,18 +1,18 @@
-from Yukki import app, OWNER
-from pyrogram import filters, Client
-from pyrogram.types import Message
-from ..YukkiUtilities.helpers.filters import command
-import subprocess
-import shutil
 import os
+import shutil
+
+from Yukki import OWNER
+from pyrogram.types import Message
+from pyrogram import filters, Client
+from ..YukkiUtilities.helpers.filters import command
    
     
 @Client.on_message(command("clean") & filters.user(OWNER))
 async def clear_storage(_, message: Message):    
-    dir = 'downloads'
-    dir1 = 'search'
-    shutil.rmtree(dir)
-    shutil.rmtree(dir1)
-    os.mkdir(dir)
-    os.mkdir(dir1)
+    dir_1 = 'downloads'
+    dir_2 = 'search'
+    shutil.rmtree(dir_1)
+    shutil.rmtree(dir_2)
+    os.mkdir(dir_1)
+    os.mkdir(dir_2)
     await message.reply_text("✅ Cleaned all **temp** dir(s) !")
