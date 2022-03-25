@@ -35,6 +35,8 @@ async def convert_count(count):
     elif str(count) == "all":
         x = "all"
     return x
+
+
 def get_url(message_1: Message) -> Union[str, None]:
     messages = [message_1]
     if message_1.reply_to_message:
@@ -54,9 +56,10 @@ def get_url(message_1: Message) -> Union[str, None]:
     if offset in (None,):
         return None
     return text[offset:offset + length]
+
 random_assistant = ["5", "1", "2", "3", "4"]
 
-themes = ["LightBlue"]
+themes = ["LightGreen"]
 
 def bytes(size: float) -> str:
     """humanize size"""
