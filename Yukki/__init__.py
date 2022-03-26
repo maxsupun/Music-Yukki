@@ -1,32 +1,36 @@
-print("[INFO]: STARTING CLIENT :: STAND BY !!")
+print("[ INFO ] STARTING CLIENT :: STAND BY !!")
 
 import time
+import uvloop
 import logging
 import aiohttp
 import asyncio
-import uvloop
 import importlib
+
 from Yukki import config
 from logging import getLogger
-from pyrogram import Client, idle
-from pyrogram import Client as Bot
 from aiohttp import ClientSession
-from Yukki.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS
+from pyrogram import Client as Bot, idle
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
-from Yukki.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, LOG_GROUP_ID, OWNER_ID
-from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
+from Yukki.config import (
+    API_ID,
+    API_HASH,
+    BOT_TOKEN,
+    MONGO_DB_URI,
+    SUDO_USERS,
+    LOG_GROUP_ID,
+    OWNER_ID,
+)
+
 
 def initialize():
     global dbb
     dbb = {}
     
 initialize()
+print("[ INFO ] INITIALIZING DATABASE")
 
-print("[INFO]: INITIALIZING DATABASE")
-
-LOGS = getLogger(__name__)
-
-__version__ = "5.0.0"
+__version__ = "6.0"
 
 MONGODB_CLI = MongoClient(MONGO_DB_URI)
 db = MONGODB_CLI.wbb
@@ -34,7 +38,7 @@ SUDOERS = SUDO_USERS
 OWNER = OWNER_ID
 async def load_sudoers():
     global SUDOERS
-    print("[INFO]: LOADING SUDO USERS")
+    print("[ INFO ] LOADING SUDO USERS")
     sudoersdb = db.sudoers
     sudoers = await sudoersdb.find_one({"sudo": "sudo"})
     sudoers = [] if not sudoers else sudoers["sudoers"]
@@ -45,7 +49,7 @@ async def load_sudoers():
                 {"sudo": "sudo"}, {"$set": {"sudoers": sudoers}}, upsert=True
             )
     SUDOERS = (SUDOERS + sudoers) if sudoers else SUDOERS
-    print("[INFO]: LOADED SUDO USERS")
+    print("[ INFO ] LOADED SUDO USERS")
 loop = asyncio.get_event_loop()
 loop.run_until_complete(load_sudoers())
 YUKKI_START_TIME = time.time()
@@ -59,7 +63,8 @@ ASSID = 0
 ASSNAME = ""
 ASSUSERNAME = ""
 ASSMENTION = ""
-print("[INFO]: INITIALIZING BOT CLIENT")
+
+print("[ INFO ] INITIALIZING BOT CLIENT")
 app = Client(
     'mega',
     API_ID,
@@ -91,10 +96,10 @@ def all_info(app, chacha):
     ASSMENTION = getme1.mention
 
     
-print("[INFO]: STARTING TELEBOT CLIENT")
+print("[ INFO ] STARTING BOT CLIENT")
 app.start()
-print("[INFO]: STARTING USERBOT CLIENT")
+print("[ INFO ] STARTING USERBOT CLIENT")
 chacha.start()
-print("[INFO]: GENERATING BOT/ASSISTANT PROFILE INFO")
+print("[ INFO ] GENERATING BOT & ASSISTANT PROFILE INFO")
 all_info(app, chacha)
-print("[INFO]: GENERATED- BOT/ASSISTANT PROFILE INFO")
+print("[ INFO ] GENERATED BOT & ASSISTANT PROFILE INFO")
