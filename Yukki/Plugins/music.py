@@ -7,6 +7,7 @@ import yt_dlp
 import shutil
 import psutil
 import subprocess
+
 from os import path
 from typing import Union
 from .. import converter
@@ -14,7 +15,6 @@ from pytube import YouTube
 from yt_dlp import YoutubeDL
 from asyncio import QueueEmpty
 from pytgcalls import StreamType
-from sys import version as pyver
 from pyrogram import Client, filters
 from pytgcalls.exceptions import NoActiveGroupCall
 from pyrogram.types import Message, Voice, Audio
@@ -41,6 +41,7 @@ from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup2, sear
 from youtubesearchpython import VideosSearch
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message)
+
 
 flex = {}
 chat_watcher_group = 3
@@ -78,7 +79,7 @@ async def play(_, message: Message):
         if int(chat_id) != int(LOG_ID):
             return await message.reply_text("» Bot is under maintenance, sorry for the inconvenience!")
         return await message.reply_text("» Bot is under maintenance, sorry for the inconvenience!")
-    a = await app.get_chat_member(message.chat.id , BOT_ID)
+    a = await app.get_chat_member(message.chat.id, BOT_ID)
     if a.status != "administrator":
         await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
         return
@@ -370,14 +371,14 @@ async def play(_, message: Message):
          
     
 @Client.on_callback_query(filters.regex(pattern=r"yukki"))
-async def startyuplay(_,CallbackQuery): 
+async def start_stream(_, CallbackQuery): 
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     try:
-        id,duration,user_id = callback_request.split("|") 
+        id, duration, user_id = callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"an error occured\n\n**reason**:{e}")
     if duration == "None":
@@ -579,14 +580,16 @@ async def popat(_, CallbackQuery):
 
 
 @Client.on_message(command(["playplaylist", "playplaylist@VeezMegaBot"]) & other_filters)
-async def play_playlist_cmd(_, message):
+async def start_playlist_stream(_, message):
     thumb ="cache/playlist.png"
+    chat_id = message.chat.id
     user_id = message.from_user.id
     user_name = message.from_user.first_name
     buttons = playlist_markup(user_name, user_id)
-    await message.reply_photo(
-    photo=thumb, 
-    caption=("**❓ Which playlist do you want to play?**"),    
-    reply_markup=InlineKeyboardMarkup(buttons),
+    await app.send_photo(
+        chat_id,
+        photo=thumb,
+        caption=("**❓ Which playlist do you want to play?**"),
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
     return
