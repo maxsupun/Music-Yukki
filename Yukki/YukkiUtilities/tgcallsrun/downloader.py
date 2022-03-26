@@ -1,6 +1,9 @@
-from os import path
+import os
 import yt_dlp
+
+from os import path
 from yt_dlp.utils import DownloadError
+
 
 ytdl = yt_dlp.YoutubeDL(
     {
@@ -8,9 +11,10 @@ ytdl = yt_dlp.YoutubeDL(
         "format": "bestaudio[ext=m4a]",
         "geo_bypass": True,
         "nocheckcertificate": True,
+        "quiet": True,
+        "no_warnings": True,
     }
  )
-
 
 def download(url: str, my_hook) -> str:       
     ydl_optssx = {
@@ -30,5 +34,5 @@ def download(url: str, my_hook) -> str:
         return print(y_e)
     else:
         dloader
-    xyz = path.join("downloads", f"{info['id']}.{info['ext']}")
-    return xyz
+    dir = path.join("downloads", f"{info['id']}.{info['ext']}")
+    return dir
