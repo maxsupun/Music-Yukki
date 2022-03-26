@@ -1,7 +1,6 @@
 import yt_dlp
 
-from pyrogram import filters
-from pyrogram import Client
+from pyrogram import Client, filters
 from youtubesearchpython import VideosSearch
 from Yukki import app, SUDOERS, BOT_ID, BOT_USERNAME, OWNER
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME
@@ -31,7 +30,8 @@ def start_pannel():
                 InlineKeyboardButton(text="💭 Group", url="https://t.me/VeezSupportGroup")
             ],
     ]
-    return "✨ This is veez mega, a bot that can play music trough the Telegram Group video chat.", buttons
+    return "✨ This is veez mega, a bot that can play music trough the Telegram Group video chat feature.", buttons
+
 
 pstart_markup = InlineKeyboardMarkup(
             [
@@ -71,7 +71,7 @@ async def welcome(_, message: Message):
                 await remove_active_chat(chat_id)
             if member.id == BOT_ID:
                 out = start_pannel()
-                await message.reply_text(f"❤️ **Thanks for adding me to the group !**\n\n**Promote me as administrator of the group, otherwise I will not be able to work properly.", reply_markup=InlineKeyboardMarkup(out[1]))
+                await message.reply_text(f"❤️ Thanks for adding me to the **group** !\n\nAppoint me as **administrator** of the **group**, otherwise I will not be able to work properly.", reply_markup=InlineKeyboardMarkup(out[1]))
                 return
         except:
             return
@@ -83,7 +83,7 @@ async def start(_, message: Message):
         await message.reply(f"❌ **This chat not authorized !**\n\nI can't stream music in non-authorized chat, ask to sudo user to auth this chat.\n\nCheck the sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
         return await app.leave_chat(chat_id)
     out = start_pannel()
-    await message.reply_text(f"✨ Hello {message.from_user.mention}, i'm Veez Mega bot.\n\n💭 Appoint me as admin in your Group so i can play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
+    await message.reply_text(f"👋🏻 Hi {message.from_user.mention}!\n\n💭 Appoint me as admin in your Group to be able play music, otherwise you can't use my service.", reply_markup=InlineKeyboardMarkup(out[1]))
     return
 
 
@@ -94,7 +94,7 @@ async def play(_, message: Message):
         user_name = message.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")" 
         await app.send_message(message.chat.id,
-            text=f"✨ Welcome {rpk} !\n\n💭 [Veez Mega](https://t.me/VeezMegaBot) **Can** play music on your **Groups** through the **Telegram Group call** feature !\n\n💡 **Check out** all the **Bot's commands** and how they work by clicking on the » 📚 **Commands** button!",
+            text=f"Hi {rpk} 👋🏻\n\nℹ️ [Veez Mega](https://t.me/VeezMegaBot) **Can** play music on your **Groups** through the **Telegram Group video chat** feature !\n\n💭 **Check out** all the **Bot commands** and how they work by clicking on the » 📚 **Commands** button!",
             parse_mode="markdown",
             reply_markup=pstart_markup,
             reply_to_message_id=message.message_id,
