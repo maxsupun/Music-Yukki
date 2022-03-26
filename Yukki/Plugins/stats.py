@@ -1,26 +1,27 @@
 import os 
 import time
+import platform, socket, re, uuid, json, psutil, logging
 
 from pymongo import MongoClient
 from ..config import MONGO_DB_URI as smex
-from Yukki import app, SUDOERS, BOT_ID, __version__ as yukki_version
+
+from pyrogram.types import Message
 from pyrogram import filters, Client
-from sys import version as pyver
 from pyrogram import __version__ as pyrover
 from pytgcalls import (__version__ as pytover)
-from pyrogram.types import Message
-import platform ,socket,re,uuid,json,psutil,logging
-from Yukki.YukkiUtilities.database.gbanned import get_gbans_count
-from Yukki.YukkiUtilities.database.chats import get_served_chats
+from sys import version as pyver
+
+from Yukki import app, SUDOERS, BOT_ID, __version__ as yukki_version, YUKKI_START_TIME
 from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove_sudo)
 from Yukki.YukkiUtilities.database.playlist import get_playlist_count
-from ..YukkiUtilities.helpers.filters import command
+from Yukki.YukkiUtilities.database.gbanned import get_gbans_count
+from Yukki.YukkiUtilities.database.chats import get_served_chats
 from ..YukkiUtilities.helpers.time import get_readable_time
-from Yukki import app, SUDOERS, YUKKI_START_TIME
+from ..YukkiUtilities.helpers.filters import command
 
 
 @app.on_message(command("stats") & filters.user(SUDOERS))
-async def gstats(_, message):
+async def get_statistic(_, message):
     m = await message.reply_text("🔄 **Getting bot stats...**")
     served_chats = []
     chats = await get_served_chats()
