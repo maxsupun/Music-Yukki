@@ -17,26 +17,26 @@ async def run_speedtest(_, message):
             pass
         else:
             return
-    m = await message.reply_text("⚡️ running server speedtest.")
+    m = await message.reply_text("⚡️ running server speedtest")
     try:
         test = speedtest.Speedtest()
         test.get_best_server()
-        m = await m.edit("⚡️ running download speedtest..")
+        m = await m.edit("⚡️ running download speedtest")
         test.download()
-        m = await m.edit("⚡️ running upload speedtest...")
+        m = await m.edit("⚡️ running upload speedtest")
         test.upload()
         test.results.share()
         result = test.results.dict()
     except Exception as e:
-        await message.err(text=e)
+        await m.edit_text(e)
         return 
-    m = await m.edit("🔄 sharing speedtest results...")
+    m = await m.edit_text("🔄 sharing speedtest results")
     path = wget.download(result["share"])
     try:
         img = Image.open(path)
         c = img.crop((17, 11, 727, 389))
         c.save(path)
-    except BaseException:
+    except Exception:
         pass
     output = f"""💡 **SpeedTest Results**
     
