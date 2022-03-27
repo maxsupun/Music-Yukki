@@ -1,22 +1,21 @@
 import os
-import subprocess
-import shutil
 import re
 import sys
+import shutil
 import traceback
-from io import StringIO
+import subprocess
+
 from time import time
-from pyrogram import filters
-from inspect import getfullargspec
-from ..YukkiUtilities.helpers.decorators import errors
-from ..YukkiUtilities.helpers.filters import command
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from io import StringIO
 from sys import version as pyver
-from pyrogram import Client, filters
-from pyrogram.types import Message
-from Yukki import app, SUDOERS, OWNER
+from inspect import getfullargspec
+
+from Yukki import app, SUDOERS
 from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.decorators import errors
+
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 
 async def aexec(code, client, message):
@@ -25,7 +24,6 @@ async def aexec(code, client, message):
         + "".join(f"\n {a}" for a in code.split("\n"))
     )
     return await locals()["__aexec"](client, message)
-
 
 async def edit_or_reply(msg: Message, **kwargs):
     func = msg.edit_text if msg.from_user.is_self else msg.reply
@@ -42,7 +40,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 )
 async def executor(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="» Give a command to execute.")
+        return await edit_or_reply(message, text="» Give a command to execute !")
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -80,14 +78,14 @@ async def executor(client, message):
             [
                 [
                     InlineKeyboardButton(
-                        text="⏳", callback_data=f"runtime {t2-t1} Seconds"
+                        text="⏳", callback_data=f"runtime {t2-t1} seconds"
                     )
                 ]
             ]
         )
         await message.reply_document(
             document=filename,
-            caption=f"`INPUT:`\n`{cmd[0:980]}`\n\n`OUTPUT:`\n`Attached Document`",
+            caption=f"`INPUT:`\n`{cmd[0:980]}`\n\n`OUTPUT:`\n`attached document`",
             quote=False,
             reply_markup=keyboard,
         )
@@ -123,7 +121,7 @@ async def runtime_func_cq(_, cq):
 )
 async def shellrunner(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="**usage:**\n\n» /sh git pull")
+        return await edit_or_reply(message, text="**usage:**\n\n» /sh echo hello world")
     text = message.text.split(None, 1)[1]
     if "\n" in text:
         code = text.split("\n")
