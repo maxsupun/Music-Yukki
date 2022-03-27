@@ -3,10 +3,11 @@ import re
 import lyricsgenius
 
 from Yukki import app
+from youtubesearchpython import VideosSearch
 
 from pyrogram import Client, filters
 from pyrogram.types import Message, CallbackQuery
-from youtubesearchpython import VideosSearch
+
 
 
 @app.on_callback_query(filters.regex(pattern=r"lyrics"))
@@ -17,8 +18,7 @@ async def lyrics_data(_, CallbackQuery):
         id, user_id = callback_request.split("|")
     except Exception as e:
         return await CallbackQuery.message.edit(
-            f"error: `{e}`"
-        )
+            f"error: `{e}`")
     url = f"https://www.youtube.com/watch?v={id}"
     print(url)
     try:
@@ -36,7 +36,7 @@ async def lyrics_data(_, CallbackQuery):
     S = y.search_song(t, get_full_info=False)
     if S is None:
         return await CallbackQuery.answer(
-            "sorry lyrics not found", show_alert=True
+            "the lyrics you requested not found", show_alert=True
         )
     await CallbackQuery.message.delete()
     userid = CallbackQuery.from_user.id
@@ -74,7 +74,7 @@ async def lyric_search(_, message: Message):
     y.verbose = False
     S = y.search_song(query, get_full_info=False)
     if S is None:
-        return await m.edit("sorry lyrics not found")
+        return await m.edit("the lyrics you requested not found")
     userid = message.from_user.id
     usr = f"[{message.from_user.first_name}](tg://user?id={userid})"
     xxx = f"""
@@ -92,7 +92,7 @@ async def lyric_search(_, message: Message):
             out_file.write(str(xxx.strip()))
         await message.reply_document(
             document=filename,
-            caption=f"**OUTPUT:**\n\n`Lyrics`",
+            caption=f"**OUTPUT:**\n\n`lyrics text file`",
             quote=False,
         )
         os.remove(filename)
