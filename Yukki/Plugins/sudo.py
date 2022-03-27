@@ -1,20 +1,22 @@
-from Yukki import app, OWNER
 import os
-import subprocess
-import shutil
 import re
 import sys
+import shutil
 import traceback
-from Yukki.YukkiUtilities.database.sudo import (get_sudoers, get_sudoers, remove_sudo, add_sudo)
-from pyrogram import filters, Client
+import subprocess
+
 from pyrogram.types import Message
+from pyrogram import filters, Client
+
+from Yukki import app, OWNER
+from Yukki.YukkiUtilities.database.sudo import get_sudoers, get_sudoers, remove_sudo, add_sudo
 
 
 @app.on_message(filters.command("addsudo") & filters.user(OWNER))
 async def useradd(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
-            await message.reply_text("reply to a user's message or give username/user_id")
+            await message.reply_text("Reply to a user's message or give his username/user_id")
             return
         user = message.text.split(None, 1)[1]
         if "@" in user:
