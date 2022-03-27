@@ -77,8 +77,8 @@ async def play(_, message: Message):
     if await is_on_off(1):
         LOG_ID = "-1001306851903"
         if int(chat_id) != int(LOG_ID):
-            return await message.reply_text("» Bot is under maintenance, sorry for the inconvenience!")
-        return await message.reply_text("» Bot is under maintenance, sorry for the inconvenience!")
+            return await message.reply_text("❌ The bot is under maintenance you're not able to play music for a while!\n\n• we're sorry for the inconveniences.")
+        return await message.reply_text("❌ The bot is under maintenance you're not able to play music for a while!\n\n• we're sorry for the inconveniences.")
     a = await app.get_chat_member(message.chat.id, BOT_ID)
     if a.status != "administrator":
         await message.reply_text(f"💡 To use me, I need to be an Administrator with the following permissions:\n\n» ❌ __Delete messages__\n» ❌ __Add users__\n» ❌ __Manage video chat__\n\nData is **updated** automatically after you **promote me**")
