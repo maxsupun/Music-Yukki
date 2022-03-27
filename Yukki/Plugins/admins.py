@@ -146,7 +146,7 @@ async def next_cmd(_, message):
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("❌ no more music in __Queues__ \n\n» userbot leaving video chat")
+            await message.reply_text("❌ no more music in queue\n\n» userbot leaving video chat")
             await yukki.pytgcalls.leave_group_call(message.chat.id)
             return  
         else:
@@ -162,7 +162,7 @@ async def next_cmd(_, message):
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this video.\n\n**reason**: `{e}`") 
+                    return await mystic.edit(f"failed to download this track.\n\n**reason**: `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -224,11 +224,12 @@ async def next_cmd(_, message):
                 buttons = play_markup(videoid, user_id)
                 await mystic.delete()
                 semx = await app.get_users(userid)
-                await message.reply_photo(
-                photo= thumb,
-                reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
-            )   
+                await app.send_photo(
+                    chat_id,
+                    photo=thumb,
+                    reply_markup=InlineKeyboardMarkup(buttons),    
+                    caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}"),
+                )   
                 os.remove(thumb)
             else:      
                 await yukki.pytgcalls.change_stream(
@@ -254,9 +255,10 @@ async def next_cmd(_, message):
                     buttons = audio_markup(videoid, user_id)
                 else:
                     buttons = play_markup(videoid, user_id)
-                await message.reply_photo(
-                photo=f"downloads/{_chat_}final.png",
-                reply_markup=InlineKeyboardMarkup(buttons),
-                caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}"),
+                await app.send_photo(
+                    chat_id,
+                    photo=f"downloads/{_chat_}final.png",
+                    reply_markup=InlineKeyboardMarkup(buttons),
+                    caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}"),
                 )
                 return
