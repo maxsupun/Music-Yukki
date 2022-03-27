@@ -10,7 +10,7 @@ import importlib
 from Yukki import config
 from logging import getLogger
 from aiohttp import ClientSession
-from pyrogram import Client as Bot, idle
+from pyrogram import Client, idle
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 from Yukki.config import (
     API_ID,
