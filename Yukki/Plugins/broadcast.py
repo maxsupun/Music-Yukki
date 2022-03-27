@@ -1,20 +1,23 @@
 import asyncio
-from Yukki import app, OWNER
-from pyrogram import filters, Client
+
 from pyrogram.types import Message
-from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
+from pyrogram import filters, Client
+
+from Yukki import app, OWNER
 from ..YukkiUtilities.helpers.filters import command
+from Yukki.YukkiUtilities.database.chats import get_served_chats
 
 
-@app.on_message(filters.command("broadcast_pin") & filters.user(OWNER))
+@app.on_message(command(["broadcast_pin"]) & filters.user(OWNER))
 async def broadcast_message_pin(_, message):
     if not message.reply_to_message:
         pass
-    else :
+    else:
+        msg = await message.reply_text("🔄 Broadcasting message...")
         x = message.reply_to_message.message_id   
         y = message.chat.id
         sent = 0
-        pin = 0
+        pins = 0
         chats = []
         schats = await get_served_chats()
         for chat in schats:
@@ -24,21 +27,22 @@ async def broadcast_message_pin(_, message):
                 m = await app.forward_messages(i, y, x)
                 try:
                     await m.pin(disable_notification=False)
-                    pin += 1
+                    pins += 1
                 except Exception:
                     pass
                 await asyncio.sleep(.3)
                 sent += 1
             except Exception:
                 pass
-        await message.reply_text(f"✅ **broadcasted message in {sent} chats\n\n📌 with {pin} pins.**")  
+        await msg.edit_text(f"✅ Broadcasted message in {sent} chats\n📌 Sent with {pins} chat pins.")  
         return
     if len(message.command) < 2:
-        await message.reply_text("**usage**:\n/broadcast (message)")
-        return  
+        await message.reply_text("**usage**:\n\n/broadcast_pin (message)")
+        return
+    msg = await message.reply_text("🔄 Broadcasting message...")
     text = message.text.split(None, 1)[1]
     sent = 0
-    pin = 0
+    pins = 0
     chats = []
     schats = await get_served_chats()
     for chat in schats:
@@ -48,21 +52,22 @@ async def broadcast_message_pin(_, message):
             m = await app.send_message(i, text=text)
             try:
                 await m.pin(disable_notification=False)
-                pin += 1
+                pins += 1
             except Exception:
                 pass
             await asyncio.sleep(.3)
             sent += 1
         except Exception:
             pass
-    await message.reply_text(f"✅ **broadcasted message in {sent} chats\n📌 with {pin} pins.**")
+    await msg.edit_text(f"✅ Broadcasted message in {sent} chats\n📌 Sent with {pins} chat pins.")
 
 
-@app.on_message(filters.command("broadcast") & filters.user(OWNER))
+@app.on_message(command(["broadcast"]) & filters.user(OWNER))
 async def broadcast_message_nopin(_, message):
     if not message.reply_to_message:
         pass
     else:
+        msg = await message.reply_text("🔄 Broadcasting message...")
         x = message.reply_to_message.message_id
         y = message.chat.id
         sent = 0
@@ -77,13 +82,14 @@ async def broadcast_message_nopin(_, message):
                 sent += 1
             except Exception:
                 pass
-        await message.reply_text(f"✅ **broadcasted message in {sent} chats")
+        await msg.edit_text(f"✅ Broadcasted message in {sent} chats")
         return
     if len(message.command) < 2:
         await message.reply_text(
-            "**usage**:\n/broadcast (message)"
+            "**usage**:\n\n/broadcast (message)"
         )
         return
+    msg = await message.reply_text("🔄 Broadcasting message...")
     text = message.text.split(None, 1)[1]
     sent = 0
     chats = []
@@ -97,4 +103,4 @@ async def broadcast_message_nopin(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply_text(f"✅ **broadcasted message in {sent} chats")
+    await msg.edit_text(f"✅ Broadcasted message in {sent} chats")

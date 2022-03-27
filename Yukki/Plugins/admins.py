@@ -1,40 +1,39 @@
-from Yukki.YukkiUtilities.helpers.decorators import errors
-from Yukki.YukkiUtilities.helpers.filters import command, other_filters
-from Yukki.YukkiUtilities.tgcallsrun import (yukki, clear, get, is_empty, put, task_done)
-from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 import os
 import yt_dlp
 import random
 import asyncio
 import shutil
-from os import path
-from Yukki import app
-from time import time
 import time as sedtime
+
+from os import path
+from time import time
 from typing import Union
 from asyncio import QueueEmpty
+
 from pyrogram import Client, filters
-from youtubesearchpython import VideosSearch
-from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
-from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
-from ..YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done)
-from Yukki.YukkiUtilities.helpers.thumbnails import gen_thumb
-from Yukki.YukkiUtilities.helpers.chattitle import CHAT_TITLE
-from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts 
-from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
-from Yukki.YukkiUtilities.tgcallsrun import (convert, download)
-from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import (
-    CallbackQuery,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     InputMediaPhoto,
+    CallbackQuery,
     Message,
     Audio,
     Voice,
 )
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
+from youtubesearchpython import VideosSearch
+
+from Yukki.YukkiUtilities.helpers.ytdl import ytdl_opts
+from Yukki.YukkiUtilities.helpers.decorators import errors
+from Yukki.YukkiUtilities.helpers.thumbnails import gen_thumb
+from Yukki.YukkiUtilities.helpers.chattitle import CHAT_TITLE
+from Yukki.YukkiUtilities.helpers.filters import command, other_filters
 from Yukki.YukkiUtilities.helpers.gets import (get_url, themes, random_assistant)
+from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
+from Yukki.YukkiUtilities.tgcallsrun import (yukki, convert, download, clear, get, is_empty, put, task_done, smexy)
+from Yukki.YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup)
+from Yukki.YukkiUtilities.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 
 flex = {}
 
@@ -53,8 +52,9 @@ def convert_seconds(seconds):
     seconds %= 60
     return "%02d:%02d" % (minutes, seconds)
 
-@app.on_message(filters.command("cleandb"))
-async def stop_cmd(_, message): # clean database of current chat (used by admin group only)
+
+@app.on_message(command(["cleandb"]) & other_filters)
+async def cleandb_cmd(_, message): # clean database of current chat (used by admin group only)
     chat_id = message.chat.id
     try:
         clear(message.chat.id)
@@ -68,7 +68,7 @@ async def stop_cmd(_, message): # clean database of current chat (used by admin 
     await message.reply_text("🗑 Cleaned database of this chat !")
 
 
-@app.on_message(filters.command("pause"))
+@app.on_message(command(["pause"]) & other_filters)
 async def pause_cmd(_, message): 
     if message.sender_chat:
         return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
@@ -87,8 +87,8 @@ async def pause_cmd(_, message):
     await message.reply_text("⏸ **Track paused.**\n\n• **To resume the playback, use the**\n» /resume command.")
 
 
-@app.on_message(filters.command("resume"))
-async def stop_cmd(_, message): 
+@app.on_message(command(["resume"]) & other_filters)
+async def resume_cmd(_, message): 
     if message.sender_chat:
         return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
@@ -107,7 +107,7 @@ async def stop_cmd(_, message):
         await message.reply_text("▶️ **Track resumed.**\n\n• **To pause the playback, use the**\n» /pause command.")
 
 
-@app.on_message(filters.command(["stop", "end"]))
+@app.on_message(command(["stop", "end"]) & other_filters)
 async def stop_cmd(_, message): 
     if message.sender_chat:
         return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
@@ -129,8 +129,8 @@ async def stop_cmd(_, message):
         return await message.reply_text("❌ **no music is currently playing**")
 
 
-@app.on_message(filters.command(["skip", "next"]))
-async def stop_cmd(_, message): 
+@app.on_message(command(["skip", "next"]) & other_filters)
+async def next_cmd(_, message): 
     if message.sender_chat:
         return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account.") 
     permission = "can_manage_voice_chats"
