@@ -162,7 +162,7 @@ async def skipvc(_,CallbackQuery):
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
-            await CallbackQuery.message.reply(f"{rpk} want to skip music**\n\n❌ There's no more music in queue!\n\n» userbot leaving video chat.")
+            await CallbackQuery.message.reply(f"{rpk} want to skip music**\n\n❌ There's no more music in queue, userbot leaving video chat.")
             await yukki.pytgcalls.leave_group_call(chat_id)
             return
         else:
@@ -321,7 +321,6 @@ async def play_playlist(_,CallbackQuery):
     try:
         user_id,smex = callback_request.split("|") 
     except Exception as e:
-        await CallbackQuery.answer()
         return await CallbackQuery.message.edit(f"an error occured\n**reason**: `{e}`")
     Name = CallbackQuery.from_user.first_name
     chat_title = CallbackQuery.message.chat.title
@@ -332,7 +331,6 @@ async def play_playlist(_,CallbackQuery):
         if not _playlist:
             return await CallbackQuery.answer(f"❌ You not have personal playlist on database", show_alert=True)
         else:
-            await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
 
 Group: {chat_title}
@@ -362,7 +360,7 @@ Request by: {Name}
                         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                             x = ytdl.extract_info(url, download=False)
                     except Exception as e:
-                        return await mystic.edit(f"failed to download this video.\n\n**reason:** `{e}`") 
+                        return await mystic.edit(f"failed to download this track.\n\n**reason:** `{e}`") 
                     title = (x["title"])
                     thumbnail = (x["thumbnail"])
                     def my_hook(d): 
@@ -409,7 +407,7 @@ Request by: {Name}
                             except Exception as e:
                                 taken = "00:00"
                             size = d['_total_bytes_str']
-                            mystic.edit(f"**Downloaded {title[:50]}.....**\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File** [__FFmpeg processing__]")
+                            mystic.edit(f"**Downloaded {title[:50]}...**\n\n**size:** `{size}`\n**time:** `{taken}` sec\n\nConverting file [ffmpeg process]")
                             print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")  
                     loop = asyncio.get_event_loop()
                     xx = await loop.run_in_executor(None, download, url, my_hook)
@@ -507,7 +505,7 @@ Request By: {Name}
                         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                             x = ytdl.extract_info(url, download=False)
                     except Exception as e:
-                        return await mystic.edit(f"failed to download this video.\n\n**reason:** `{e}`") 
+                        return await mystic.edit(f"failed to download this track.\n\n**reason:** `{e}`") 
                     title = (x["title"])
                     thumbnail = (x["thumbnail"])
                     def my_hook(d): 
@@ -554,7 +552,7 @@ Request By: {Name}
                             except Exception as e:
                                 taken = "00:00"
                             size = d['_total_bytes_str']
-                            mystic.edit(f"**Downloaded: {title[:50]}...**\n\n**Size:** {size}\n**Time:** `{taken}` sec\n\n**Converting File** [__FFmpeg processing__]")
+                            mystic.edit(f"**Downloaded: {title[:50]}...**\n\n**size:** `{size}`\n**time:** `{taken}` sec\n\nConverting file [ffmpeg process]")
                             print(f"[{videoid}] Downloaded | Elapsed: {taken} seconds")  
                     loop = asyncio.get_event_loop()
                     xx = await loop.run_in_executor(None, download, url, my_hook)
@@ -621,7 +619,7 @@ Request By: {Name}
 
 
 @Client.on_callback_query(filters.regex("group_playlist"))
-async def group_playlist(_,CallbackQuery):
+async def start_group_playlist(_,CallbackQuery):
     await CallbackQuery.answer()
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
@@ -639,7 +637,6 @@ async def group_playlist(_,CallbackQuery):
     count = 0
     if not _count:
         sex = await CallbackQuery.answer("💡 Generating Group's playlist from database...", show_alert=True)
-        await asyncio.sleep(2)
     else:
         for smex in _count:
             count += 1   
@@ -665,13 +662,11 @@ async def group_playlist(_,CallbackQuery):
         "duration": duration,
     }
     await save_playlist(chat_id, videoid, assis)
-    Name = CallbackQuery.from_user.mention
     return await CallbackQuery.answer("✅ Track added to Group's playlist !", show_alert=True)
   
 
 @Client.on_callback_query(filters.regex("playlist"))
-async def pla_playylistt(_,CallbackQuery):
-    await CallbackQuery.answer()
+async def start_personal_playlist(_,CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -685,7 +680,6 @@ async def pla_playylistt(_,CallbackQuery):
     count = 0
     if not _count:
         sex = await CallbackQuery.answer("💡 Generating your personal playlist from database...", show_alert=True)
-        await asyncio.sleep(2)
     else:
         for smex in _count:
             count += 1   
@@ -830,8 +824,6 @@ async def cbgroupdel(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
-    await CallbackQuery.message.delete() 
-    await CallbackQuery.answer()
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
     if not _playlist:
         return await CallbackQuery.answer("❌ This Group has no a playlist in database.", show_alert=True)
@@ -839,13 +831,12 @@ async def cbgroupdel(_,CallbackQuery):
         titlex = []
         for note in _playlist:
             await delete_playlist(CallbackQuery.message.chat.id, note)
-    await CallbackQuery.answer("✅ Successfully deleted the whole Group's playlist", show_alert=True)  
+    await CallbackQuery.answer("✅ Successfully deleted the whole Group's playlist", show_alert=True)
+    return await CallbackQuery.message.delete()
     
     
 @Client.on_callback_query(filters.regex("cbdel"))
-async def delplcb(_,CallbackQuery): 
-    await CallbackQuery.answer()
-    await CallbackQuery.message.delete() 
+async def delplcb(_,CallbackQuery):
     _playlist = await get_note_names(CallbackQuery.from_user.id)                                    
     if not _playlist:
         return await CallbackQuery.answer("❌ You not have a personal playlist in database.", show_alert=True)
@@ -854,3 +845,4 @@ async def delplcb(_,CallbackQuery):
         for note in _playlist:
             await delete_playlist(CallbackQuery.from_user.id, note)
     await CallbackQuery.answer("✅ Successfully deleted your whole persoanl playlist", show_alert=True)
+    return await CallbackQuery.message.delete()
