@@ -1,60 +1,46 @@
 {
-    "name": "Veez Mega Bot",
+    "name": "Yukki-Music Old",
     "logo": "https://telegra.ph/file/e17ae80eefd44ab387aaf.jpg",
-    "description": "Create your own bot to stream music trought the new Telegram video chat feature.",
-    "keywords": ["music", "voice chat", "telegram"],
+    "description": "Telegram Bot for streaming music trough the Telegram Group video chat feature.",
+    "keywords": ["music", "py-tgcalls", "pyrogram", "telegram"],
     "repository": "https://github.com/levina-lab/YukkiMusic-Old",
     "stack": "container",
     "env": {
         "SESSION_NAME": {
             "description": "fill with the pyrogram session string",
-            "required": true,
-            "value": ""
+            "required": true
         },
         "OWNER_ID": {
             "description": "fill with your telegram id as the owner of the bot",
-            "required": true,
-            "value": "1757169682"
+            "required": true
         },
         "ASS_ID": {
             "description": "fill with the telegram id of account you used for the assistant/userbot",
-            "required": true,
-            "value": "1727937540"
+            "required": true
         },
         "LOG_GROUP_ID": {
-            "description": "create a private group and get the group id, add your bot as admin to the group too",
-            "required": true,
-            "value": "-1001306851903"
+            "description": "create a private group and get the group id and fill the group id here, Then add the assistant and bot as admin to the group",
+            "required": true
         },
         "API_ID": {
             "description": "your Api ID from my.telegram.org/apps",
-            "required": true,
-            "value": ""
+            "required": true
         },
         "API_HASH": {
             "description": "your Api Hash from my.telegram.org/apps",
-            "required": true,
-            "value": ""
+            "required": true
         },
         "SUDO_USERS": {
-            "description": "fill with the user id who can access all function in your bot (separate with space).",
-            "required": true,
-            "value": "1952053555 1738637033 1253367088"
-        },
-        "DURATION_LIMIT": {
-            "description": "The duration limit of the video allowed to play",
-            "required": false,
-            "value": "540000"
+            "description": "fill with the id of user who can access the sudo feature in your bot (for multiple IDs separate with space)",
+            "required": true
         },
         "BOT_TOKEN": {
             "description": "fill with your bot token get from @BotFather on telegram",
-            "required": true,
-            "value": ""
+            "required": true
         },
         "MONGO_DB_URI": {
-            "description": "fill with the mongodb url get from mongodb.cloud.com",
-            "required": true,
-            "value": ""
+            "description": "fill with the mongodb url (this is needed for the database). Get it from mongodb.cloud.com",
+            "required": true
         }
     },
     "addons": [],
