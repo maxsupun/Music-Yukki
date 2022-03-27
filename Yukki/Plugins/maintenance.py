@@ -26,7 +26,7 @@ async def maintenance_off_on(_, message):
         await message.reply_text(usage)
 
         
-@Client.on_message(command("speedtest") & filters.user(SUDOERS))
+@Client.on_message(command("sptest") & filters.user(SUDOERS))
 async def speedtest_off_on(_, message):
     usage = "**usage:**\n\n/speedtest [on / off]"
     if len(message.command) != 2:
