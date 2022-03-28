@@ -143,6 +143,7 @@ async def next_cmd(_, message):
     if not await is_active_chat(chat_id):
         await message.reply_text("❌ **no music is currently playing**")
     else:
+        await message.delete()
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
@@ -156,13 +157,13 @@ async def next_cmd(_, message):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await message.reply_text("💡 currently playing playlist !\n\n💭 downloading next music from playlist...")
+                mystic = await message.reply_text("📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this track.\n\n**reason**: `{e}`") 
+                    return await mystic.edit_text(f"failed to download this track.\n\n**reason**: `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
