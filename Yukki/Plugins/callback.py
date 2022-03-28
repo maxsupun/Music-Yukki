@@ -96,7 +96,6 @@ async def closesmex(_,CallbackQuery):
         await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
         return
     await CallbackQuery.message.delete()
-    await CallbackQuery.answer()
     
     
 @Client.on_callback_query(filters.regex("pausevc"))
@@ -228,6 +227,7 @@ async def skipvc(_,CallbackQuery):
                         ),
                     ),
                 )
+                await mystic.delete()
                 thumbnail = (x["thumbnail"])
                 duration = (x["duration"])
                 duration = round(x["duration"] / 60)
@@ -239,7 +239,6 @@ async def skipvc(_,CallbackQuery):
                 thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                 user_id = userid
                 buttons = play_markup(videoid, user_id)
-                await mystic.delete()
                 semx = await app.get_users(userid)
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
@@ -260,6 +259,7 @@ async def skipvc(_,CallbackQuery):
                         ),
                     ),
                 )
+                await mystic.delete()
                 _chat_ = ((str(afk)).replace("_","", 1).replace("/","", 1).replace(".","", 1))
                 f2 = open(f'search/{_chat_}title.txt', 'r')        
                 title =(f2.read())
@@ -313,7 +313,7 @@ async def stopvc(_,CallbackQuery):
 
 
 @Client.on_callback_query(filters.regex("play_playlist"))
-async def play_playlist(_,CallbackQuery):
+async def play_playlist(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -331,6 +331,7 @@ async def play_playlist(_,CallbackQuery):
         if not _playlist:
             return await CallbackQuery.answer(f"❌ You not have personal playlist on database", show_alert=True)
         else:
+            await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
 
 Group: {chat_title}
@@ -423,6 +424,7 @@ Request by: {Name}
                         ),
                         stream_type=StreamType().local_stream,
                     )
+                    await mystic.delete()
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
                     ctitle = await CHAT_TITLE(ctitle)
@@ -434,8 +436,6 @@ Request by: {Name}
                         caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}"),
                     )   
                     os.remove(thumb)
-                    await CallbackQuery.message.delete()
-        await mystic.delete()
         m = await CallbackQuery.message.reply_text("🔄 pasting queued playlist to bin...")
         link = await paste(msg)
         preview = link + "/preview.png"
@@ -475,6 +475,7 @@ Request by: {Name}
         if not _playlist:
             return await CallbackQuery.answer(f"This Group has no a playlist on database, try to adding music into playlist.", show_alert=True)
         else:
+            await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
 
 Group: {chat_title}
@@ -567,6 +568,7 @@ Request By: {Name}
                         ),
                         stream_type=StreamType().local_stream,
                     )
+                    await mystic.delete()
                     theme = random.choice(themes)
                     ctitle = CallbackQuery.message.chat.title
                     ctitle = await CHAT_TITLE(ctitle)
@@ -578,8 +580,6 @@ Request By: {Name}
                         caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}"),
                     )
                     os.remove(thumb)
-                    await CallbackQuery.message.delete()
-        await mystic.delete()
         m = await CallbackQuery.message.reply_text("🔄 pasting queued playlist to bin...")
         link = await paste(msg)
         preview = link + "/preview.png"
@@ -633,11 +633,8 @@ async def start_group_playlist(_,CallbackQuery):
     name = CallbackQuery.from_user.first_name
     _count = await get_note_names(chat_id)
     count = 0
-    if not _count:
-        sex = await CallbackQuery.answer("💡 Generating Group's playlist from database...", show_alert=True)
-    else:
-        for smex in _count:
-            count += 1   
+    for smex in _count:
+        count += 1
     count = int(count)
     if count == 30:
         return await CallbackQuery.answer("💡 Sorry you can only have 30 music in Group's playlist", show_alert=True)
@@ -676,11 +673,8 @@ async def start_personal_playlist(_,CallbackQuery):
     name = CallbackQuery.from_user.first_name
     _count = await get_note_names(userid)
     count = 0
-    if not _count:
-        sex = await CallbackQuery.answer("💡 Generating your personal playlist from database...", show_alert=True)
-    else:
-        for smex in _count:
-            count += 1   
+    for smex in _count:
+        count += 1
     count = int(count)
     if count == 30:
         if userid in SUDOERS:
@@ -716,7 +710,6 @@ async def P_list(_,CallbackQuery):
         return await CallbackQuery.answer("❌ You not have personal playlist in database, try to adding music into playlist.", show_alert=True)
     else:
         j = 0
-        await CallbackQuery.answer()
         msg = f"Personal Playlist:\n\n"
         for note in _playlist:
             j += 1
@@ -724,8 +717,7 @@ async def P_list(_,CallbackQuery):
             title = _note["title"]
             duration = _note["duration"]
             msg += f"{j}- {title[:60]}\n"
-            msg += f"Duration: {duration} min(s)\n\n"   
-        await CallbackQuery.answer()
+            msg += f"Duration: {duration} min(s)\n\n"
         await CallbackQuery.message.delete()     
         m = await CallbackQuery.message.reply_text("🔄 pasting playlist to bin...")
         link = await paste(msg)
@@ -771,7 +763,6 @@ async def G_list(_,CallbackQuery):
     if not _playlist:
         return await CallbackQuery.answer(f"❌ This Group has no playlist in database, try to adding music into playlist.", show_alert=True)
     else:
-        await CallbackQuery.answer()
         j = 0
         msg = f"Group Playlist:\n\n"
         for note in _playlist:
@@ -781,7 +772,6 @@ async def G_list(_,CallbackQuery):
             duration = _note["duration"]
             msg += f"{j}- {title[:60]}\n"
             msg += f"    Duration- {duration} Min(s)\n\n"
-        await CallbackQuery.answer()
         await CallbackQuery.message.delete()
         m = await CallbackQuery.message.reply_text("🔄 pasting playlist to bin...")
         link = await paste(msg)
@@ -830,7 +820,10 @@ async def cbgroupdel(_,CallbackQuery):
         for note in _playlist:
             await delete_playlist(CallbackQuery.message.chat.id, note)
     await CallbackQuery.answer("✅ Successfully deleted the whole Group's playlist", show_alert=True)
-    return await CallbackQuery.message.delete()
+    if CallbackQuery.message.reply_to_message:
+        return await CallbackQuery.message.delete()
+    else:
+        return await CallbackQuery.message.delete()
     
     
 @Client.on_callback_query(filters.regex("cbdel"))
@@ -843,4 +836,7 @@ async def delplcb(_,CallbackQuery):
         for note in _playlist:
             await delete_playlist(CallbackQuery.from_user.id, note)
     await CallbackQuery.answer("✅ Successfully deleted your whole personal playlist", show_alert=True)
-    return await CallbackQuery.message.delete()
+    if CallbackQuery.message.reply_to_message:
+        return await CallbackQuery.message.delete()
+    else:
+        return await CallbackQuery.message.delete()
