@@ -166,19 +166,23 @@ async def skipvc(_,CallbackQuery):
             return
         else:
             await CallbackQuery.answer("You've skipped to the next song", show_alert=True)
+            if CallbackQuery.message.reply_to_message:
+                return await CallbackQuery.message.delete()
+            else:
+                return await CallbackQuery.message.delete()
             afk = get(chat_id)['file']
             f1 = (afk[0])
             f2 = (afk[1])
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply("💡 currently playing playlist\n\n📥 downloading next music from playlist...")
+                mystic = await CallbackQuery.message.reply_text("📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this video.\n\n**reason:** `{e}`") 
+                    return await mystic.edit_text(f"failed to download this video.\n\n**reason:** `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
