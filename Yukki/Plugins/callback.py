@@ -244,12 +244,12 @@ async def skipvc(_,CallbackQuery):
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
                 rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-                await CallbackQuery.send_photo(
-                chat_id,
-                photo=thumb,
-                reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
-            )   
+                await app.send_photo(
+                    chat_id,
+                    photo=thumb,
+                    reply_markup=InlineKeyboardMarkup(buttons),    
+                    caption=(f"⏭ **Skipped to the next track**\n\n🗂 **Name** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}"),
+                )   
                 os.remove(thumb)
             else:      
                 await yukki.pytgcalls.change_stream(
@@ -278,11 +278,11 @@ async def skipvc(_,CallbackQuery):
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
                 rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"    
-                await CallbackQuery.send_photo(
-                chat_id,
-                photo=f"downloads/{_chat_}final.png",
-                reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}",
+                await app.send_photo(
+                    chat_id,
+                    photo=f"downloads/{_chat_}final.png",
+                    reply_markup=InlineKeyboardMarkup(buttons),
+                    caption=f"⏭ **Skipped to the next track**\n\n🗂 **Name:** {title[:80]}\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {username}",
                 )
                 return           
             
@@ -428,11 +428,11 @@ Request by: {Name}
                     ctitle = await CHAT_TITLE(ctitle)
                     thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)  
                     buttons = play_markup(videoid, user_id)
-                    m = await CallbackQuery.message.reply_photo(
-                    photo=thumb,
-                    reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}")
-                )   
+                    m = await app.send_photo(
+                        photo=thumb,
+                        reply_markup=InlineKeyboardMarkup(buttons),    
+                        caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}"),
+                    )   
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
         await mystic.delete()
@@ -475,7 +475,6 @@ Request by: {Name}
         if not _playlist:
             return await CallbackQuery.answer(f"This Group has no a playlist on database, try to adding music into playlist.", show_alert=True)
         else:
-            await CallbackQuery.message.delete()
             logger_text=f"""💡 starting playlist
 
 Group: {chat_title}
@@ -573,14 +572,13 @@ Request By: {Name}
                     ctitle = await CHAT_TITLE(ctitle)
                     thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                     buttons = play_markup(videoid, user_id)
-                    m = await CallbackQuery.message.reply_photo(
-                    photo=thumb,
-                    reply_markup=InlineKeyboardMarkup(buttons),    
-                    caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}")
-                )   
+                    m = await app.send_photo(
+                        photo=thumb,
+                        reply_markup=InlineKeyboardMarkup(buttons),    
+                        caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}"),
+                    )
                     os.remove(thumb)
                     await CallbackQuery.message.delete()
-        await asyncio.sleep(1)
         await mystic.delete()
         m = await CallbackQuery.message.reply_text("🔄 pasting queued playlist to bin...")
         link = await paste(msg)
@@ -632,7 +630,7 @@ async def start_group_playlist(_,CallbackQuery):
         url,smex= callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
-    name = CallbackQuery.from_user.mention
+    name = CallbackQuery.from_user.first_name
     _count = await get_note_names(chat_id)
     count = 0
     if not _count:
@@ -675,7 +673,7 @@ async def start_personal_playlist(_,CallbackQuery):
         url,smex= callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
-    name = CallbackQuery.from_user.mention
+    name = CallbackQuery.from_user.first_name
     _count = await get_note_names(userid)
     count = 0
     if not _count:
@@ -844,5 +842,5 @@ async def delplcb(_,CallbackQuery):
         titlex = []
         for note in _playlist:
             await delete_playlist(CallbackQuery.from_user.id, note)
-    await CallbackQuery.answer("✅ Successfully deleted your whole persoanl playlist", show_alert=True)
+    await CallbackQuery.answer("✅ Successfully deleted your whole personal playlist", show_alert=True)
     return await CallbackQuery.message.delete()
