@@ -435,6 +435,7 @@ Request by: {name}
                     thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)  
                     buttons = play_markup(videoid, user_id)
                     m = await app.send_photo(
+                        chat_id,
                         photo=thumb,
                         reply_markup=InlineKeyboardMarkup(buttons),    
                         caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}"),
@@ -579,6 +580,7 @@ Request By: {name}
                     thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                     buttons = play_markup(videoid, user_id)
                     m = await app.send_photo(
+                        chat_id,
                         photo=thumb,
                         reply_markup=InlineKeyboardMarkup(buttons),    
                         caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {checking}"),
@@ -631,7 +633,7 @@ async def start_group_playlist(_,CallbackQuery):
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     try:
-        url, smex= callback_request.split("|") 
+        url,smex = callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     name = CallbackQuery.from_user.first_name
@@ -657,7 +659,7 @@ async def start_group_playlist(_,CallbackQuery):
     _check = await get_playlist(chat_id, videoid)
     title = title[:50]
     if _check:
-         return await CallbackQuery.answer(f"{name} this track is already added to Group's playlist !", show_alert=True)   
+         return await CallbackQuery.answer("❗ This track is already added to Group's playlist !", show_alert=True)   
     assis = {
         "videoid": videoid,
         "title": title,
@@ -674,7 +676,7 @@ async def start_personal_playlist(_, CallbackQuery):
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     try:
-        url, smex= callback_request.split("|") 
+        url,smex = callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     name = CallbackQuery.from_user.first_name
@@ -702,7 +704,7 @@ async def start_personal_playlist(_, CallbackQuery):
             return await CallbackQuery.message.reply_text(f"an error occured.\n\nplease forward to @VeezSupportGroup\n**Possible Reason:**{e}") 
     _check = await get_playlist(userid, videoid)
     if _check:
-         return await CallbackQuery.answer(f"{name} this track is already added to your personal playlist !", show_alert=True) 
+         return await CallbackQuery.answer("❗ This track is already added to your personal playlist !", show_alert=True) 
     title = title[:50]    
     assis = {
         "videoid": videoid,
