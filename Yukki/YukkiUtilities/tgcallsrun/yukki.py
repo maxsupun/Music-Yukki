@@ -31,7 +31,11 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardM
 
 flex = {}
 smexy = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
-pytgcalls = PyTgCalls(smexy, overload_quiet_mode=True)
+pytgcalls = PyTgCalls(
+    smexy,
+    cache_duration=100,
+    overload_quiet_mode=True,
+)
 
 def convert_seconds(seconds):
     seconds = seconds % (24 * 3600)
