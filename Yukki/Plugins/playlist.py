@@ -32,7 +32,7 @@ async def del_personal_playlist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 18:
-        return await message.reply_text(f"💡 **Confirmation** !!\n\nAre you sure want to delete your whole playlist ?", reply_markup=confirm_keyboard)
+        return await message.reply_text(f"💡 **Confirmation** !\n\nThe playlist will be lost, are you sure want to delete your whole personal playlist ?", reply_markup=confirm_keyboard)
     else:
          _playlist = await get_note_names(message.from_user.id)
     if not _playlist:
@@ -47,7 +47,7 @@ async def del_personal_playlist(_, message):
             if j == count:
                 deleted = await delete_playlist(message.from_user.id, note)
                 if deleted:
-                    return await message.reply_text(f"✅ Deleted the {count} music in playlist")
+                    return await message.reply_text(f"✅ Deleted the {count} music in personal playlist")
                 else:
                     return await message.reply_text("no such saved music in your playlist !")                                
         await message.reply_text("You not have such music in personal playlist !")                             
@@ -67,7 +67,7 @@ async def del_chat_playlist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 20:
-        return await message.reply_text(f"💡 Confirmation !\n\nAre you sure want to delete the whole Group playlist ?", reply_markup=confirm_group_keyboard)
+        return await message.reply_text(f"💡 Confirmation !\n\nThe playlist will be lost, are you sure want to delete the whole Group playlist ?", reply_markup=confirm_group_keyboard)
     else:
          _playlist = await get_note_names(message.chat.id)
     if not _playlist:
