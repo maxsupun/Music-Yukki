@@ -82,7 +82,7 @@ async def isPreviewUp(preview: str) -> bool:
 
     
 @Client.on_callback_query(filters.regex(pattern=r"ppcl"))
-async def closesmex(_,CallbackQuery):
+async def closesmex(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -99,7 +99,7 @@ async def closesmex(_,CallbackQuery):
     
     
 @Client.on_callback_query(filters.regex("pausevc"))
-async def pausevc(_,CallbackQuery):
+async def pausevc(_, CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -122,7 +122,7 @@ async def pausevc(_,CallbackQuery):
    
     
 @Client.on_callback_query(filters.regex("resumevc"))
-async def resumevc(_,CallbackQuery):  
+async def resumevc(_, CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -145,7 +145,7 @@ async def resumevc(_,CallbackQuery):
    
     
 @Client.on_callback_query(filters.regex("skipvc"))
-async def skipvc(_,CallbackQuery): 
+async def skipvc(_, CallbackQuery): 
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -292,7 +292,7 @@ async def skipvc(_,CallbackQuery):
             
        
 @Client.on_callback_query(filters.regex("stopvc"))
-async def stopvc(_,CallbackQuery):
+async def stopvc(_, CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -323,10 +323,10 @@ async def play_playlist(_, CallbackQuery):
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     try:
-        user_id,smex = callback_request.split("|") 
+        user_id, smex = callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"an error occured\n**reason**: `{e}`")
-    Name = CallbackQuery.from_user.first_name
+    name = CallbackQuery.from_user.first_name
     chat_title = CallbackQuery.message.chat.title
     if str(smex) == "personal":
         if CallbackQuery.from_user.id != int(user_id):
@@ -339,10 +339,10 @@ async def play_playlist(_, CallbackQuery):
             logger_text=f"""💡 starting playlist
 
 Group: {chat_title}
-Request by: {Name}
+Request by: {name}
 
 ▶ personal playlist playback"""
-            mystic = await CallbackQuery.message.reply_text(f"💡 Starting {Name}'s personal playlist.\n\n🎧 Request by: {CallbackQuery.from_user.first_name}")   
+            mystic = await CallbackQuery.message.reply(f"💡 Starting {name}'s personal playlist.\n🎧 Request by: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
             j = 0
@@ -464,7 +464,7 @@ Request by: {Name}
         if await isPreviewUp(preview):
             try:
                 await CallbackQuery.message.reply_photo(
-                    photo=preview, caption=f"This is queued personal playlist of {Name}.\n\nIf you want to delete any music from playlist use: /delmyplaylist", quote=False, reply_markup=key
+                    photo=preview, caption=f"This is queued personal playlist of {name}.\n\nIf you want to delete any music from playlist use: /delmyplaylist", quote=False, reply_markup=key
                 )
                 await m.delete()
             except Exception:
@@ -483,10 +483,10 @@ Request by: {Name}
             logger_text=f"""💡 starting playlist
 
 Group: {chat_title}
-Request By: {Name}
+Request By: {name}
 
 ▶ Group's playlist playback"""
-            mystic = await CallbackQuery.message.reply_text(f"💡 Starting Groups's playlist.\n\n🎧 Request by: {CallbackQuery.from_user.first_name}")   
+            mystic = await CallbackQuery.message.reply(f"💡 Starting Groups's playlist.\n🎧 Request by: {CallbackQuery.from_user.first_name}")   
             checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
             msg = f"Queued Playlist:\n\n"
             j = 0
@@ -631,14 +631,17 @@ async def start_group_playlist(_,CallbackQuery):
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     try:
-        url,smex= callback_request.split("|") 
+        url, smex= callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     name = CallbackQuery.from_user.first_name
     _count = await get_note_names(chat_id)
     count = 0
-    for smex in _count:
-        count += 1
+    if not _count:
+        sex = await CallbackQuery.answer("✅ Track added to Group's playlist !", show_alert=True)
+    else:
+        for smex in _count:
+            count += 1
     count = int(count)
     if count == 30:
         return await CallbackQuery.answer("💡 Sorry you can only have 30 music in Group's playlist", show_alert=True)
@@ -665,20 +668,23 @@ async def start_group_playlist(_,CallbackQuery):
   
 
 @Client.on_callback_query(filters.regex("playlist"))
-async def start_personal_playlist(_,CallbackQuery):
+async def start_personal_playlist(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
     userid = CallbackQuery.from_user.id 
     try:
-        url,smex= callback_request.split("|") 
+        url, smex= callback_request.split("|") 
     except Exception as e:
         return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
     name = CallbackQuery.from_user.first_name
     _count = await get_note_names(userid)
     count = 0
-    for smex in _count:
-        count += 1
+    if not _count:
+        sex = await CallbackQuery.answer("✅ Track added to your personal playlist !", show_alert=True)
+    else:
+        for smex in _count:
+            count += 1 
     count = int(count)
     if count == 30:
         if userid in SUDOERS:
@@ -708,7 +714,7 @@ async def start_personal_playlist(_,CallbackQuery):
     
 
 @Client.on_callback_query(filters.regex("P_list"))
-async def P_list(_,CallbackQuery):
+async def P_list(_, CallbackQuery):
     _playlist = await get_note_names(CallbackQuery.from_user.id)
     if not _playlist:
         return await CallbackQuery.answer("❌ You not have personal playlist in database, try to adding music into playlist.", show_alert=True)
@@ -730,7 +736,7 @@ async def P_list(_,CallbackQuery):
         urlxp = link + "/index.txt"
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
-        a2 = InlineKeyboardButton(text=f"💡 Start {user_name[:17]}'s playlist", callback_data=f'play_playlist {user_id}|personal')
+        a2 = InlineKeyboardButton(text=f"💡 Start {user_name[:18]}'s playlist", callback_data=f'play_playlist {user_id}|personal')
         a3 = InlineKeyboardButton(text=f"🔗 Check Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
@@ -761,7 +767,7 @@ async def P_list(_,CallbackQuery):
     
     
 @Client.on_callback_query(filters.regex("G_list"))
-async def G_list(_,CallbackQuery):
+async def G_list(_, CallbackQuery):
     user_id = CallbackQuery.from_user.id
     _playlist = await get_note_names(CallbackQuery.message.chat.id)
     if not _playlist:
@@ -812,7 +818,7 @@ async def G_list(_,CallbackQuery):
                        
         
 @Client.on_callback_query(filters.regex("cbgroupdel"))
-async def cbgroupdel(_,CallbackQuery):  
+async def cbgroupdel(_, CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -831,7 +837,7 @@ async def cbgroupdel(_,CallbackQuery):
     
     
 @Client.on_callback_query(filters.regex("cbdel"))
-async def delplcb(_,CallbackQuery):
+async def delplcb(_, CallbackQuery):
     _playlist = await get_note_names(CallbackQuery.from_user.id)                                    
     if not _playlist:
         return await CallbackQuery.answer("❌ You not have a personal playlist in database.", show_alert=True)
