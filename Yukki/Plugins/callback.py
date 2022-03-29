@@ -448,12 +448,6 @@ Request by: {name}
         key = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="▶️", callback_data=f'resumevc2'),
-                    InlineKeyboardButton(text="⏸️", callback_data=f'pausevc2'),
-                    InlineKeyboardButton(text="⏭️", callback_data=f'skipvc2'),
-                    InlineKeyboardButton(text="⏹️", callback_data=f'stopvc2')
-                ],
-                [
                     a1,
                 ],
                 [
@@ -592,12 +586,6 @@ Request By: {name}
         a1 = InlineKeyboardButton(text=f"Checkout Queued Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
-                [
-                    InlineKeyboardButton(text="▶️", callback_data=f'resumevc2'),
-                    InlineKeyboardButton(text="⏸️", callback_data=f'pausevc2'),
-                    InlineKeyboardButton(text="⏭️", callback_data=f'skipvc2'),
-                    InlineKeyboardButton(text="⏹️", callback_data=f'stopvc2')
-                ],
                 [
                     a1,
                 ],
