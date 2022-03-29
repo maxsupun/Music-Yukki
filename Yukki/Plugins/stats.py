@@ -50,8 +50,10 @@ async def get_statistic(_, message):
     free = (hdd.free / (1024.0 ** 3))
     free = str(free)
     msg = f"""
-📊 **Current Bot Statistic**:\n
-⩥ **System Stats:**\n
+📊 **Current bot statistic:**
+
+• **System Stats:**
+
 **Uptime:** `{uptime}`
 **System Proc:** Online
 **Platform:** {sc}
@@ -63,10 +65,11 @@ async def get_statistic(_, message):
 **Pyrogram Version:** `{pyrover}`
 **PyTgCalls Version:** `{pytover.__version__}`
 
-⩥ **Bot Stats:**\n
-**Loaded Modules:** `{modules_count}`
+• **Bot Stats:**
+
+**Imported Modules:** `{modules_count}`
 **Gbanned Users:** `{blocked}`
-**Sudo Users:** {j}
+**Sudo Users:** `{j}`
 **Authorized Chats:** `{len(served_chats)}`
 """
     served_chats.pop(0)
