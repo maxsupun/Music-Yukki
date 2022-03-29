@@ -160,7 +160,6 @@ async def skipvc(_, CallbackQuery):
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await remove_active_chat(chat_id)
-            await CallbackQuery.answer()
             await CallbackQuery.message.reply(f"{rpk} want to skip music**\n\n❌ There's no more music in queue, userbot leaving video chat.")
             await yukki.pytgcalls.leave_group_call(chat_id)
             return
@@ -176,13 +175,13 @@ async def skipvc(_, CallbackQuery):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply_text("📥 downloading next music from playlist...")
+                mystic = await CallbackQuery.message.reply("📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit_text(f"failed to download this video.\n\n**reason:** `{e}`") 
+                    return await mystic.edit(f"failed to download this video.\n\n**reason:** `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -624,7 +623,6 @@ Request By: {name}
 
 @Client.on_callback_query(filters.regex("group_playlist"))
 async def start_group_playlist(_,CallbackQuery):
-    await CallbackQuery.answer()
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -646,7 +644,7 @@ async def start_group_playlist(_,CallbackQuery):
             count += 1
     count = int(count)
     if count == 30:
-        return await CallbackQuery.answer("💡 Sorry you can only have 30 music in Group's playlist", show_alert=True)
+        return await CallbackQuery.answer("💡 This chat only can have 30 music in Group's playlist", show_alert=True)
     try:
         url = (f"https://www.youtube.com/watch?v={url}")
         results = VideosSearch(url, limit=1)
@@ -692,7 +690,7 @@ async def start_personal_playlist(_, CallbackQuery):
         if userid in SUDOERS:
             pass
         else:
-            return await CallbackQuery.answer("💡 Sorry you can only have 30 music in personal playlist !", show_alert=True)
+            return await CallbackQuery.answer("💡 You can only have 30 music in personal playlist !", show_alert=True)
     try:
         url = (f"https://www.youtube.com/watch?v={url}")
         results = VideosSearch(url, limit=1)
@@ -738,7 +736,7 @@ async def P_list(_, CallbackQuery):
         urlxp = link + "/index.txt"
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
-        a2 = InlineKeyboardButton(text=f"💡 Start {user_name[:18]}'s playlist", callback_data=f'play_playlist {user_id}|personal')
+        a2 = InlineKeyboardButton(text=f"💡 start {user_name[:18]}'s playlist", callback_data=f'play_playlist {user_id}|personal')
         a3 = InlineKeyboardButton(text=f"🔗 Check Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
@@ -791,7 +789,7 @@ async def G_list(_, CallbackQuery):
         urlxp = link + "/index.txt"
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
-        a1 = InlineKeyboardButton(text=f"💡 Start Group's playlist", callback_data=f'play_playlist {user_id}|group')
+        a1 = InlineKeyboardButton(text=f"💡 start Group's playlist", callback_data=f'play_playlist {user_id}|group')
         a3 = InlineKeyboardButton(text=f"🔗 Check Playlist", url=urlxp)
         key = InlineKeyboardMarkup(
             [
@@ -826,12 +824,12 @@ async def cbgroupdel(_, CallbackQuery):
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
     _playlist = await get_note_names(CallbackQuery.message.chat.id)                                    
     if not _playlist:
-        return await CallbackQuery.answer("❌ This Group has no a playlist in database.", show_alert=True)
+        return await CallbackQuery.answer("❌ This Group has no playlist in database.", show_alert=True)
     else:
         titlex = []
         for note in _playlist:
             await delete_playlist(CallbackQuery.message.chat.id, note)
-    await CallbackQuery.answer("✅ Successfully deleted the whole Group's playlist", show_alert=True)
+    await CallbackQuery.answer("✅ The whole Group's playlist has been deleted", show_alert=True)
     if CallbackQuery.message.reply_to_message:
         return await CallbackQuery.message.delete()
     else:
@@ -847,7 +845,7 @@ async def delplcb(_, CallbackQuery):
         titlex = []
         for note in _playlist:
             await delete_playlist(CallbackQuery.from_user.id, note)
-    await CallbackQuery.answer("✅ Successfully deleted your whole personal playlist", show_alert=True)
+    await CallbackQuery.answer("✅ The whole of your personal playlist has been deleted", show_alert=True)
     if CallbackQuery.message.reply_to_message:
         return await CallbackQuery.message.delete()
     else:
