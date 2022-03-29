@@ -5,7 +5,6 @@ import importlib
 
 from pytgcalls import idle
 from pyrogram import Client
-from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 
 from .YukkiUtilities.tgcallsrun import run
 from Yukki import BOT_NAME, ASSNAME, app, chacha, aiohttpsession
@@ -44,20 +43,21 @@ async def load_start():
         chats = await get_active_chats()
         for chat in chats:
             served_chats.append(int(chat["chat_id"]))
-    except Exception as e:
-        print("Error came while clearing db")
+    except Exception:
+        print("error came while clearing db")
+        pass
     for served_chat in served_chats:
         try:
             await remove_active_chat(served_chat)                                         
-        except Exception as e:
-            print("Error came while clearing db")
+        except Exception:
+            print("error came while clearing db")
             pass     
-    await app.send_message(LOG_GROUP_ID, "✅ client 2.0 started")
-    await chacha.send_message(LOG_GROUP_ID, "✅ client 2.1 started")
+    await app.send_message(LOG_GROUP_ID, "✅ bot client started")
+    await chacha.send_message(LOG_GROUP_ID, "✅ userbot client started")
     print("[ INFO ] BOT & USERBOT CLIENT STARTED")
     
    
-loop = asyncio.get_event_loop()
+loop = asyncio.get_event_loop_policy().get_event_loop()
 loop.run_until_complete(load_start())
 run()
 idle()
