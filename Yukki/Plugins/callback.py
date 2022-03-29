@@ -819,7 +819,8 @@ async def cbgroupdel(_, CallbackQuery):
             await delete_playlist(CallbackQuery.message.chat.id, note)
     await CallbackQuery.answer("✅ The whole Group's playlist has been deleted", show_alert=True)
     if CallbackQuery.message.reply_to_message:
-        return await CallbackQuery.message.reply_to_message.delete()
+        await CallbackQuery.message.reply_to_message.delete()
+        return await CallbackQuery.message.delete()
     else:
         return await CallbackQuery.message.delete()
     
@@ -835,6 +836,7 @@ async def delplcb(_, CallbackQuery):
             await delete_playlist(CallbackQuery.from_user.id, note)
     await CallbackQuery.answer("✅ The whole of your personal playlist has been deleted", show_alert=True)
     if CallbackQuery.message.reply_to_message:
-        return await CallbackQuery.message.reply_to_message.delete()
+        await CallbackQuery.message.reply_to_message.delete()
+        return await CallbackQuery.message.delete()
     else:
         return await CallbackQuery.message.delete()
