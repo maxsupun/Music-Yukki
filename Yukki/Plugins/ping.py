@@ -25,9 +25,8 @@ async def bot_sys_stats():
 
 @app.on_message(filters.command(["ping", "server"]) & ~filters.edited)
 async def ping(_, message):
-    response = await message.reply_photo(
-        photo="cache/ping.png",
-        caption=">> pinging..."
+    response = await message.reply_text(
+        ">> pinging..."
     )
     uptime = await bot_sys_stats()
     start = datetime.now()
