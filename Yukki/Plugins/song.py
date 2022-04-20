@@ -1,19 +1,34 @@
 import os
 import time
-from os import path
 import random
-import asyncio
 import shutil
+import yt_dlp
+import psutil
+import asyncio
+import subprocess
+
+from os import path
+from typing import Union
 from pytube import YouTube
 from yt_dlp import YoutubeDL
-from .. import converter
-import yt_dlp
-import shutil
-import psutil
-from pyrogram import Client
-from pyrogram.types import Message
-from pyrogram.types import Voice
+from asyncio import QueueEmpty
 from sys import version as pyver
+from youtubesearchpython import VideosSearch
+
+from pyrogram import Client, filters
+from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
+from pyrogram.types import (
+    Message,
+    Audio,
+    Voice,
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InputMediaPhoto,
+)
+
+from .. import converter
+from ..config import DURATION_LIMIT
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
 from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
@@ -21,7 +36,6 @@ from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_
 from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
 from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
 from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
-from ..config import DURATION_LIMIT
 from ..YukkiUtilities.helpers.decorators import errors
 from ..YukkiUtilities.helpers.filters import command, other_filters
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant, ass_det)
@@ -29,14 +43,6 @@ from ..YukkiUtilities.helpers.logger import LOG_CHAT
 from ..YukkiUtilities.helpers.thumbnails import down_thumb
 from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from ..YukkiUtilities.helpers.ytdl import ytdl_opts 
-from pyrogram import filters
-from typing import Union
-import subprocess
-from asyncio import QueueEmpty
-from youtubesearchpython import VideosSearch
-from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
-from pyrogram.types import Message, Audio, Voice
-from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message)
 
 flex = {}
 chat_watcher_group = 3
@@ -56,7 +62,7 @@ async def musicdl(_, message: Message):
         await message.reply_text(f"❌ **This chat not authorized !**\n\nI can't stream music in non-authorized chat, ask to sudo user to auth this chat.\n\nCheck the sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account from admin rights.")  
+        return await message.reply_text("You'll need to switch to a user account to download video/music.")  
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
