@@ -3,10 +3,11 @@ import wget
 import speedtest
 
 from PIL import Image
+from pyrogram.types import Message
+from pyrogram import filters, Client
+
 from Yukki import app, SUDOERS
 from Yukki.YukkiUtilities.database.onoff import is_on_off
-from pyrogram import filters, Client
-from pyrogram.types import Message
 
 
 @app.on_message(filters.command("speedtest") & ~filters.edited)
@@ -17,7 +18,7 @@ async def run_speedtest(_, message):
             pass
         else:
             return
-    m = await message.reply_text("⚡️ running server speedtest")
+    m = await message.reply_text("starting server test...")
     try:
         test = speedtest.Speedtest()
         test.get_best_server()
@@ -26,18 +27,21 @@ async def run_speedtest(_, message):
         m = await m.edit("⚡️ running upload speedtest")
         test.upload()
         test.results.share()
-        result = test.results.dict()
+    except speedtest.ShareResultsConnectFailure:
+        pass
     except Exception as e:
         await m.edit_text(e)
-        return 
+        return
+    result = test.results.dict()
     m = await m.edit_text("🔄 sharing speedtest results")
-    path = wget.download(result["share"])
-    try:
-        img = Image.open(path)
-        c = img.crop((17, 11, 727, 389))
-        c.save(path)
-    except Exception:
-        pass
+    if result["share"]:
+        path = wget.download(result["share"])
+        try:
+            img = Image.open(path)
+            c = img.crop((17, 11, 727, 389))
+            c.save(path)
+        except BaseException:
+            pass
     output = f"""💡 **SpeedTest Results**
     
 <u>**Client:**</u>
@@ -53,8 +57,13 @@ async def run_speedtest(_, message):
 **Latency:** {result['server']['latency']}  
 
 ⚡ **Ping:** {result['ping']}"""
-    msg = await app.send_photo(
-        chat_id=message.chat.id, photo=path, caption=output
-    )
-    os.remove(path)
+    if result["share"]:
+        msg = await app.send_photo(
+            chat_id=message.chat.id, photo=path, caption=output
+        )
+        os.remove(path)
+    else:
+        msg = await app.send_message(
+            chat_id=message.chat.id, text=output
+        )
     await m.delete()
