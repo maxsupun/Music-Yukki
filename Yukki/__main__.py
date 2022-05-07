@@ -6,7 +6,7 @@ import importlib
 from pytgcalls import idle
 from pyrogram import Client
 
-from .YukkiUtilities.tgcallsrun import run
+from .YukkiUtilities.tgcallsrun import run as runs
 from Yukki import BOT_NAME, ASSNAME, app, chacha, aiohttpsession
 from Yukki.YukkiUtilities.database.functions import clean_restart_stage
 from Yukki.YukkiUtilities.database.queue import (get_active_chats, remove_active_chat)
@@ -21,7 +21,6 @@ Client(
     plugins={'root': 'Yukki.Plugins'},
 ).start()
 
-
 print(f"[ INFO ] BOT STARTED AS {BOT_NAME} !")
 print(f"[ INFO ] USERBOT STARTED AS {ASSNAME} !")
 
@@ -29,7 +28,7 @@ print(f"[ INFO ] USERBOT STARTED AS {ASSNAME} !")
 async def load_start():
     restart_data = await clean_restart_stage()
     if restart_data:
-        print("[ INFO ] SENDING RESTART STATUS")
+        print("[ SERVER ] <--- RESTARTING CLIENT --->")
         try:
             await app.edit_message_text(
                 restart_data["chat_id"],
@@ -54,13 +53,14 @@ async def load_start():
             pass     
     await app.send_message(LOG_GROUP_ID, "✅ bot client started")
     await chacha.send_message(LOG_GROUP_ID, "✅ userbot client started")
-    print("[ INFO ] BOT & USERBOT CLIENT STARTED")
+    print("[ SERVER ] <--- CLIENT RESTARTED! --->")
     
-   
-loop = asyncio.get_event_loop_policy().get_event_loop()
-loop.run_until_complete(load_start())
-run()
+ 
+loop = asyncio.get_event_loop_policy()
+new_event_loop = loop.new_event_loop()
+new_event_loop.run_until_complete(load_start())
+runs()
 idle()
 
 loop.close()
-print("[ INFO ] BOT & USERBOT STOPPED")
+print("[ INFO ] BOT & USERBOT CLIENT STOPPED !")
