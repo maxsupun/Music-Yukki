@@ -1,4 +1,4 @@
-print("[ INFO ] STARTING CLIENT :: STAND BY !!")
+print("[ INFO ] CONNECTING TO BOT & USERBOT CLIENT --->")
 
 import time
 import uvloop
@@ -28,7 +28,7 @@ def initialize():
     dbb = {}
     
 initialize()
-print("[ INFO ] INITIALIZING DATABASE")
+print("[ INFO ] CLIENT READY! NOW LOADING DATABASE --->")
 
 __version__ = "6.0"
 
@@ -36,9 +36,10 @@ MONGODB_CLI = MongoClient(MONGO_DB_URI)
 db = MONGODB_CLI.wbb
 SUDOERS = SUDO_USERS
 OWNER = OWNER_ID
+
 async def load_sudoers():
     global SUDOERS
-    print("[ INFO ] LOADING SUDO USERS")
+    print("[ INFO ] GETTING SUDO USERS DATA --->")
     sudoersdb = db.sudoers
     sudoers = await sudoersdb.find_one({"sudo": "sudo"})
     sudoers = [] if not sudoers else sudoers["sudoers"]
@@ -49,13 +50,14 @@ async def load_sudoers():
                 {"sudo": "sudo"}, {"$set": {"sudoers": sudoers}}, upsert=True
             )
     SUDOERS = (SUDOERS + sudoers) if sudoers else SUDOERS
-    print("[ INFO ] LOADED SUDO USERS")
+    print("[ INFO ] SUDO USERS DATA LOADED! --->")
+
+
 loop = asyncio.get_event_loop()
 loop.run_until_complete(load_sudoers())
+
+
 YUKKI_START_TIME = time.time()
-loop = asyncio.get_event_loop()
-
-
 BOT_ID = 0
 BOT_NAME = ""
 BOT_USERNAME = ""
@@ -64,7 +66,8 @@ ASSNAME = ""
 ASSUSERNAME = ""
 ASSMENTION = ""
 
-print("[ INFO ] INITIALIZING BOT CLIENT")
+print("[ INFO ] <--- PREPARING BOT & USERBOT --->")
+
 app = Client(
     'mega',
     API_ID,
@@ -96,10 +99,10 @@ def all_info(app, chacha):
     ASSMENTION = getme1.mention
 
     
-print("[ INFO ] STARTING BOT CLIENT")
+print("[ INFO ] <--- CLIENT_1 STARTED --->")
 app.start()
-print("[ INFO ] STARTING USERBOT CLIENT")
+print("[ INFO ] <--- CLIENT_2 STARTED --->")
 chacha.start()
-print("[ INFO ] GENERATING BOT & ASSISTANT PROFILE INFO")
+print("[ INFO ] <--- CLIENT_1 PROFILE INFO LOADED --->")
 all_info(app, chacha)
-print("[ INFO ] GENERATED BOT & ASSISTANT PROFILE INFO")
+print("[ INFO ] <--- CLIENT_2 PROFILE INFO LOADED --->")
