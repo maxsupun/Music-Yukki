@@ -141,9 +141,7 @@ async def skip_changeTrue(_, CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
-    checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    chat_title = CallbackQuery.message.chat.title
     if await is_active_chat(chat_id):
         task_done(CallbackQuery.message.chat.id)
         if is_empty(CallbackQuery.message.chat.id):
@@ -159,7 +157,7 @@ async def skip_changeTrue(_, CallbackQuery):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply("📥 downloading next music from playlist...")
+                mystic = await app.send_message(chat_id, "📥 downloading next music from playlist...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
@@ -227,9 +225,6 @@ async def skip_changeTrue(_, CallbackQuery):
                 user_id = userid
                 buttons = play_markup(videoid, user_id)
                 semx = await app.get_users(userid)
-                user_id = CallbackQuery.from_user.id
-                user_name = CallbackQuery.from_user.first_name
-                rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
                 await app.send_photo(
                     chat_id,
                     photo=thumb,
@@ -261,10 +256,7 @@ async def skip_changeTrue(_, CallbackQuery):
                 if videoid == "smex1":
                     buttons = audio_markup(videoid, user_id)
                 else:
-                    buttons = play_markup(videoid, user_id)
-                user_id = CallbackQuery.from_user.id
-                user_name = CallbackQuery.from_user.first_name
-                rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"    
+                    buttons = play_markup(videoid, user_id)   
                 await app.send_photo(
                     chat_id,
                     photo=f"downloads/{_chat_}final.png",
@@ -279,7 +271,6 @@ async def end_stopTrue(_, CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
-    checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         try:
@@ -291,9 +282,6 @@ async def end_stopTrue(_, CallbackQuery):
         except Exception as e:
             pass
         await remove_active_chat(CallbackQuery.message.chat.id)
-        user_id = CallbackQuery.from_user.id
-        user_name = CallbackQuery.from_user.first_name
-        rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
         await CallbackQuery.edit_message_text("✅ This music playback has ended", reply_markup=close_keyboard)
     else:
         await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
