@@ -30,18 +30,13 @@ from pyrogram.types import (
 from .. import converter
 from ..config import DURATION_LIMIT
 from Yukki import dbb, app, BOT_USERNAME, BOT_ID, ASSID, ASSNAME, ASSUSERNAME, ASSMENTION
-from Yukki.YukkiUtilities.database.onoff import (is_on_off, add_on, add_off)
 from Yukki.YukkiUtilities.database.chats import (get_served_chats, is_served_chat, add_served_chat, get_served_chats)
 from ..YukkiUtilities.helpers.inline import (play_keyboard, search_markup, play_markup, playlist_markup, audio_markup, play_list_keyboard)
-from Yukki.YukkiUtilities.database.gbanned import (get_gbans_count, is_gbanned_user, add_gban_user, add_gban_user)
-from Yukki.YukkiUtilities.database.theme import (_get_theme, get_theme, save_theme)
-from Yukki.YukkiUtilities.database.assistant import (_get_assistant, get_assistant, save_assistant)
 from ..YukkiUtilities.helpers.decorators import errors
-from ..YukkiUtilities.helpers.filters import command, other_filters
+from ..YukkiUtilities.helpers.filters import command
 from ..YukkiUtilities.helpers.gets import (get_url, themes, random_assistant, ass_det)
 from ..YukkiUtilities.helpers.logger import LOG_CHAT
 from ..YukkiUtilities.helpers.thumbnails import down_thumb
-from ..YukkiUtilities.helpers.chattitle import CHAT_TITLE
 from ..YukkiUtilities.helpers.ytdl import ytdl_opts 
 
 flex = {}
@@ -54,7 +49,7 @@ def time_to_seconds(time):
     )
 
 
-@Client.on_message(command(["music", "song"]) & other_filters)
+@Client.on_message(command(["music", "song"]) & ~filters.edited)
 async def musicdl(_, message: Message):
     await message.delete()
     chat_id = message.chat.id
@@ -87,7 +82,7 @@ async def musicdl(_, message: Message):
             return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")    
         smex = int(time_to_seconds(duration))
         if smex > DURATION_LIMIT:
-            return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
+            return await mystic.edit_text(f"❌ **duration error**\n\n**allowed duration: {DURATION_LIMIT}\n**received duration:** {duration}")
         if duration == "None":
             return await mystic.edit_text("❌ **live stream not supported**")
         if views == "None":
@@ -102,7 +97,7 @@ async def musicdl(_, message: Message):
         os.remove(thumb)
     else:
         if len(message.command) < 2:
-            await message.reply_text("**usage:**\n\n/song or /music [yt url/music name]")
+            await message.reply_text("**usage:**\n\n/song [youtube url/song name]")
         query = " ".join(message.command[1:])
         mystic = await _.send_message(chat_id, "🔍 **Searching...**")
         try:
@@ -158,7 +153,7 @@ async def download_data(_,CallbackQuery):
     idx = id
     smex = int(time_to_seconds(duration))
     if smex > DURATION_LIMIT:
-        await CallbackQuery.message.reply_text(f"**❌ __Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
+        await CallbackQuery.message.reply_text(f"❌ **duration error**\n\n**allowed duration: {DURATION_LIMIT}\n**received duration:** {duration}")
         return 
     try:
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
