@@ -24,8 +24,7 @@ Client(
 print(f"[ INFO ] BOT STARTED AS {BOT_NAME} !")
 print(f"[ INFO ] USERBOT STARTED AS {ASSNAME} !")
 
-
-async def load_start():
+async def main():
     restart_data = await clean_restart_stage()
     if restart_data:
         print("[ SERVER ] <--- RESTARTING CLIENT --->")
@@ -54,11 +53,11 @@ async def load_start():
     await app.send_message(LOG_GROUP_ID, "✅ bot client started")
     await chacha.send_message(LOG_GROUP_ID, "✅ userbot client started")
     print("[ SERVER ] <--- CLIENT RESTARTED! --->")
-    
- 
-loop = asyncio.get_event_loop_policy()
-new_event_loop = loop.new_event_loop()
-new_event_loop.run_until_complete(load_start())
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
+
 runs()
 idle()
 
