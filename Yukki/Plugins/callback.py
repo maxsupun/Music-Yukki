@@ -82,7 +82,7 @@ async def isPreviewUp(preview: str) -> bool:
 
     
 @Client.on_callback_query(filters.regex(pattern=r"ppcl"))
-async def closesmex(_, CallbackQuery):
+async def close_deleteTrue(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
     callback_request = callback_data.split(None, 1)[1]
@@ -93,26 +93,22 @@ async def closesmex(_, CallbackQuery):
         await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
         return 
     if CallbackQuery.from_user.id != int(user_id):
-        await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
+        await CallbackQuery.answer("💡 This track is not your request !", show_alert=True)
         return
     await CallbackQuery.message.delete()
     
     
 @Client.on_callback_query(filters.regex("pausevc"))
-async def pausevc(_, CallbackQuery):
+async def off_pauseTrue(_, CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
-    checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(chat_id):
             await yukki.pytgcalls.pause_stream(chat_id)
             await music_off(chat_id)
             await CallbackQuery.answer("streaming paused")
-            user_id = CallbackQuery.from_user.id
-            user_name = CallbackQuery.from_user.first_name
-            rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await CallbackQuery.edit_message_text(f"⏸ music playback has paused", reply_markup=play_keyboard)
         else:
             await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
@@ -122,11 +118,10 @@ async def pausevc(_, CallbackQuery):
    
     
 @Client.on_callback_query(filters.regex("resumevc"))
-async def resumevc(_, CallbackQuery):  
+async def on_resumeTrue(_, CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
-    checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(chat_id):
@@ -136,16 +131,13 @@ async def resumevc(_, CallbackQuery):
             await music_on(chat_id)
             await yukki.pytgcalls.resume_stream(chat_id)
             await CallbackQuery.answer("streaming resumed")
-            user_id = CallbackQuery.from_user.id
-            user_name = CallbackQuery.from_user.first_name
-            rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await CallbackQuery.edit_message_text(f"▶ music playback has resumed", reply_markup=play_keyboard)
     else:
         await CallbackQuery.answer(f"❌ no music is currently playing", show_alert=True)
    
     
 @Client.on_callback_query(filters.regex("skipvc"))
-async def skipvc(_, CallbackQuery): 
+async def skip_changeTrue(_, CallbackQuery): 
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
@@ -155,20 +147,12 @@ async def skipvc(_, CallbackQuery):
     if await is_active_chat(chat_id):
         task_done(CallbackQuery.message.chat.id)
         if is_empty(CallbackQuery.message.chat.id):
-            user_id = CallbackQuery.from_user.id
-            await remove_active_chat(chat_id) 
-            user_name = CallbackQuery.from_user.first_name
-            rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await remove_active_chat(chat_id)
-            await CallbackQuery.message.reply(f"{rpk} want to skip music**\n\n❌ There's no more music in queue, userbot leaving video chat.")
+            await CallbackQuery.answer("❌ There's no more music in queue, userbot leaving video chat.", show_alert=True)
             await yukki.pytgcalls.leave_group_call(chat_id)
             return
         else:
             await CallbackQuery.answer("You've skipped to the next song", show_alert=True)
-            if CallbackQuery.message.reply_to_message:
-                return await CallbackQuery.message.delete()
-            else:
-                return await CallbackQuery.message.delete()
             afk = get(chat_id)['file']
             f1 = (afk[0])
             f2 = (afk[1])
@@ -181,7 +165,7 @@ async def skipvc(_, CallbackQuery):
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this video.\n\n**reason:** `{e}`") 
+                    return await mystic.edit(f"failed to download this song.\n\n**reason:** `{e}`") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -220,8 +204,8 @@ async def skipvc(_, CallbackQuery):
                                 mystic.edit(f"Downloading {title[:50]}.....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec") 
                                 print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
                 loop = asyncio.get_event_loop()
-                xx = await loop.run_in_executor(None, download, url, my_hook)
-                file = await convert(xx)
+                data = await loop.run_in_executor(None, download, url, my_hook)
+                file = await convert(data)
                 await yukki.pytgcalls.change_stream(
                     chat_id,
                     InputStream(
@@ -238,7 +222,7 @@ async def skipvc(_, CallbackQuery):
                 ctitle = (await app.get_chat(chat_id)).title
                 ctitle = await CHAT_TITLE(ctitle)
                 f2 = open(f'search/{afk}id.txt', 'r')        
-                userid =(f2.read())
+                userid = (f2.read())
                 thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                 user_id = userid
                 buttons = play_markup(videoid, user_id)
@@ -291,7 +275,7 @@ async def skipvc(_, CallbackQuery):
             
        
 @Client.on_callback_query(filters.regex("stopvc"))
-async def stopvc(_, CallbackQuery):
+async def end_stopTrue(_, CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
         return await CallbackQuery.answer("You must be admin with permissions:\n\n❌ » manage_video_chats", show_alert=True)
