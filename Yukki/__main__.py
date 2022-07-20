@@ -32,7 +32,7 @@ async def main():
             await app.edit_message_text(
                 restart_data["chat_id"],
                 restart_data["message_id"],
-                "✅ Bot restarted successfully",
+                " Bot restarted successfully",
             )
         except Exception:
             pass
@@ -50,8 +50,8 @@ async def main():
         except Exception:
             print("error came while clearing db")
             pass     
-    await app.send_message(LOG_GROUP_ID, "✅ bot client started")
-    await chacha.send_message(LOG_GROUP_ID, "✅ userbot client started")
+    await app.send_message(LOG_GROUP_ID, "bot client started")
+    await chacha.send_message(LOG_GROUP_ID, "userbot client started")
     print("[ SERVER ] <--- CLIENT RESTARTED! --->")
 
 
