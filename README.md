@@ -18,4 +18,4 @@ This repo has blacklisted by Heroku, to deploy this repo you need to fork this r
 [Me](https://github.com/maxsupun)
 
 
-<img src="https://telegra.ph/file/9307e42446a4cea631bab.jpg">
+<img src="https://telegra.ph/file/9307e42446a4cea631bab.jpg" width="400" height="600" >
