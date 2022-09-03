@@ -3,12 +3,12 @@ import asyncio
 from pyrogram.types import Message
 from pyrogram import filters, Client
 
-from Yukki import app, OWNER
+from Yukki import app, OWNER, SUDO_USERS
 from ..YukkiUtilities.helpers.filters import command
 from Yukki.YukkiUtilities.database.chats import get_served_chats
 
 
-@app.on_message(command(["broadcast_pin"]) & filters.user(OWNER))
+@app.on_message(command(["broadcast_pin"]) & filters.user(OWNER,SUDO_USERS))
 async def broadcast_message_pin(_, message):
     if not message.reply_to_message:
         pass
@@ -62,7 +62,7 @@ async def broadcast_message_pin(_, message):
     await msg.edit_text(f"✅ Broadcasted message in {sent} chats\n📌 Sent with {pins} chat pins.")
 
 
-@app.on_message(command(["broadcast"]) & filters.user(OWNER))
+@app.on_message(command(["broadcast"]) & filters.user(OWNER,SUDO_USERS))
 async def broadcast_message_nopin(_, message):
     if not message.reply_to_message:
         pass
