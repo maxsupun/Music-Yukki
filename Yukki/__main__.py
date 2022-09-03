@@ -50,8 +50,8 @@ async def main():
         except Exception:
             print("error came while clearing db")
             pass     
-    await app.send_message(LOG_GROUP_ID, "bot client started")
-    await chacha.send_message(LOG_GROUP_ID, "userbot client started")
+    await app.send_message(LOG_GROUP_ID, "අපි තමයි හොඳටම කරේ😏 @Maxsupun1 ")
+    await chacha.send_message(LOG_GROUP_ID, "මෙයා තමයි හොඳටම කරේ😏 @Maxsupun1")
     print("[ SERVER ] <--- CLIENT RESTARTED! --->")
 
 
