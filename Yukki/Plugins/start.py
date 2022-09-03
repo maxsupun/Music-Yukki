@@ -37,7 +37,7 @@ pstart_markup = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "➕ Add me to your Group ➕", url="https://t.me/VeezMegaBot?startgroup=true")
+                        "➕ Add me to your Group ➕", url="https://t.me/The_Max_Robot?startgroup=true")
                 ],[
                     InlineKeyboardButton(
                         "📚 Commands", url="https://telegra.ph/Veez-Mega-Guide-01-10"),
@@ -45,9 +45,9 @@ pstart_markup = InlineKeyboardMarkup(
                         "❓ Setup Guide", url="https://telegra.ph/Veez-Mega-Guid-11-19")
                 ],[
                     InlineKeyboardButton(
-                        "👥 Official Group", url="https://t.me/VeezSupportGroup"), 
+                        "👥 Official Group", url="https://t.me/MaxRobotSupport"), 
                     InlineKeyboardButton(
-                        "📎 Official Channel", url="https://t.me/levinachannel")
+                        "📎 Official Channel", url="https://t.me/MaxRobot_updates")
                 ],
             ]
         )
