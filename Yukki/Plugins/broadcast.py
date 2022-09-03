@@ -8,7 +8,7 @@ from ..YukkiUtilities.helpers.filters import command
 from Yukki.YukkiUtilities.database.chats import get_served_chats
 
 
-@app.on_message(command(["broadcast_pin"]) & filters.user(OWNER,SUDO_USERS))
+@app.on_message(command(["broadcast_pin"]) & filters.user(SUDO_USERS))
 async def broadcast_message_pin(_, message):
     if not message.reply_to_message:
         pass
