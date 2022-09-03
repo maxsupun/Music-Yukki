@@ -62,7 +62,7 @@ async def broadcast_message_pin(_, message):
     await msg.edit_text(f"✅ Broadcasted message in {sent} chats\n📌 Sent with {pins} chat pins.")
 
 
-@app.on_message(command(["broadcast"]) & filters.user(OWNER,SUDO_USERS))
+@app.on_message(command(["broadcast"]) & filters.user(SUDO_USERS))
 async def broadcast_message_nopin(_, message):
     if not message.reply_to_message:
         pass
